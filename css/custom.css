@@ -1,10 +1,15 @@
-.circle-pink {
-    padding: 40px 25px 50px;
-    border: solid 1px rgb(233, 137, 212);
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-content: center;
+/* 1. 注册你的字体 */
+@font-face {
+    font-family: 'EvaMing';  /* 给字体起个名字，这里叫 EvaMing */
+    /* 注意：OTF 文件的 format 是 'opentype' */
+    src: url('/fonts/Eva-Ming-SC-v0.1.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* 优化加载体验 */
+}
+
+/* 2. 强制应用到全站 */
+body {
+    /* 将 'EvaMing' 放在第一位 */
+    font-family: 'EvaMing', "LXGW WenKai", "Microsoft YaHei", sans-serif !important;
 }
