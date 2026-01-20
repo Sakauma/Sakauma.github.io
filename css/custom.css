@@ -2,7 +2,7 @@
 @font-face {
     font-family: 'EvaMing';  /* 给字体起个名字，这里叫 EvaMing */
     /* 注意：OTF 文件的 format 是 'opentype' */
-    src: url('/fonts/Eva-Ming-SC-v0.1.otf') format('opentype');
+    src: url('/fonts/Eva-Ming-SC-v0.1.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap; /* 优化加载体验 */
