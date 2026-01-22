@@ -1,15 +1,108 @@
-/* 1. 注册你的字体 */
+/* ============================================================
+   1. 配置 Noto Sans (英文/俄文)
+   ============================================================ */
 @font-face {
-    font-family: 'EvaMing';  /* 给字体起个名字，这里叫 EvaMing */
-    /* 注意：OTF 文件的 format 是 'opentype' */
-    src: url('/fonts/Eva-Ming-SC-v0.1.otf') format('opentype');
-    font-weight: normal;
+    font-family: 'GlobalFont';
+    src: url('/fonts/Noto-Var.ttf') format('truetype');
+    font-weight: 100 900; /* 支持任意粗细 */
     font-style: normal;
-    font-display: block;
+    unicode-range: U+0000-00FF, U+0400-052F, U+2DE0-2DFF, U+A640-A69F;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'GlobalFont';
+    src: url('/fonts/Noto-Var-Italic.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    unicode-range: U+0000-00FF, U+0400-052F, U+2DE0-2DFF, U+A640-A69F;
+    font-display: swap;
 }
 
-/* 2. 强制应用到全站 */
+/* ============================================================
+   2. 配置 HarmonyOS Sans (中文)
+   范围：U+4E00-9FFF (汉字) 及中文标点
+   ============================================================ */
+
+/* 1. Thin (极细 - 100) */
+@font-face {
+    font-family: 'GlobalFont';
+    src: url('/fonts/Harmony-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+    unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+    font-display: swap;
+}
+
+/* 2. Light (细体 - 300) */
+@font-face {
+    font-family: 'GlobalFont';
+    src: url('/fonts/Harmony-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+    font-display: swap;
+}
+
+/* 3. Regular (标准 - 400/normal) */
+@font-face {
+    font-family: 'GlobalFont';
+    src: url('/fonts/Harmony-Regular.ttf') format('truetype');
+    font-weight: 400; 
+    font-style: normal;
+    unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+    font-display: swap;
+}
+
+/* 4. Medium (中粗 - 500) */
+@font-face {
+    font-family: 'GlobalFont';
+    src: url('/fonts/Harmony-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+    font-display: swap;
+}
+
+/* 5. Bold (粗体 - 700/bold) */
+@font-face {
+    font-family: 'GlobalFont';
+    src: url('/fonts/Harmony-Bold.ttf') format('truetype');
+    font-weight: 700; 
+    font-style: normal;
+    unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+    font-display: swap;
+}
+
+/* 6. Black (极粗 - 900) */
+@font-face {
+    font-family: 'GlobalFont';
+    src: url('/fonts/Harmony-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    unicode-range: U+4E00-9FFF, U+3000-303F, U+FF00-FFEF;
+    font-display: swap;
+}
+
+/* ============================================================
+   3. 全局应用
+   ============================================================ */
 body {
-    /* 将 'EvaMing' 放在第一位 */
-    font-family: 'EvaMing', "LXGW WenKai", "Microsoft YaHei", sans-serif !important;
+    font-family: 'GlobalFont', sans-serif !important;
+    font-weight: 400; /* 默认使用 Regular */
+}
+
+/* 标题默认使用 Bold (700) */
+h1, h2, h3, h4, h5, h6, .post-title {
+    font-family: 'GlobalFont', sans-serif !important;
+    font-weight: 700;
+}
+
+strong, b {
+    font-family: 'GlobalFont', sans-serif !important;
+    font-weight: 700 !important; 
+}
+
+em, i {
+    font-family: 'GlobalFont', sans-serif !important;
+    font-style: italic !important;
 }

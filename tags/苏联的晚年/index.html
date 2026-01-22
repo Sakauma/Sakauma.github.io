@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="cn">
+    
+    <style>
+        body
+        {
+            font-family: "Times New Roman", Helvetica, Tahoma, Arial,   "notoserifsc-medium", "Microsoft YaHei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif !important;
+
+        }
+    </style>
+
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="" />
+    <meta name="hexo-theme-A4" content="v2.0.0" />
+    <link rel="alternate icon" type="image/webp" href="/img/avatar.png">
+    <title>Sakauma</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+   
+        
+<link rel="stylesheet" href="/css/custom.css">
+
+    
+    <link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css' /> 
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+
+
+
+    
+    <style>
+        :root {
+            --waline-theme-color: #323e74; 
+            --waline-color: #323e74; 
+            --waline-border-color: #323e74; 
+            --waline-white: #323e74; 
+            --waline-bgcolor-light: #f2fafc;  
+        }
+        body {
+            color: #323e74;
+            background: #eaeae8;
+        }
+        .post-md code {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        .post-md pre, .post-md .highlight {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
+            color: #323e74;
+        }
+        pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
+            color: #323e74;
+        }
+        .year-font-color {
+            color: #323e74 !important;
+        }
+        .wl-card span.wl-nick {
+            color: #323e74; 
+        }
+        .wl-card .wl-badge {
+            border: 1px solid #323e74;
+            color: #323e74; 
+        }
+        .wl-btn {
+            border: 1px solid #323e74; 
+            color:  #323e74;  
+        }
+        .wl-btn.primary {
+            color: #f2fafc; 
+        }
+        .wl-header label {
+            color: #323e74;
+        }
+        a {
+            color: #7f688d;
+        }
+
+        .post-md a {
+            color: #7f688d;
+        }
+
+        .nav li a {
+            color: #7f688d;
+        }
+
+        .archive-main a:link {
+            color: #7f688d;
+        }
+        .archive-main a:visited {
+            color: #767c7c; 
+        }
+
+        .archive li span {
+            color: #323e74;
+        }
+
+        .post-main-title {
+            color: #323e74;
+        }
+
+        .post-md h1,
+        .post-md h2,
+        .post-md h3,
+        .post-md h4,
+        .post-md h5,
+        .post-md h6 {
+            color: #323e74;
+        }
+
+        [data-waline] p {
+            color: #323e74;
+        }
+        [data-waline] a {
+            color: #323e74;
+        } 
+        .wl-sort li.active {
+            color: #323e74;
+        }
+
+        .wl-card .wl-meta>span {
+            background: #f2fafc;
+        }
+
+        .paper {
+            background: #eaeae8;
+        }
+
+        .index-main {
+            background: #f2fafc;
+        }
+
+        .paper-main {
+            background: #f2fafc;
+        }
+
+        .wl-panel {
+            background: #f2fafc;
+        }
+
+        .archive li:nth-child(odd) {
+            background: #f2fafc;
+            ;
+        }
+
+        .archive li:nth-child(even) {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(odd) td {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(even) td {
+            background: #f2fafc;
+        }
+
+    
+        .progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+        .return-to-last-progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .return-to-last-progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .return-to-last-progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+         .left-toc-container::-webkit-scrollbar-thumb {
+            background-color: #323e74; /* 设置滚动条拖动块的颜色 */
+        }
+
+        .bs-docs-sidebar .nav>.active>a,
+        .bs-docs-sidebar .nav>li>a:hover,
+        .bs-docs-sidebar .nav>li>a:focus {
+            color: #7f688d;
+            border-left-color: #7f688d;
+        }
+        .bs-docs-sidebar .nav>li>a {
+            color:  #323e74;
+        }
+    </style>
+
+    
+    <style>
+        body {
+            background-image: url(/img/Tlaloc_cropped_1920x1080.webp);
+            background-attachment: fixed;  /* 背景固定，不随页面滚动 */
+            background-repeat: no-repeat;  /* 防止背景图片重复 */
+            background-size: cover;       /* 背景自适应大小，覆盖整个背景 */
+            background-position: center;   /* 背景居中显示 */
+        }
+        .paper {
+            background-image: url(/img/Tlaloc_cropped_1920x1080.webp);
+            background-attachment: fixed;  /* 背景固定，不随页面滚动 */
+            background-repeat: no-repeat;  /* 防止背景图片重复 */
+            background-size: cover;       /* 背景自适应大小，覆盖整个背景 */
+            background-position: center;   /* 背景居中显示 */
+        }  
+    </style>
+
+
+
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        
+            
+        
+        <div class="paper">
+
+            
+
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <style>
+            .header-img {
+                width: 56px;
+                height: auto;
+                object-fit: cover; /* 保持图片比例 */
+                transition: transform 0.3s ease-in-out; 
+                border-radius: 0; 
+            }
+            
+        </style>
+        <img 
+            alt="^-^" 
+            cache-control="max-age=86400" 
+            class="header-img" 
+            src="/img/avatar.png" 
+        />
+        <div class="header-content">
+            <a class="logo" href="/">Egor Izmaylov</a> 
+            <span class="description"></span> 
+        </div>
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+            
+                <li><i>
+                    
+                        <u>
+                            <a  href="/tags/">标签</a>
+                        </u>
+                    
+                </i></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+    </ul>
+</div>
+
+                    
+                    
+
+                    
+                            
+
+
+<div class="archive-list">
+  <ul class="archive">
+
+    
+    <span><span class="darkmode-ignore">📌</span><i>苏联的晚年</i></span>
+ 
+    
+
+    
+    
+
+    
+
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%AD%90%E5%A4%9C%E6%97%B6%E5%88%86%EF%BC%8C%E5%8D%87%E8%B5%B7%E4%BA%86%E6%BC%86%E9%BB%91%E7%9A%84%E5%A4%AA%E9%98%B3%E2%80%A6%E2%80%A6%EF%BC%88%D0%92%D1%81%D0%BF%D1%8B%D1%85%D0%BD%D1%83%D0%BB%D0%BE-%D0%B2-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D1%87%D1%8C-%D0%BA%D1%80%D0%BE%D0%BC%D0%B5%D1%88%D0%BD%D0%BE%D0%B5-%D1%81%D0%BE%D0%BB%D0%BD%D1%8B%D1%88%D0%BA%D0%BE-%EF%BC%89/">子夜时分，升起了漆黑的太阳……（Вспыхнуло в полночь кромешное солнышко...）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E9%9B%B7%E9%AC%BC%EF%BC%88Reggae%EF%BC%89/">雷鬼 (Reggae )</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%A6%88%E5%A6%88%EF%BC%8C%E5%A6%88%E5%A6%88%E2%80%A6%E2%80%A6%EF%BC%88%D0%9C%D0%B0%D0%BC%D0%B0-%D0%BC%D0%B0%D0%BC%D0%B0%EF%BC%89/">妈妈，妈妈……（Мама, мама...）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%88%91%E7%9A%84%E6%B1%A1%E7%A7%BD%E5%A6%82%E6%AD%A4%E4%B8%8D%E4%B8%BA%E4%BA%BA%E7%9F%A5%EF%BC%8C%E5%A6%82%E6%AD%A4%E7%BA%AF%E7%9C%9F%EF%BC%88%D0%93%D1%80%D1%8F%D0%B7%D1%8C-%D0%BC%D0%BE%D1%8F-%D1%82%D0%B0%D0%BA%D0%B0%D1%8F-%D0%BD%D0%B5%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%B0%D1%8F-%D1%82%D0%B0%D0%BA%D0%B0%D1%8F-%D0%BD%D0%B5%D0%B2%D0%B8%D0%BD%D0%BD%D0%B0%D1%8F-%EF%BC%89/">我的污秽如此不为人知，如此纯真（Грязь моя такая неведомая, такая невинная...）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%88%91%E4%BB%AC%E6%98%AF%E5%86%B0%EF%BC%88%D0%9C%D1%8B-%E2%80%94-%D0%BB%D1%91%D0%B4%EF%BC%89/">我们是冰（Мы — лёд）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E7%A9%BF%E8%BF%87%E6%88%91%E5%86%85%E5%BF%83%E6%B7%B1%E5%A4%84%E9%93%85%E7%81%B0%E8%89%B2%E7%9A%84%E6%AD%BB%E5%AF%82%EF%BC%88%D0%9F%D0%BE-%D1%81%D0%B2%D0%B8%D0%BD%D1%86%D0%BE%D0%B2%D0%BE%D0%BC%D1%83-%D0%BF%D0%BE%D0%BA%D0%BE%D1%8E-%D0%B3%D0%BB%D1%83%D0%B1%D0%B8%D0%BD%D1%8B-%D0%BC%D0%BE%D0%B5%D0%B9-%EF%BC%89/">穿过我内心深处铅灰色的死寂（По свинцовому покою глубины моей...）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E7%99%BE%E5%B9%B4%E4%B9%8B%E9%9B%A8%EF%BC%88%D0%A1%D1%82%D0%BE%D0%BB%D0%B5%D1%82%D0%BD%D0%B8%D0%B9-%D0%B4%D0%BE%D0%B6%D0%B4%D1%8C%EF%BC%89/">百年之雨（Столетний дождь）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E8%A8%80%E8%AF%AD%E5%A4%AA%E5%B0%91%EF%BC%8C%E5%86%99%E4%B8%8D%E6%88%90%E8%AF%97%E8%A1%8C%E2%80%A6%E2%80%A6%EF%BC%88%D0%93%D1%80%D1%8F%D0%B7%D1%8C-%D0%BC%D0%BE%D1%8F-%D1%82%D0%B0%D0%BA%D0%B0%D1%8F-%D0%BD%D0%B5%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%B0%D1%8F-%D1%82%D0%B0%D0%BA%D0%B0%D1%8F-%D0%BD%D0%B5%D0%B2%D0%B8%D0%BD%D0%BD%D0%B0%D1%8F-%EF%BC%89/">言语太少，写不成诗行……（Грязь моя такая неведомая, такая невинная...）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%88%87%E8%85%B9%EF%BC%88%D0%A5%D0%B0%D1%80%D0%B0%D0%BA%D0%B8%D1%80%D0%B8%EF%BC%89/">切腹（Харакири）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%9C%A8%E6%AF%8F%E5%BA%A7%E6%88%BF%E5%AD%90%E9%87%8C%EF%BC%88%D0%92-%D0%BA%D0%B0%D0%B6%D0%B4%D0%BE%D0%BC-%D0%B4%D0%BE%D0%BC%D0%B5%EF%BC%89/">在每座房子里（В каждом доме）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%88%91%E6%84%9F%E8%A7%89%E8%87%AA%E5%B7%B1%E9%AD%82%E4%B8%8D%E5%AE%88%E8%88%8D%EF%BC%88%D0%AF-%D1%87%D1%83%D0%B2%D1%81%D1%82%D0%B2%D1%83%D1%8E-%D1%81%D0%B5%D0%B1%D1%8F-%D0%BD%D0%B5-%D0%B2-%D1%81%D0%B2%D0%BE%D0%B8%D1%85-%D1%88%D1%82%D0%B0%D0%BD%D0%B0%D1%85%EF%BC%89/">我感觉自己魂不守舍（Я чувствую себя не в своих штанах）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%88%91%E4%BB%AC%E7%AD%89%E5%80%99%E5%A4%A9%E9%99%8D%E5%8F%98%E5%B1%80%E2%80%94%E2%80%94%E6%89%80%E8%A7%81%E7%9A%84%E5%8D%B4%E6%98%AF%E7%BB%9E%E7%B4%A2%EF%BC%88%D0%96%D0%B4%D1%91%D0%BC-%D1%81-%D0%BD%D0%B5%D0%B1%D0%B5%D1%81-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD-%E2%80%94-%D0%B2%D0%B8%D0%B4%D0%B8%D0%BC-%D0%BF%D0%B5%D1%82%D0%BB%D0%B8-%D0%B2%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD-%EF%BC%89/">我们等候天降变局——所见的却是绞索（Ждём с небес перемен — видим петли взамен...）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%B2%A1%E7%94%A8%E7%9A%84%E4%B8%9C%E8%A5%BF%EF%BC%88%D0%91%D0%B5%D1%81%D0%BF%D0%BE%D0%BD%D1%82%D0%BE%D0%B2%D1%8B%D0%B9-%D0%BF%D0%B8%D1%80%D0%BE%D0%B6%D0%BE%D0%BA%EF%BC%89/">没用的东西（Беспонтовый пирожок）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%88%91%E4%BB%AC%E6%B7%B1%E9%99%B7%E7%B2%AA%E5%9D%91%EF%BC%88%D0%9C%D1%8B-%D0%B2-%D0%B3%D0%BB%D1%83%D0%B1%D0%BE%D0%BA%D0%BE%D0%B9-%D0%B6%D0%BE%D0%BF%D0%B5%EF%BC%89/">我们深陷粪坑（Мы в глубокой жопе）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E9%92%A2%E9%93%81%E5%B0%B1%E6%98%AF%E8%BF%99%E6%A0%B7%E7%82%BC%E6%88%90%E7%9A%84%EF%BC%88%D0%A2%D0%B0%D0%BA-%D0%B7%D0%B0%D0%BA%D0%B0%D0%BB%D1%8F%D0%BB%D0%B0%D1%81%D1%8C-%D1%81%D1%82%D0%B0%D0%BB%D1%8C%EF%BC%89/">钢铁就是这样炼成的（Так закалялась сталь）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%91%87%E7%AF%AE%E6%9B%B2%EF%BC%88%D0%9A%D0%BE%D0%BB%D1%8B%D0%B1%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%EF%BC%89/">摇篮曲（Колыбельная）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E7%94%B5%E8%BD%A6%EF%BC%88%D0%A2%D1%80%D0%B0%D0%BC%D0%B2%D0%B0%D0%B9%EF%BC%89/">电车（Трамвай）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%85%8B%E6%A0%BC%E5%8B%83%E6%91%87%E6%BB%9A%EF%BC%88%D0%9A%D0%93%D0%91-%D1%80%D0%BE%D0%BA%EF%BC%89/">克格勃摇滚（КГБ-рок）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E7%A9%BF%E8%BF%87%E6%88%91%E5%A4%B4%E9%A2%85%E7%9A%84%E5%BC%B9%E5%AD%94%EF%BC%88%D0%A1%D0%BA%D0%B2%D0%BE%D0%B7%D1%8C-%D0%B4%D1%8B%D1%80%D1%83-%D0%B2-%D0%BC%D0%BE%D0%B5%D0%B9-%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%B5%EF%BC%89/">穿过我头颅的弹孔（Сквозь дыру в моей голове）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%81%8B%E5%B0%B8%E7%99%96%EF%BC%88%D0%9D%D0%B5%D0%BA%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D0%B8%D1%8F%EF%BC%89/">恋尸癖（Некрофилия）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%B0%B8%E6%81%92%E7%9A%84%E6%98%A5%E5%A4%A9%EF%BC%88%D0%92%D0%B5%D1%87%D0%BD%D0%B0%D1%8F-%D0%B2%D0%B5%D1%81%D0%BD%D0%B0%EF%BC%89/">永恒的春天（Вечная весна）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E9%9B%BE%E9%9C%AD%EF%BC%88%E4%BF%AF%E5%86%B2%E8%BD%B0%E7%82%B8%E6%9C%BA%E7%BC%96%E5%B9%B4%E5%8F%B2%EF%BC%89%D0%A2%D1%83%D0%BC%D0%B0%D0%BD-%D0%A5%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0-%D0%BF%D0%B8%D0%BA%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B5%D0%B3%D0%BE-%D0%B1%D0%BE%D0%BC%D0%B1%D0%B0%D1%80%D0%B4%D0%B8%D1%80%D0%BE%D0%B2%D1%89%D0%B8%D0%BA%D0%B0/">雾霭（俯冲轰炸机编年史）Туман (Хроника пикирующего бомбардировщика)</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%85%B3%E4%BA%8E%E8%A0%95%E8%99%AB%EF%BC%88%D0%9F%D1%80%D0%BE-%D1%87%D0%B5%D1%80%D0%B2%D1%8F%D1%87%D0%BA%D0%BE%D0%B2%EF%BC%89/">关于蠕虫（Про червячков）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%9E%81%E4%B9%90%E6%88%96%E8%80%85%E6%9B%B4%E5%A4%9A%EF%BC%88%D0%9A%D0%B0%D0%B9%D1%84-%D0%B8%D0%BB%D0%B8-%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%B5%EF%BC%89/">极乐或者更多（Кайф или больше）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E7%BA%BD%E5%9F%BA%E5%A8%9C%E7%9A%84%E6%AD%8C%E8%B0%A3%EF%BC%88%D0%9D%D1%8E%D1%80%D0%BA%D0%B8%D0%BD%D0%B0-%D0%BF%D0%B5%D1%81%D0%BD%D1%8F%EF%BC%89/">纽基娜的歌谣（Нюркина песня）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E2%80%9C%E8%AE%B0%E5%BF%86%E2%80%9D%E7%A4%BE%E4%BC%9A%EF%BC%88%D0%9E%D0%B1%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%C2%AB%D0%9F%D0%B0%D0%BC%D1%8F%D1%82%D1%8C%C2%BB%EF%BC%89/">“记忆”社会（Общество «Память»）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%B0%8F%E7%8E%8B%E5%AD%90%E5%9B%9E%E5%AE%B6%E4%BA%86%EF%BC%88%D0%9C%D0%B0%D0%BB%D0%B5%D0%BD%D1%8C%D0%BA%D0%B8%D0%B9-%D0%BF%D1%80%D0%B8%D0%BD%D1%86-%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%89%D0%B0%D0%BB%D1%81%D1%8F-%D0%B4%D0%BE%D0%BC%D0%BE%D0%B9%EF%BC%89/">小王子回家了（Маленький принц возвращался домой）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E6%9C%8B%E5%85%8B%E5%92%8C%E6%91%87%E6%BB%9A%EF%BC%88%D0%9F%D0%B0%D0%BD%D0%BA-%D0%B8-%D1%80%D0%BE%D0%BA-%D0%BD-%D1%80%D0%BE%D0%BB%D0%BB%EF%BC%89/">朋克和摇滚（Панк и рок-н-ролл）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%88%97%E4%BE%AC%E5%8E%BB%E4%B8%96%EF%BC%88%D0%9B%D0%B5%D0%BD%D0%BD%D0%BE%D0%BD-%D1%83%D0%BC%D0%B5%D1%80%EF%BC%89/">列侬去世（Леннон умер）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-22</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/22/%E5%88%97%E5%AE%81%E4%B9%8B%E6%AD%8C%EF%BC%88%D0%9F%D0%B5%D1%81%D0%BD%D1%8F-%D0%BE-%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B5%EF%BC%89/">列宁之歌（Песня о Ленине）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E5%8D%81%E6%9C%88%E9%9D%A9%E5%91%BD%E4%B8%83%E5%8D%81%E5%91%A8%E5%B9%B4%EF%BC%8870-%D0%BB%D0%B5%D1%82-%D0%9E%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8F%EF%BC%89/">十月革命七十周年（70 лет Октября）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E6%88%91%E4%B8%8D%E7%9B%B8%E4%BF%A1%E5%AE%89%E9%82%A3%E5%85%B6%EF%BC%88%D0%AF-%D0%9D%D0%B5-%D0%92%D0%B5%D1%80%D1%8E-%D0%92-%D0%90%D0%BD%D0%B0%D1%80%D1%85%D0%B8%D1%8E%EF%BC%89/">我不相信安那其（Я Не Верю В Анархию）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E4%B8%80%E5%88%87%E4%B8%8D%E8%AF%A5%E6%98%AF%E8%BF%99%E6%A0%B7%EF%BC%88%D0%92%D1%81%D1%91-%D1%81%D0%BE%D0%B2%D1%81%D0%B5%D0%BC-%D0%BD%D0%B5-%D1%82%D0%BE%EF%BC%89/">一切不该是这样（Всё совсем не то）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E5%B8%A6%E4%B8%8A%E4%BD%A0%E7%9A%84%E5%A4%96%E5%A5%97%EF%BC%88%D0%91%D0%B5%D1%80%D0%B8-%D1%88%D0%B8%D0%BD%D0%B5%D0%BB%D1%8C%EF%BC%89/">带上你的外套（Бери шинель）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E6%9C%9D%E5%9C%A3%E8%80%85%E5%89%8D%E5%BE%80%E6%9C%9D%E9%B2%9C%EF%BC%88%D0%9F%D0%B0%D0%BB%D0%BE%D0%BC%D0%BD%D0%B8%D0%BA%D0%B8-%D0%B2-%D0%9A%D0%BE%D1%80%D0%B5%D1%8E%EF%BC%89/">朝圣者前往朝鲜（Паломники в Корею）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E5%83%8F%E9%85%B8%E5%A5%B6%E6%B2%B9%E4%B8%80%E6%A0%B7%EF%BC%88%D0%9A%D0%B0%D0%BA-%D1%81%D0%BC%D0%B5%D1%82%D0%B0%D0%BD%D0%B0%EF%BC%89/">像酸奶油一样（Как сметана）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E9%A1%B6%E9%83%A8%E5%92%8C%E6%A0%B9%E9%83%A8%EF%BC%88%D0%92%D0%B5%D1%80%D1%88%D0%BA%D0%B8-%D0%B8-%D0%BA%D0%BE%D1%80%D0%B5%D1%88%D0%BA%D0%B8%EF%BC%89/">顶部和根部（Вершки и корешки）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E8%87%AA%E6%88%91%E5%9B%9E%E9%81%BF%EF%BC%88%D0%A1%D0%B0%D0%BC%D0%BE%D0%BE%D1%82%D0%B2%D0%BE%D0%B4%EF%BC%89/">自我回避（Самоотвод）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E7%A6%8F%E9%9F%B3%E4%B9%A6%EF%BC%88%D0%95%D0%B2%D0%B0%D0%BD%D0%B3%D0%B5%D0%BB%D0%B8%D0%B5%EF%BC%89/">福音书（Евангелие）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E5%85%B3%E4%BA%8E%E5%B0%8F%E7%86%8A%EF%BC%88%E7%8C%AE%E7%BB%99%E6%89%AC%E5%8D%A1%E7%9A%84%E6%AD%8C%E8%B0%A3%EF%BC%89%D0%9F%D1%80%D0%BE-%D0%BC%D0%B8%D1%88%D1%83%D1%82%D0%BA%D1%83-%D0%9F%D0%B5%D1%81%D0%B5%D0%BD%D0%BA%D0%B0-%D0%B4%D0%BB%D1%8F-%D0%AF%D0%BD%D0%BA%D0%B8/">关于小熊（献给扬卡的歌谣）Про мишутку (Песенка для Янки)</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E4%B8%AD%E5%9B%BD%E5%B0%B1%E5%9C%A8%E5%92%AB%E5%B0%BA%E4%B9%8B%E9%97%B4%EF%BC%88%D0%94%D0%BE-%D0%9A%D0%B8%D1%82%D0%B0%D1%8F-%D0%BF%D0%B5%D1%88%D0%BA%D0%BE%D0%BC-%D1%80%D1%83%D0%BA%D0%BE%D0%B9-%D0%BF%D0%BE%D0%B4%D0%B0%D1%82%D1%8C%EF%BC%89/">中国就在咫尺之间（До Китая пешком рукой подать）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E4%B8%80%E5%88%87%E7%9A%86%E5%A6%82%E4%BA%BA%EF%BC%88%D0%92%D1%81%D1%91-%D0%BA%D0%B0%D0%BA-%D1%83-%D0%BB%D1%8E%D0%B4%D0%B5%D0%B9%EF%BC%89/">一切皆如人（Всё как у людей）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E4%B8%AD%E5%9B%BD%E4%BA%BA%E6%B0%91%E5%BF%97%E6%84%BF%E5%86%9B%E4%B9%8B%E6%AD%8C%EF%BC%88%D0%9F%D0%B5%D1%81%D0%BD%D1%8F-%D0%BE-%D0%BA%D0%B8%D1%82%D0%B0%D0%B9%D1%81%D0%BA%D0%BE%D0%BC-%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%BD%D0%BE%D0%BC-%D0%B4%D0%BE%D0%B1%D1%80%D0%BE%D0%B2%D0%BE%D0%BB%D1%8C%D1%86%D0%B5%EF%BC%89/">中国人民志愿军之歌（Песня о китайском народном добровольце）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E6%B2%A1%E6%9C%89%E6%88%91%EF%BC%88%D0%91%D0%B5%D0%B7-%D0%BC%D0%B5%D0%BD%D1%8F%EF%BC%89/">没有我（Без меня）</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E6%88%91%E7%9A%84%E9%98%B2%E5%BE%A1%EF%BC%88%D0%9C%D0%BE%D1%8F-%D0%BE%D0%B1%D0%BE%D1%80%D0%BE%D0%BD%D0%B0%EF%BC%89%E6%96%B0%E7%89%88/">我的防御（Моя оборона）新版</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E6%88%91%E7%9A%84%E9%98%B2%E5%BE%A1%EF%BC%88%D0%9C%D0%BE%D1%8F-%D0%BE%D0%B1%D0%BE%D1%80%D0%BE%D0%BD%D0%B0%EF%BC%89%E6%97%A7%E7%89%88/">我的防御（Моя оборона）旧版</a>
+        </div>
+        </li>
+    
+  
+    
+        <li>
+        <span class="archive-date">2026-01-21</span>
+        <div class="archive-main">
+            <a class="archive-title" href="/2026/01/21/%E8%9B%86%E4%B9%8B%E6%AD%8C%EF%BC%88%D0%9F%D1%80%D0%BE-%D1%87%D0%B5%D1%80%D0%B2%D1%8F%D1%87%D0%BA%D0%BE%D0%B2%EF%BC%89%E6%97%A7%E7%89%88/">蛆之歌（Про червячков）旧版</a>
+        </div>
+        </li>
+    
+  
+  </ul>
+</div>
+
+                    
+                    
+
+                    <!--说明是文章post页面-->
+                    
+
+                    <div class="footer">
+    
+        <span> 
+            © 2024-2026 IDIPLab 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>🎷Саксофон играет🎷</span>
+            
+                <span class="footer-last-span-right"><i>本站由<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/index.html">Hexo</a>驱动｜使用<a target="_blank" rel="noopener" href="https://github.com/HiNinoJay/hexo-theme-A4">Hexo-theme-A4</a>主题</i></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
+<script src="/js/emojiHandler.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        wrapEmojis('.paper');
+    });
+</script>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="cn">
+    
+    <style>
+        body
+        {
+            font-family: "Times New Roman", Helvetica, Tahoma, Arial,   "notoserifsc-medium", "Microsoft YaHei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif !important;
+
+        }
+    </style>
+
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <meta name="description" content="红色笑声（Красный смех）" />
+    <meta name="hexo-theme-A4" content="v2.0.0" />
+    <link rel="alternate icon" type="image/webp" href="/img/avatar.png">
+    <title>Sakauma</title>
+
+    
+        
+<link rel="stylesheet" href="/css/highlight/style1.css">
+
+        
+<link rel="stylesheet" href="/css/reset.css">
+
+        
+<link rel="stylesheet" href="/css/markdown.css">
+
+        
+<link rel="stylesheet" href="/css/fonts.css">
+ 
+         <!--注意：首页既不是post也不是page-->
+        
+        
+        
+<link rel="stylesheet" href="/css/ui.css">
+ 
+        
+<link rel="stylesheet" href="/css/style.css">
+
+
+        
+            <!--返回顶部css-->
+            
+<link rel="stylesheet" href="/css/returnToTop.css">
+
+            
+<link rel="stylesheet" href="/css/unicons.css">
+
+        
+        
+            <!--目录-->
+            
+<link rel="stylesheet" href="/css/toc.css">
+
+        
+    
+
+    
+        
+<link rel="stylesheet" href="/css/returnToLastPage.css">
+
+    
+    
+   
+<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
+
+
+   
+        
+<link rel="stylesheet" href="/css/custom.css">
+
+    
+    <link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css' /> 
+<meta name="generator" content="Hexo 7.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+    
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+
+
+
+
+    
+    <style>
+        :root {
+            --waline-theme-color: #323e74; 
+            --waline-color: #323e74; 
+            --waline-border-color: #323e74; 
+            --waline-white: #323e74; 
+            --waline-bgcolor-light: #f2fafc;  
+        }
+        body {
+            color: #323e74;
+            background: #eaeae8;
+        }
+        .post-md code {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        .post-md pre, .post-md .highlight {
+            background: #e7f7f3;
+            color: #7f688d; 
+        }
+        pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
+            color: #323e74;
+        }
+        pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
+            color: #323e74;
+        }
+        .year-font-color {
+            color: #323e74 !important;
+        }
+        .wl-card span.wl-nick {
+            color: #323e74; 
+        }
+        .wl-card .wl-badge {
+            border: 1px solid #323e74;
+            color: #323e74; 
+        }
+        .wl-btn {
+            border: 1px solid #323e74; 
+            color:  #323e74;  
+        }
+        .wl-btn.primary {
+            color: #f2fafc; 
+        }
+        .wl-header label {
+            color: #323e74;
+        }
+        a {
+            color: #7f688d;
+        }
+
+        .post-md a {
+            color: #7f688d;
+        }
+
+        .nav li a {
+            color: #7f688d;
+        }
+
+        .archive-main a:link {
+            color: #7f688d;
+        }
+        .archive-main a:visited {
+            color: #767c7c; 
+        }
+
+        .archive li span {
+            color: #323e74;
+        }
+
+        .post-main-title {
+            color: #323e74;
+        }
+
+        .post-md h1,
+        .post-md h2,
+        .post-md h3,
+        .post-md h4,
+        .post-md h5,
+        .post-md h6 {
+            color: #323e74;
+        }
+
+        [data-waline] p {
+            color: #323e74;
+        }
+        [data-waline] a {
+            color: #323e74;
+        } 
+        .wl-sort li.active {
+            color: #323e74;
+        }
+
+        .wl-card .wl-meta>span {
+            background: #f2fafc;
+        }
+
+        .paper {
+            background: #eaeae8;
+        }
+
+        .index-main {
+            background: #f2fafc;
+        }
+
+        .paper-main {
+            background: #f2fafc;
+        }
+
+        .wl-panel {
+            background: #f2fafc;
+        }
+
+        .archive li:nth-child(odd) {
+            background: #f2fafc;
+            ;
+        }
+
+        .archive li:nth-child(even) {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(odd) td {
+            background: #f2fafc;
+        }
+
+        .post-md table tr:nth-child(even) td {
+            background: #f2fafc;
+        }
+
+    
+        .progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+        .return-to-last-progress-wrap::after {
+            color: #323e74; /* 箭头的颜色 */
+        }
+        .return-to-last-progress-wrap svg.progress-circle path {
+	        stroke: #323e74; /* 边框的颜色 */
+        }
+        .return-to-last-progress-wrap::before {
+	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
+         }
+
+         .left-toc-container::-webkit-scrollbar-thumb {
+            background-color: #323e74; /* 设置滚动条拖动块的颜色 */
+        }
+
+        .bs-docs-sidebar .nav>.active>a,
+        .bs-docs-sidebar .nav>li>a:hover,
+        .bs-docs-sidebar .nav>li>a:focus {
+            color: #7f688d;
+            border-left-color: #7f688d;
+        }
+        .bs-docs-sidebar .nav>li>a {
+            color:  #323e74;
+        }
+    </style>
+
+    
+    <style>
+        body {
+            background-image: url(/img/Tlaloc_cropped_1920x1080.webp);
+            background-attachment: fixed;  /* 背景固定，不随页面滚动 */
+            background-repeat: no-repeat;  /* 防止背景图片重复 */
+            background-size: cover;       /* 背景自适应大小，覆盖整个背景 */
+            background-position: center;   /* 背景居中显示 */
+        }
+        .paper {
+            background-image: url(/img/Tlaloc_cropped_1920x1080.webp);
+            background-attachment: fixed;  /* 背景固定，不随页面滚动 */
+            background-repeat: no-repeat;  /* 防止背景图片重复 */
+            background-size: cover;       /* 背景自适应大小，覆盖整个背景 */
+            background-position: center;   /* 背景居中显示 */
+        }  
+    </style>
+
+
+
+    <body>
+        <script src="/js/darkmode-js.min.js"></script>
+        
+        
+            
+                <div class="left-toc-container">
+                    <nav id="toc" class="bs-docs-sidebar"></nav>
+                </div>
+            
+        
+        <div class="paper">
+
+            
+
+            
+                <div class="shadow-drop-2-bottom paper-main">
+                    
+
+
+<div class="header">
+    <div class="header-container">
+        <style>
+            .header-img {
+                width: 56px;
+                height: auto;
+                object-fit: cover; /* 保持图片比例 */
+                transition: transform 0.3s ease-in-out; 
+                border-radius: 0; 
+            }
+            
+        </style>
+        <img 
+            alt="^-^" 
+            cache-control="max-age=86400" 
+            class="header-img" 
+            src="/img/avatar.png" 
+        />
+        <div class="header-content">
+            <a class="logo" href="/">Egor Izmaylov</a> 
+            <span class="description"></span> 
+        </div>
+    </div>
+    
+   
+    <ul class="nav">
+        
+            
+                <li><a href="/">首页</a></li>
+            
+        
+            
+                <li><a href="/list/">文章</a></li>
+            
+        
+            
+                <li><a href="/categories/">分类</a></li>
+            
+        
+            
+                <li><a href="/tags/">标签</a></li>
+            
+        
+            
+                <li><a href="/about/">关于</a></li>
+            
+        
+    </ul>
+</div>
+
+                    
+                    
+
+                    
+                    
+
+                    <!--说明是文章post页面-->
+                    
+                        <div class="post-main">
+    
+
+    
+        
+            
+                <div class="post-main-title" style="text-align: center;">
+                    红色笑声（Красный смех）
+                </div>
+            
+        
+      
+    
+
+    
+
+        
+            <div class="post-head-meta-center">
+        
+                
+                    <span>最近更新：2026-01-22</span> 
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                     <span>字数总计：2k</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span>阅读估时：8分钟</span>
+                
+                
+                    
+                        &nbsp; | &nbsp;
+                    
+                    <span id="busuanzi_container_page_pv">
+                        阅读量：<span id="busuanzi_value_page_pv"></span>次
+                    </span>
+                
+            </div>
+    
+
+    <div class="post-md">
+        
+            
+                
+            
+        
+        <div class=".article-gallery"><p>小说（节选）：</p>
+<p>——<strong>…… 他们人数众多。他们成百地死在深渊里，死在为健康聪慧之人设下的陷阱中，死在带刺的铁丝和捕兽夹的残骸上；他们介入正义、理智的战斗，像英雄一样勇往直前、无所畏惧地战斗；但他们常常误伤自己人。我喜欢他们。</strong>现在我只是有些精神错乱，所以才坐在这里跟您交谈，等理智彻底离我而去，我就会走到旷野中 —— 我会走到旷野中，我会吹响口哨 —— 我会吹响口哨，<strong>把这些勇士、这些无畏的骑士召集到我身边</strong>，然后向全世界宣战。我们会像一群欢快的人，带着旋律和歌声，走进城市和乡村，我们所到之处，一切都将变得火红，一切都将像火焰般旋转、舞动。那些没死的人会加入我们，我们这支勇敢的军队会像雪崩一样壮大，净化整个世界。谁说不能杀戮、焚烧和掠夺？……</p>
+<p>这个疯癫的医生已经在大声叫嚷了，他的喊声仿佛把那些胸膛和腹部被撕裂、眼睛被挖出、双腿被砍断的伤者从沉睡的痛苦中惊醒。病房里充满了悠长、凄惨、悲泣的呻吟声，四面八方都转过来苍白、蜡黄、憔悴的面孔，有的没了眼睛，有的模样怪异得如同从地狱归来。他们呻吟着，谛听着，一团黑色、不成形的阴影在敞开的门外小心翼翼地窥探着，这阴影升腾在世界之上，而这个疯癫的老人伸开双手叫嚷着：“谁说不能杀戮、焚烧和掠夺？我们要杀戮，要掠夺，要焚烧！一群欢快、无忧无虑的勇士 —— 我们要摧毁一切：他们的建筑，他们的大学和博物馆；一群快乐的年轻人，充满炽热的欢笑 —— 我们要在废墟上起舞。我要宣布疯人院就是我的祖国；<strong>我们的敌人和疯子就是所有那些还没疯的人；当我，伟大、无敌、快乐的我，成为世界的统治者，独一无二的主宰和君王 —— 那欢快的笑声将响彻宇宙！”</strong><br>——“红色的欢笑！” 我打断他喊道，“救命啊！我又听到红色的欢笑了！”<br>——“朋友们！” 医生继续对着那些呻吟着、面容可怖的影子说道，“朋友们！我们会有一轮红色的月亮和一轮红色的太阳，动物们也会有一身欢快的红色皮毛，我们要扒下那些惨白的人的皮，那些惨白的人的皮…… 你们尝过喝血的滋味吗？它有点黏，有点温热，但它是红色的，它带着那样欢快的红色的欢笑！……”</p>
+<br>
+
+<p>Красный смех (Леонид Андреев, 1904)</p>
+<p>— <strong>… Их много. Они умирают сотнями в пропастях, в волчьих ямах, приготовленных для здоровых и умных, на остатках колючей проволоки и кольев; они вмешиваются в правильные, разумные сражения и дерутся, как герои всегда впереди, всегда бесстрашные; но часто бьют своих. Они мне нравятся.</strong> Сейчас я только ещё схожу с ума и оттого сижу и разговариваю с вами, а когда разум окончательно покинет меня, я выйду в поле — я выйду в поле, я кликну клич — я кликну клич, <strong>я соберу вокруг себя этих храбрецов, этих рыцарей без страха</strong>, и объявлю войну всему миру. Весёлой толпой, с музыкой и песнями, мы войдём в города и села, и где мы пройдём, там всё будет красно, там всё будет кружиться и плясать, как огонь. Те, кто не умер, присоединятся к нам, и наша храбрая армия будет расти, как лавина, и очистит весь этот мир. Кто сказал, что нельзя убивать, жечь и грабить?..<br>Он уже кричал, этот сумасшедший доктор, и криком своим точно разбудил заснувшую боль тех, у кого были изорваны груди и животы, и вырваны глаза, и обрублены ноги. Широким, скребущим, плачущим стоном наполнилась палата, и отовсюду к нам повернулись бледные, жёлтые, изможденные лица, иные без глаз, иные в таком чудовищном уродстве, как будто из ада вернулись они. И они стонали и слушали, и в открытую дверь осторожно заглядывала чёрная бесформенная тень, поднявшаяся над миром, и сумасшедший старик кричал, простирая руки: — Кто сказал что нельзя убивать, жечь и грабить? Мы будем убивать, и грабить, и жечь. Весёлая, беспечная ватага храбрецов — мы разрушим всё: их здания, их университеты и музеи; вёселые ребята, полные огненного смеха,** — мы попляшем на развалинах.** Отечеством нашим я объявлю сумасшедший дом; <strong>врагами нашими и сумасшедшими — всех тех, кто ещё не сошёл с ума; и когда, великий, непобедимый, радостный, я воцарюсь над миром, единым его владыкою и господином, — какой весёлый смех огласит вселенную!</strong><br>— Красный смех! — закричал я, перебивая. — Спасите! Опять я слышу красный смех!<br>— Друзья! — продолжал доктор, обращаясь к стонущим, изуродованным теням. — Друзья! У нас будет красная луна и красное солнце, и у зверей будет красная весёлая шерсть, и мы сдерём кожу с тех, кто слишком бел, кто слишком бел… Вы не пробовали пить кровь? Она немного липкая, она немного теплая, но она красная, и у неё такой весёлый красный смех!..</p>
+<br>
+<br>
+
+<p>诗歌：</p>
+<p><strong>红色笑声</strong></p>
+<p>当离开自己的身躯，宛如在殊死搏斗中化作一片废墟，<br>目睹着那渐渐消逝、背离自身信仰的色调，<br>以坚如磐石、难以企及的骄傲覆盖每一片区域，<br>展开那孤独心灵与边界的旗帜。</p>
+<p>文明塑造了七月，黑色的焦油黏在黄色的指尖，<br>秋天已近在咫尺，沥青上躺着一只死去的蜜蜂。<br>那金属铸就的房屋不会哭泣，尽管岁月在其中悬荡已久，<br>它无比坚韧地与我一同悲戚，黑色的雪依旧纷纷飘坠……</p>
+<p>继续前行！<br>活下去，活得更久！<br>繁衍不息！</p>
+<p>红色的笑声在大地上四处游荡。</p>
+<p>越过雪野，越过田野，越过那些无助诗篇的罪孽，<br>越过疯狂思想与长矛的晶莹碎片，<br>远离宇宙的耻辱，远离为不朽肉身而战的勇士，<br>直面无辜的梦魇，直面屈辱与伤痛。</p>
+<p>文明塑造了七月，黑色的焦油黏在黄色的指尖，<br>秋天已近在咫尺，沥青上躺着一只死去的蜜蜂。<br>那金属铸就的房屋不会哭泣，尽管岁月在其中悬荡已久，<br>它无比坚韧地与我一同悲戚，黑色的雪依旧纷纷飘坠……</p>
+<p>继续前行！<br>活下去，活得更久！<br>繁衍不息！</p>
+<p>红色的笑声在大地上四处游荡 。</p>
+<br>
+
+<p><strong>Красный смех</strong> (Роман Неумоев, написано не позднее 1989)</p>
+<p>Покидая своё тело, как пожарище в смертном бою,<br>Наблюдая, как тональность, уходящую веру свою,<br>Покрывая площадями неприступную гордость — гранит,<br>Разворачивая знамя одиноких сердец и границ.</p>
+<p>Цивилизация построила июль, на жёлтых пальцах чёрная смола,<br>И близко осень, и на асфальте мёртвая пчела.<br>И металлический не плачет дом, хотя в нём вешаются столько лет,<br>Непобедимо сострадает мне, и продолжает падать чёрный снег…</p>
+<p>Дальше!<br>Живите дальше!<br>Живите дольше!<br>Рожайте больше!</p>
+<p>Красный смех гуляет по стране.</p>
+<p>За снегами, за полями, за грехом беззащитных стихов,<br>За хрустальными осколками безумных идей и штыков,<br>От вселенского позора, от бойцов за нетленную плоть,<br>От невинного кошмара, от обиды и боли назло.</p>
+<p>Цивилизация построила июль, на жёлтых пальцах чёрная смола,<br>И близко осень, и на асфальте мёртвая пчела.<br>И металлический не плачет дом, хотя в нём вешаются столько лет,<br>Непобедимо сострадает мне, и продолжает падать чёрный снег…</p>
+<p>Дальше!<br>Живите дальше!<br>Живите дольше!<br>Рожайте больше!</p>
+<p>Красный смех гуляет по стране.</p>
+<br>
+
+<p>第一段小说节选自列昂尼德·安德列耶夫的《红色笑声》，该部小说写作于1904年底，用以纪念契科夫（1904年去世）。它讲述了抽象战争的恐怖以及人类社会陷入混乱的故事。这部作品成为作家对日俄战争的回应，这场战争给他带来了毫无意义的残酷。</p>
+<p>这部小说在现代流行的原因来自罗曼·纽莫耶夫的同名诗歌（即下文）</p>
+<p>列昂尼德·安德列耶夫和罗曼·纽莫耶夫在1917年之后拥有了更多的共同点——都站在反布尔什维克党的立场上。罗曼·纽莫耶夫是鲜明的君主主义者和俄罗斯民族主义者，和极端组织关系密切；而列昂尼德·安德列耶夫在前半生热情歌颂革命，和托尔斯泰以及高尔基都多有往来；然而十月革命苏维埃承认芬兰独立之后他抛弃了一切革命主张，疯狂反对革命以及布尔什维克党。认为布尔什维克的革命让他失去了国家，给他眼中最伟大的斯拉夫民族（即俄罗斯人）带来深重灾难。</p>
+<br>
+
+<p style="text-align: right;">
+于2025年1月4日夜，成都
+</p></div>
+    </div>
+
+    <div class="post-meta">
+        <i>
+        
+            <span>2026-01-22</span>
+            
+                <span>该篇文章被 Egor Izmaylov</span>
+            
+            
+                <span>打上标签:
+                    
+                    
+                        <a href='/tags/%E7%BF%BB%E8%AF%91/'>
+                            翻译
+                        </a>
+                    
+                        <a href='/tags/%E8%AF%97%E6%AD%8C/'>
+                            诗歌
+                        </a>
+                    
+                        <a href='/tags/2025%E5%B9%B4/'>
+                            2025年
+                        </a>
+                    
+                        <a href='/tags/%E8%8B%8F%E8%81%94%E8%AF%9E%E7%94%9F%E7%9A%84%E5%89%8D%E5%A4%9C/'>
+                            苏联诞生的前夜
+                        </a>
+                    
+                        <a href='/tags/%E5%AE%89%E5%BE%B7%E5%88%97%E8%80%B6%E5%A4%AB/'>
+                            安德列耶夫
+                        </a>
+                    
+                        <a href='/tags/%E7%BA%BD%E8%8E%AB%E8%80%B6%E5%A4%AB/'>
+                            纽莫耶夫
+                        </a>
+                    
+                        <a href='/tags/%E6%96%87%E5%AD%97/'>
+                            文字
+                        </a>
+                    
+                </span>
+             
+             
+                <span>归为分类:
+                    
+                    
+                        <a href='/categories/%E5%88%97%E6%89%98%E5%A4%AB%E3%80%81%E8%8B%8F%E8%81%94%E5%92%8C%E5%9C%B0%E4%B8%8B%E6%9C%8B%E5%85%8B%E7%9A%84%E4%B8%80%E5%88%87/'>
+                            列托夫、苏联和地下朋克的一切
+                        </a>
+                    
+                </span>
+            
+        
+        </i>
+    </div>
+    <br>
+    
+    
+        
+            
+    
+            <div class="post-footer-pre-next">
+                
+                    <span>上一篇：<a href='/2026/01/22/%E5%85%B3%E4%BA%8E%E8%A0%95%E8%99%AB%EF%BC%88%D0%9F%D1%80%D0%BE-%D1%87%D0%B5%D1%80%D0%B2%D1%8F%D1%87%D0%BA%D0%BE%D0%B2%EF%BC%89/'>关于蠕虫（Про червячков）</a></span>
+                
+
+                
+                    <span class="post-footer-pre-next-last-span-right">下一篇：<a href="/2026/01/22/%E4%BA%B2%E7%88%B1%E7%9A%84%EF%BC%88%E6%B0%91%E8%B0%A3%EF%BC%89%D0%9B%D1%8E%D0%B1%D0%BE-%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%BD/">亲爱的（民谣）Любо (народн.)</a>
+                    </span>
+                
+            </div>
+    
+        
+    
+
+    
+        
+
+     
+</div>
+
+
+
+
+                    
+
+                    <div class="footer">
+    
+        <span> 
+            © 2024-2026 IDIPLab 
+
+            
+                
+
+            
+        </span>
+       
+    
+</div>
+
+
+
+<!--这是指一条线往下的内容-->
+<div class="footer-last">
+    
+            <span>🎷Саксофон играет🎷</span>
+            
+                <span class="footer-last-span-right"><i>本站由<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/index.html">Hexo</a>驱动｜使用<a target="_blank" rel="noopener" href="https://github.com/HiNinoJay/hexo-theme-A4">Hexo-theme-A4</a>主题</i></span>
+            
+    
+</div>
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!--目录-->
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
+        
+<script src="/js/toc.js"></script>
+
+    
+
+    
+<script src="/js/randomHeaderContent.js"></script>
+
+    <!--回到顶部按钮-->
+    
+        
+<script src="/js/returnToTop.js"></script>
+
+    
+
+    
+        
+<script src="/js/returnToLastPage.js"></script>
+
+    
+
+
+
+
+
+<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
+
+
+
+<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
+
+
+<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+     
+    if (typeof lightGallery !== "undefined") {
+        var options1 = {
+            selector: '.gallery-item',
+            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
+            thumbnail: true,          // 显示缩略图
+            zoom: true,               // 启用缩放功
+            rotate: true,             // 启用旋转功能能
+            autoplay: true,        // 启用自动播放功能
+            fullScreen: true,      // 启用全屏功能
+            pager: false, //页码,
+            zoomFromOrigin: true,   // 从原始位置缩放
+            actualSize: true,       // 启用查看实际大小的功能
+            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
+    }
+    
+</script>
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+
+                </div>
+            
+            
+                <!-- 回到顶部的按钮-->
+                <div class="progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+            
+                <!-- 返回的按钮-->
+                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
+                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+                    </svg>
+                </div>
+            
+    </body>
+</html>
+<script src="/js/emojiHandler.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        wrapEmojis('.paper');
+    });
+</script>
