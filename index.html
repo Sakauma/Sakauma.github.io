@@ -1,482 +1,1769 @@
-<!DOCTYPE html>
-<html lang="cn">
-    
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sakauma | Egor Izmaylov</title>
+    <link rel="icon" href="assets/img/avatar.png" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
     <style>
-        body
-        {
-            font-family: "Times New Roman", Helvetica, Tahoma, Arial,   "notoserifsc-medium", "Microsoft YaHei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif !important;
+      :root {
+        --ink: #101528;
+        --pit: #eaeae8;
+        --track: #f2fafc;
+        --track-2: #e7f7f3;
+        --lime: #b8ff36;
+        --cream: #323e74;
+        --mist: #5d668b;
+        --line: rgba(50, 62, 116, 0.18);
+        --blue: #7f688d;
+        --orange: #c95a74;
+      }
 
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--pit);
+        color: var(--cream);
+        font-family:
+          Arial,
+          "Microsoft YaHei",
+          "Noto Sans SC",
+          Helvetica,
+          sans-serif;
+        line-height: 1.45;
+      }
+
+      .js body.loading {
+        overflow: hidden;
+      }
+
+      body.menu-open {
+        overflow: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .preloader {
+        display: none;
+      }
+
+      .js .preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: grid;
+        place-items: center;
+        background: var(--lime);
+        color: var(--ink);
+        transition: transform 680ms cubic-bezier(0.76, 0, 0.24, 1), opacity 320ms ease;
+      }
+
+      .loaded .preloader {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-100%);
+      }
+
+      .loader-stack {
+        display: grid;
+        gap: 18px;
+        justify-items: center;
+      }
+
+      .loader-mark {
+        font-size: 8rem;
+        line-height: 0.8;
+        font-weight: 900;
+        animation: punch 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      }
+
+      .loader-bar {
+        width: min(360px, 72vw);
+        height: 8px;
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .loader-bar span {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: var(--ink);
+        transform-origin: left;
+        animation: loadbar 1150ms cubic-bezier(0.76, 0, 0.24, 1) both;
+      }
+
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 60;
+        width: 100%;
+        height: 4px;
+        pointer-events: none;
+      }
+
+      .scroll-progress span {
+        display: block;
+        width: 0%;
+        height: 100%;
+        background: var(--lime);
+        box-shadow: 0 0 18px rgba(200, 255, 0, 0.86);
+      }
+
+      .cursor-dot,
+      .cursor-ring {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 90;
+        pointer-events: none;
+        opacity: 0;
+        transform: translate3d(-50%, -50%, 0);
+      }
+
+      .cursor-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--lime);
+      }
+
+      .cursor-ring {
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(200, 255, 0, 0.9);
+        border-radius: 50%;
+        transition: width 180ms ease, height 180ms ease, border-color 180ms ease;
+      }
+
+      .cursor-active .cursor-ring {
+        width: 72px;
+        height: 72px;
+        border-color: rgba(244, 241, 232, 0.86);
+      }
+
+      .shell {
+        overflow: clip;
+        background:
+          linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 12.5% 100%,
+          var(--pit);
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        min-height: 72px;
+        padding: 14px 22px;
+        color: var(--cream);
+        background: rgba(242, 250, 252, 0.72);
+        border-bottom: 1px solid rgba(50, 62, 116, 0.12);
+        backdrop-filter: blur(18px);
+        mix-blend-mode: normal;
+        transform: translateY(-100%);
+        animation: nav-drop 760ms cubic-bezier(0.76, 0, 0.24, 1) 1020ms forwards;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 900;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        background: var(--lime);
+        color: var(--ink);
+        border-radius: 4px;
+        font-weight: 900;
+        transition: transform 240ms ease;
+      }
+
+      .brand:hover .brand-mark {
+        transform: rotate(-8deg) scale(1.08);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+      }
+
+      .nav-links a,
+      .social-list a {
+        position: relative;
+      }
+
+      .nav-links a::after,
+      .social-list a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -5px;
+        height: 2px;
+        background: var(--lime);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 260ms ease;
+      }
+
+      .nav-links a:hover::after,
+      .social-list a:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      .nav-action {
+        justify-self: end;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 0 12px;
+        background: var(--lime);
+        color: var(--ink);
+        border-radius: 4px;
+        font-weight: 900;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        transition: transform 200ms ease, box-shadow 200ms ease;
+      }
+
+      .nav-action:hover,
+      .arrow-link:hover,
+      .signup button:hover {
+        box-shadow: 0 0 24px rgba(200, 255, 0, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .menu-button {
+        display: none;
+        justify-self: end;
+        width: 38px;
+        height: 38px;
+        border: 1px solid currentColor;
+        border-radius: 4px;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      .menu-button span {
+        display: block;
+        width: 18px;
+        height: 2px;
+        margin: 4px auto;
+        background: currentColor;
+        transition: transform 220ms ease, opacity 220ms ease;
+      }
+
+      body.menu-open .menu-button span:first-child {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      body.menu-open .menu-button span:last-child {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      .mobile-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 19;
+        display: grid;
+        align-content: center;
+        gap: 22px;
+        padding: 84px 26px 32px;
+        background: var(--ink);
+        transform: translateY(-100%);
+        transition: transform 520ms cubic-bezier(0.76, 0, 0.24, 1);
+      }
+
+      body.menu-open .mobile-menu {
+        transform: translateY(0);
+      }
+
+      .mobile-menu a {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 14px;
+        font-size: 2rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 320ms ease, transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      body.menu-open .mobile-menu a {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      body.menu-open .mobile-menu a:nth-child(1) {
+        transition-delay: 120ms;
+      }
+
+      body.menu-open .mobile-menu a:nth-child(2) {
+        transition-delay: 170ms;
+      }
+
+      body.menu-open .mobile-menu a:nth-child(3) {
+        transition-delay: 220ms;
+      }
+
+      body.menu-open .mobile-menu a:nth-child(4) {
+        transition-delay: 270ms;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 720px;
+        display: grid;
+        align-items: end;
+        padding: 104px 22px 28px;
+        background: var(--track);
+        isolation: isolate;
+        --mx: 0;
+        --my: 0;
+      }
+
+      .hero-media {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        overflow: hidden;
+      }
+
+      .hero-media img {
+        transform: translate3d(calc(var(--mx) * -10px), calc(var(--my) * -8px), 0) scale(1.08);
+        transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1), filter 900ms ease;
+      }
+
+      .hero-media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(11, 13, 10, 0.1), rgba(11, 13, 10, 0.82) 78%),
+          linear-gradient(90deg, rgba(11, 13, 10, 0.58), transparent 62%);
+      }
+
+      .hero-stripe {
+        position: absolute;
+        top: 0;
+        right: 8%;
+        z-index: -1;
+        width: 190px;
+        height: 58%;
+        background: var(--lime);
+        transform: translate3d(calc(var(--mx) * 18px), calc(var(--my) * 10px), 0) skewX(-12deg);
+        opacity: 0.95;
+        mix-blend-mode: hard-light;
+        animation: stripe-sweep 1250ms cubic-bezier(0.76, 0, 0.24, 1) 520ms both;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) 340px;
+        gap: 34px;
+        align-items: end;
+        max-width: 1380px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--lime);
+        font-size: 0.86rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .hero h1,
+      .section-title,
+      .split-word {
+        margin: 0;
+        font-weight: 900;
+        line-height: 0.86;
+      }
+
+      .hero h1 {
+        max-width: 820px;
+        font-size: 8.8rem;
+        overflow: hidden;
+      }
+
+      [data-split] .char {
+        display: inline-block;
+        will-change: transform, opacity;
+      }
+
+      [data-split] .space {
+        width: 0.24em;
+      }
+
+      .js [data-split] .char {
+        opacity: 0;
+        transform: translateY(1.1em) rotate(8deg);
+        transition:
+          opacity 320ms ease,
+          transform 820ms cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(1080ms + var(--i) * 34ms);
+      }
+
+      .loaded [data-split] .char {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+      }
+
+      .hero-copy {
+        max-width: 680px;
+        margin: 22px 0 0;
+        color: var(--mist);
+        font-size: 1.05rem;
+        text-transform: none;
+      }
+
+      .race-card {
+        position: relative;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(11, 13, 10, 0.72);
+        backdrop-filter: blur(16px);
+        overflow: hidden;
+        transform-origin: center bottom;
+        transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+      }
+
+      .race-card::before,
+      .helmet-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.24) 50%, transparent 65%);
+        transform: translateX(-120%);
+        transition: transform 540ms ease;
+        pointer-events: none;
+      }
+
+      .race-card:hover {
+        border-color: rgba(200, 255, 0, 0.7);
+        box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
+        transform: translateY(-8px) rotate(-1deg);
+      }
+
+      .race-card:hover::before,
+      .helmet-card:hover::before {
+        transform: translateX(120%);
+      }
+
+      .race-card .label,
+      .race-card .place,
+      .race-card .meta {
+        padding: 16px;
+      }
+
+      .race-card .label {
+        color: var(--lime);
+        border-bottom: 1px solid var(--line);
+        font-size: 0.75rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .race-card .place {
+        font-size: 3.1rem;
+        line-height: 0.9;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .race-card .meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        border-top: 1px solid var(--line);
+        color: var(--mist);
+        font-size: 0.78rem;
+      }
+
+      .ticker {
+        display: flex;
+        gap: 18px;
+        overflow: hidden;
+        border-block: 1px solid var(--line);
+        background: var(--lime);
+        color: var(--ink);
+        font-weight: 900;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .ticker span {
+        display: inline-block;
+        padding: 10px 0;
+        animation: roll 18s linear infinite;
+      }
+
+      .ticker:hover span {
+        animation-play-state: paused;
+      }
+
+      @keyframes roll {
+        from {
+          transform: translateX(0);
         }
+        to {
+          transform: translateX(-100%);
+        }
+      }
+
+      .section {
+        padding: 92px 22px;
+      }
+
+      .section-inner {
+        max-width: 1380px;
+        margin: 0 auto;
+      }
+
+      .intro {
+        background: var(--track);
+      }
+
+      .intro-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 36px;
+        align-items: start;
+      }
+
+      .section-title {
+        font-size: 6.2rem;
+      }
+
+      .intro-copy {
+        margin: 0;
+        max-width: 820px;
+        color: var(--cream);
+        font-size: 2.15rem;
+        line-height: 1.02;
+        font-weight: 900;
+      }
+
+      .photo-strip {
+        margin-top: 56px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.8fr 1fr 0.7fr;
+        gap: 14px;
+        align-items: end;
+      }
+
+      .photo {
+        position: relative;
+        min-height: 260px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: var(--ink);
+        clip-path: inset(0);
+        transform: translateY(0);
+        transition:
+          clip-path 860ms cubic-bezier(0.76, 0, 0.24, 1),
+          transform 320ms ease,
+          border-color 320ms ease;
+      }
+
+      .photo img {
+        transform: translateY(var(--parallax, 0px)) scale(1.1);
+        transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), filter 320ms ease;
+      }
+
+      .photo:hover {
+        border-color: rgba(200, 255, 0, 0.7);
+        transform: translateY(-10px);
+      }
+
+      .photo:hover img {
+        filter: saturate(1.18) contrast(1.08);
+      }
+
+      .photo.tall {
+        min-height: 420px;
+      }
+
+      .photo.small {
+        min-height: 220px;
+      }
+
+      .photo::after {
+        content: attr(data-caption);
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        display: inline-block;
+        color: var(--lime);
+        font-size: 0.7rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        transform: translateY(0);
+        transition: transform 240ms ease;
+      }
+
+      .photo:hover::after {
+        transform: translateY(-6px);
+      }
+
+      .modes {
+        background: var(--ink);
+      }
+
+      .mode-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 560px;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .mode {
+        position: relative;
+        display: grid;
+        align-content: end;
+        min-height: 560px;
+        padding: 30px;
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      .mode::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, transparent 15%, rgba(11, 13, 10, 0.68) 82%),
+          radial-gradient(circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(200, 255, 0, 0.24), transparent 30%);
+        opacity: 0.86;
+        transition: opacity 300ms ease;
+      }
+
+      .mode + .mode {
+        border-left: 1px solid var(--line);
+      }
+
+      .mode img {
+        position: absolute;
+        inset: 0;
+        opacity: 0.68;
+        transform: translateY(var(--parallax, 0px)) scale(1.04);
+        transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 420ms ease;
+      }
+
+      .mode:hover img {
+        transform: translateY(var(--parallax, 0px)) scale(1.1);
+        opacity: 0.9;
+      }
+
+      .mode:hover::after {
+        opacity: 1;
+      }
+
+      .mode-content {
+        position: relative;
+        z-index: 2;
+        max-width: 520px;
+      }
+
+      .split-word {
+        font-size: 7rem;
+      }
+
+      .mode p {
+        max-width: 420px;
+        color: var(--mist);
+        text-transform: none;
+        font-size: 1rem;
+      }
+
+      .arrow-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 36px;
+        padding: 0 12px;
+        background: var(--lime);
+        color: var(--ink);
+        border-radius: 4px;
+        font-weight: 900;
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+      }
+
+      .stats {
+        background: var(--track);
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+
+      .stat {
+        min-height: 190px;
+        padding: 20px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        position: relative;
+        overflow: hidden;
+        transition: background 240ms ease;
+      }
+
+      .stat::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 3px;
+        background: var(--lime);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 440ms ease;
+      }
+
+      .stat:hover {
+        background: rgba(200, 255, 0, 0.05);
+      }
+
+      .stat:hover::after {
+        transform: scaleX(1);
+      }
+
+      .stat strong {
+        display: block;
+        color: var(--lime);
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: 18px;
+        color: var(--mist);
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .helmets {
+        background: var(--cream);
+        color: var(--ink);
+      }
+
+      .helmets .eyebrow {
+        color: #2b3c16;
+      }
+
+      .helmet-head {
+        display: grid;
+        grid-template-columns: 1fr 0.85fr;
+        gap: 36px;
+        align-items: end;
+      }
+
+      .helmet-head p {
+        margin: 0;
+        max-width: 590px;
+        color: #4f5549;
+        text-transform: none;
+        font-size: 1.05rem;
+      }
+
+      .helmet-rail {
+        margin-top: 46px;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(230px, 1fr);
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 16px;
+        scroll-snap-type: x proximity;
+      }
+
+      .helmet-card {
+        position: relative;
+        min-height: 350px;
+        padding: 18px;
+        border: 1px solid rgba(11, 13, 10, 0.16);
+        border-radius: 8px;
+        background: #ffffff;
+        scroll-snap-align: start;
+        overflow: hidden;
+        transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+      }
+
+      .helmet-card:hover {
+        border-color: rgba(11, 13, 10, 0.42);
+        box-shadow: 0 24px 48px rgba(11, 13, 10, 0.16);
+        transform: translateY(-12px);
+      }
+
+      .helmet-visual {
+        height: 210px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        background:
+          linear-gradient(135deg, transparent 0 48%, rgba(11, 13, 10, 0.08) 48% 52%, transparent 52%),
+          #e9eadf;
+        overflow: hidden;
+      }
+
+      .topic-mark {
+        display: grid;
+        place-items: center;
+        width: 160px;
+        height: 160px;
+        border: 8px solid #151515;
+        border-radius: 50%;
+        background:
+          linear-gradient(135deg, var(--helmet), var(--stripe)),
+          var(--helmet);
+        color: #151515;
+        font-size: 3.6rem;
+        font-weight: 900;
+        line-height: 1;
+        transition: transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .helmet-card:hover .topic-mark {
+        transform: translateY(-8px) rotate(-8deg) scale(1.06);
+      }
+
+      .helmet-shape {
+        width: 152px;
+        height: 116px;
+        border-radius: 62% 48% 44% 54% / 58% 44% 56% 40%;
+        background: var(--helmet);
+        border: 8px solid #151515;
+        box-shadow: inset 0 -20px rgba(0, 0, 0, 0.18);
+        position: relative;
+        transition: transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .helmet-card:hover .helmet-shape {
+        transform: translateY(-8px) rotate(-8deg) scale(1.06);
+      }
+
+      .helmet-shape::before {
+        content: "";
+        position: absolute;
+        left: 34px;
+        top: 34px;
+        width: 78px;
+        height: 28px;
+        border-radius: 999px;
+        background: #121512;
+        border: 4px solid rgba(255, 255, 255, 0.7);
+      }
+
+      .helmet-shape::after {
+        content: "";
+        position: absolute;
+        right: 8px;
+        bottom: 16px;
+        width: 54px;
+        height: 18px;
+        background: var(--stripe);
+        transform: skewX(-22deg);
+      }
+
+      .helmet-card h3 {
+        margin: 18px 0 4px;
+        font-size: 1.4rem;
+        line-height: 1;
+      }
+
+      .helmet-card p {
+        margin: 0;
+        color: #5f655a;
+        text-transform: none;
+        font-size: 0.9rem;
+      }
+
+      .store {
+        min-height: 610px;
+        display: grid;
+        align-items: end;
+        background:
+          linear-gradient(180deg, rgba(11, 13, 10, 0.15), rgba(11, 13, 10, 0.82)),
+          url("assets/img/Tlaloc_cropped_1920x1080.webp") center / cover;
+        background-position: center calc(50% + var(--store-shift, 0px));
+      }
+
+      .store-panel {
+        max-width: 1380px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 92px 22px;
+      }
+
+      .store h2 {
+        max-width: 780px;
+        margin: 0;
+        font-size: 6.2rem;
+        line-height: 0.9;
+        font-weight: 900;
+      }
+
+      .store p {
+        max-width: 600px;
+        color: var(--mist);
+        text-transform: none;
+        font-size: 1.02rem;
+      }
+
+      .socials {
+        background: var(--track-2);
+      }
+
+      .social-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        align-items: start;
+      }
+
+      .social-list {
+        display: grid;
+        border-top: 1px solid var(--line);
+      }
+
+      .social-list a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 76px;
+        border-bottom: 1px solid var(--line);
+        color: var(--cream);
+        font-size: 1.4rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        overflow: hidden;
+        transition: color 180ms ease, padding-left 220ms ease;
+      }
+
+      .social-list a:hover {
+        color: var(--lime);
+        padding-left: 14px;
+      }
+
+      .social-list span {
+        color: var(--lime);
+        text-transform: none;
+      }
+
+      .signup {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px;
+      }
+
+      .signup input {
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        color: var(--cream);
+        padding: 0 12px;
+        outline: 0;
+        text-transform: none;
+      }
+
+      .signup button {
+        border: 0;
+        min-height: 40px;
+        padding: 0 14px;
+        border-radius: 4px;
+        background: var(--lime);
+        color: var(--ink);
+        font-weight: 900;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: transform 200ms ease, box-shadow 200ms ease;
+      }
+
+      .footer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 22px;
+        align-items: end;
+        padding: 32px 22px;
+        background: var(--ink);
+        color: var(--mist);
+        font-size: 0.76rem;
+      }
+
+      .footer strong {
+        display: block;
+        max-width: 760px;
+        color: var(--cream);
+        font-size: 3.6rem;
+        line-height: 0.9;
+      }
+
+      .credit {
+        max-width: 560px;
+        margin-top: 16px;
+        color: #8f9688;
+        text-transform: none;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: translateY(0);
+        clip-path: inset(0);
+        transition:
+          opacity 620ms ease,
+          transform 760ms cubic-bezier(0.16, 1, 0.3, 1),
+          clip-path 760ms cubic-bezier(0.76, 0, 0.24, 1);
+      }
+
+      .js .reveal {
+        opacity: 0;
+        transform: translateY(38px);
+        clip-path: inset(0 0 100% 0);
+      }
+
+      .js .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+        clip-path: inset(0);
+      }
+
+      @keyframes punch {
+        from {
+          transform: scale(0.72) rotate(-8deg);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) rotate(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes loadbar {
+        from {
+          transform: scaleX(0);
+        }
+        to {
+          transform: scaleX(1);
+        }
+      }
+
+      @keyframes nav-drop {
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes stripe-sweep {
+        from {
+          clip-path: inset(0 0 100% 0);
+          transform: translate3d(70px, -80px, 0) skewX(-12deg);
+        }
+        to {
+          clip-path: inset(0);
+          transform: translate3d(calc(var(--mx) * 18px), calc(var(--my) * 10px), 0) skewX(-12deg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 1ms !important;
+        }
+
+        .js .reveal {
+          opacity: 1;
+          transform: none;
+          clip-path: inset(0);
+        }
+      }
+
+      @media (max-width: 980px) {
+        .nav {
+          grid-template-columns: 1fr auto;
+        }
+
+        .nav-links,
+        .nav-action {
+          display: none;
+        }
+
+        .menu-button {
+          display: block;
+        }
+
+        .hero {
+          min-height: 680px;
+        }
+
+        .hero-grid,
+        .intro-grid,
+        .helmet-head,
+        .social-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero h1 {
+          font-size: 5.6rem;
+        }
+
+        .race-card {
+          max-width: 420px;
+        }
+
+        .section-title,
+        .store h2 {
+          font-size: 4.2rem;
+        }
+
+        .intro-copy {
+          font-size: 1.72rem;
+        }
+
+        .photo-strip {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .mode-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .mode + .mode {
+          border-left: 0;
+          border-top: 1px solid var(--line);
+        }
+
+        .stat-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .section {
+          padding: 68px 16px;
+        }
+
+        .nav {
+          min-height: 62px;
+          padding: 10px 16px;
+        }
+
+        .brand span:last-child {
+          display: none;
+        }
+
+        .hero {
+          min-height: 640px;
+          padding: 84px 16px 22px;
+        }
+
+        .hero-stripe {
+          width: 94px;
+          right: 10%;
+          height: 44%;
+        }
+
+        .hero h1 {
+          font-size: 3.75rem;
+        }
+
+        .hero-copy {
+          font-size: 0.96rem;
+        }
+
+        .race-card .place {
+          font-size: 2.4rem;
+        }
+
+        .section-title,
+        .store h2 {
+          font-size: 3rem;
+        }
+
+        .intro-copy {
+          font-size: 1.28rem;
+        }
+
+        .photo-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .photo,
+        .photo.tall,
+        .photo.small {
+          min-height: 300px;
+        }
+
+        .mode,
+        .mode-grid {
+          min-height: 430px;
+        }
+
+        .split-word {
+          font-size: 4rem;
+        }
+
+        .stat-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stat {
+          min-height: 150px;
+        }
+
+        .stat strong {
+          font-size: 3.4rem;
+        }
+
+        .helmet-rail {
+          grid-auto-columns: 82%;
+        }
+
+        .store-panel {
+          padding: 74px 16px;
+        }
+
+        .social-list a {
+          font-size: 1.05rem;
+        }
+
+        .signup {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          grid-template-columns: 1fr;
+          padding: 28px 16px;
+        }
+
+        .footer strong {
+          font-size: 2.4rem;
+        }
+      }
     </style>
+  </head>
+  <body class="loading">
+    <div class="preloader" aria-hidden="true">
+      <div class="loader-stack">
+        <div class="loader-mark">S</div>
+        <div class="loader-bar"><span></span></div>
+      </div>
+    </div>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <div class="shell">
+      <header class="nav" aria-label="主导航">
+        <a class="brand" href="#top" aria-label="回到首页">
+          <span class="brand-mark">S</span>
+          <span>Sakauma</span>
+        </a>
+        <nav class="nav-links" aria-label="页面导航">
+          <a href="#writing">Writing</a>
+          <a href="#topics">Topics</a>
+          <a href="#archive">Archive</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a class="nav-action" href="https://github.com/Sakauma">GitHub</a>
+        <button class="menu-button" type="button" aria-label="打开菜单" aria-expanded="false">
+          <span></span>
+          <span></span>
+        </button>
+      </header>
 
-    <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
-    <meta name="description" content="" />
-    <meta name="hexo-theme-A4" content="v2.0.0" />
-    <link rel="alternate icon" type="image/webp" href="/img/avatar.png">
-    <title>Sakauma</title>
+      <nav class="mobile-menu" aria-label="移动端菜单">
+        <a href="#writing">Writing</a>
+        <a href="#about">About</a>
+        <a href="#topics">Topics</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-    
-        
-<link rel="stylesheet" href="/css/highlight/style1.css">
+      <main id="top">
+        <section class="hero">
+          <div class="hero-media" aria-hidden="true">
+            <img
+              src="assets/img/Tlaloc_cropped_1920x1080.webp"
+              alt=""
+            />
+          </div>
+          <div class="hero-stripe" aria-hidden="true"></div>
+          <div class="hero-grid">
+            <div>
+              <p class="eyebrow reveal">Egor Izmaylov / UESTC PhD</p>
+              <h1 class="reveal" data-split>SAKAUMA</h1>
+              <p class="hero-copy reveal">
+                Добро пожаловать в этот грёбаный мир. 我是 Egor Izmaylov，目前 UESTC PhD 在读。
+              </p>
+            </div>
+            <a class="race-card reveal" href="https://sakauma.github.io/list/" aria-label="查看文章列表">
+              <div class="label">Now writing</div>
+              <div class="place">70<br />POSTS</div>
+              <div class="meta">
+                <span>Hexo / A4</span>
+                <span>2024-2026</span>
+              </div>
+            </a>
+          </div>
+        </section>
 
-        
-<link rel="stylesheet" href="/css/reset.css">
-
-        
-<link rel="stylesheet" href="/css/markdown.css">
-
-        
-<link rel="stylesheet" href="/css/fonts.css">
- 
-         <!--注意：首页既不是post也不是page-->
-        
-        
-        
-<link rel="stylesheet" href="/css/ui.css">
- 
-        
-<link rel="stylesheet" href="/css/style.css">
-
-
-        
-            <!--返回顶部css-->
-            
-<link rel="stylesheet" href="/css/returnToTop.css">
-
-            
-<link rel="stylesheet" href="/css/unicons.css">
-
-        
-        
-            <!--目录-->
-            
-<link rel="stylesheet" href="/css/toc.css">
-
-        
-    
-
-    
-        
-<link rel="stylesheet" href="/css/returnToLastPage.css">
-
-    
-    
-   
-<link rel="stylesheet" href="/css/lightgallery-bundle.min.css">
-
-
-   
-        
-<link rel="stylesheet" href="/css/custom.css">
-
-    
-    <link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/LXGWWenKai-Regular/result.css' /> 
-<meta name="generator" content="Hexo 7.3.0">
-<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-</head>
-    
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-
-
-
-
-    
-    <style>
-        :root {
-            --waline-theme-color: #323e74; 
-            --waline-color: #323e74; 
-            --waline-border-color: #323e74; 
-            --waline-white: #323e74; 
-            --waline-bgcolor-light: #f2fafc;  
-        }
-        body {
-            color: #323e74;
-            background: #eaeae8;
-        }
-        .post-md code {
-            background: #e7f7f3;
-            color: #7f688d; 
-        }
-        .post-md pre, .post-md .highlight {
-            background: #e7f7f3;
-            color: #7f688d; 
-        }
-        pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
-            color: #323e74;
-        }
-        pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
-            color: #323e74;
-        }
-        .year-font-color {
-            color: #323e74 !important;
-        }
-        .wl-card span.wl-nick {
-            color: #323e74; 
-        }
-        .wl-card .wl-badge {
-            border: 1px solid #323e74;
-            color: #323e74; 
-        }
-        .wl-btn {
-            border: 1px solid #323e74; 
-            color:  #323e74;  
-        }
-        .wl-btn.primary {
-            color: #f2fafc; 
-        }
-        .wl-header label {
-            color: #323e74;
-        }
-        a {
-            color: #7f688d;
-        }
-
-        .post-md a {
-            color: #7f688d;
-        }
-
-        .nav li a {
-            color: #7f688d;
-        }
-
-        .archive-main a:link {
-            color: #7f688d;
-        }
-        .archive-main a:visited {
-            color: #767c7c; 
-        }
-
-        .archive li span {
-            color: #323e74;
-        }
-
-        .post-main-title {
-            color: #323e74;
-        }
-
-        .post-md h1,
-        .post-md h2,
-        .post-md h3,
-        .post-md h4,
-        .post-md h5,
-        .post-md h6 {
-            color: #323e74;
-        }
-
-        [data-waline] p {
-            color: #323e74;
-        }
-        [data-waline] a {
-            color: #323e74;
-        } 
-        .wl-sort li.active {
-            color: #323e74;
-        }
-
-        .wl-card .wl-meta>span {
-            background: #f2fafc;
-        }
-
-        .paper {
-            background: #eaeae8;
-        }
-
-        .index-main {
-            background: #f2fafc;
-        }
-
-        .paper-main {
-            background: #f2fafc;
-        }
-
-        .wl-panel {
-            background: #f2fafc;
-        }
-
-        .archive li:nth-child(odd) {
-            background: #f2fafc;
-            ;
-        }
-
-        .archive li:nth-child(even) {
-            background: #f2fafc;
-        }
-
-        .post-md table tr:nth-child(odd) td {
-            background: #f2fafc;
-        }
-
-        .post-md table tr:nth-child(even) td {
-            background: #f2fafc;
-        }
-
-    
-        .progress-wrap::after {
-            color: #323e74; /* 箭头的颜色 */
-        }
-        .progress-wrap svg.progress-circle path {
-	        stroke: #323e74; /* 边框的颜色 */
-        }
-        .progress-wrap::before {
-	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
-         }
-
-        .return-to-last-progress-wrap::after {
-            color: #323e74; /* 箭头的颜色 */
-        }
-        .return-to-last-progress-wrap svg.progress-circle path {
-	        stroke: #323e74; /* 边框的颜色 */
-        }
-        .return-to-last-progress-wrap::before {
-	        background-image: linear-gradient(298deg, #7f688d, #7f688d); /* 鼠标滑过的箭头颜色 */
-         }
-
-         .left-toc-container::-webkit-scrollbar-thumb {
-            background-color: #323e74; /* 设置滚动条拖动块的颜色 */
-        }
-
-        .bs-docs-sidebar .nav>.active>a,
-        .bs-docs-sidebar .nav>li>a:hover,
-        .bs-docs-sidebar .nav>li>a:focus {
-            color: #7f688d;
-            border-left-color: #7f688d;
-        }
-        .bs-docs-sidebar .nav>li>a {
-            color:  #323e74;
-        }
-    </style>
-
-    
-    <style>
-        body {
-            background-image: url(/img/Tlaloc_cropped_1920x1080.webp);
-            background-attachment: fixed;  /* 背景固定，不随页面滚动 */
-            background-repeat: no-repeat;  /* 防止背景图片重复 */
-            background-size: cover;       /* 背景自适应大小，覆盖整个背景 */
-            background-position: center;   /* 背景居中显示 */
-        }
-        .paper {
-            background-image: url(/img/Tlaloc_cropped_1920x1080.webp);
-            background-attachment: fixed;  /* 背景固定，不随页面滚动 */
-            background-repeat: no-repeat;  /* 防止背景图片重复 */
-            background-size: cover;       /* 背景自适应大小，覆盖整个背景 */
-            background-position: center;   /* 背景居中显示 */
-        }  
-    </style>
-
-
-
-    <body>
-        <script src="/js/darkmode-js.min.js"></script>
-        
-        
-            
-        
-        <div class="paper">
-
-            
-
-            
-                <div class="shadow-drop-2-bottom index-main">
-                    <!-- 这个header就是特指index的头部 -->
-
-
-
-    <div style="text-align: left;">
-
-        <a class="index-logo" href="/">Egor Izmaylov</a>
-        <div style="margin-bottom: 12px;"> 
-            
-                
-                    首页
-                
-            
-                
-                    &nbsp / &nbsp<a href="/list/">文章</a>
-                
-            
-                
-                    &nbsp / &nbsp<a href="/categories/">分类</a>
-                
-            
-                
-                    &nbsp / &nbsp<a href="/tags/">标签</a>
-                
-            
-                
-                    &nbsp / &nbsp<a href="/about/">关于</a>
-                
-            
+        <div class="ticker" aria-hidden="true">
+          <span>Добро пожаловать / 我爱一切不该爱的东西 / 翻译 / 诗歌 / 苏联地下朋克 / </span>
+          <span>Добро пожаловать / 我爱一切不该爱的东西 / 翻译 / 诗歌 / 苏联地下朋克 / </span>
+          <span>Добро пожаловать / 我爱一切不该爱的东西 / 翻译 / 诗歌 / 苏联地下朋克 / </span>
         </div>
+
+        <section class="section intro" id="about">
+          <div class="section-inner">
+            <div class="intro-grid">
+              <div>
+                <p class="eyebrow reveal">Index note</p>
+                <h2 class="section-title reveal">不该<br />爱的东西</h2>
+              </div>
+              <p class="intro-copy reveal">
+                我爱一切不该爱的东西。这里收着翻译、诗歌、苏联地下朋克，以及一些不太适合被整理成标准履历的精神碎片。
+              </p>
+            </div>
+            <div class="photo-strip">
+              <figure class="photo tall reveal" data-caption="Avatar">
+                <img
+                  src="assets/img/avatar.png"
+                  alt="Sakauma avatar"
+                />
+              </figure>
+              <figure class="photo small reveal" data-caption="A4 background">
+                <img
+                  src="assets/img/Tlaloc_cropped_1920x1080.webp"
+                  alt="Tlaloc themed background"
+                />
+              </figure>
+              <figure class="photo reveal" data-caption="Anime table">
+                <img
+                  src="assets/img/anime-table.jpg"
+                  alt="动画生涯个人喜好表"
+                />
+              </figure>
+              <figure class="photo tall reveal" data-caption="Sakauma.github.io">
+                <img
+                  src="assets/img/Tlaloc_cropped_1920x1080.webp"
+                  alt="Sakauma site background detail"
+                />
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section class="modes" id="writing">
+          <div class="mode-grid">
+            <a class="mode" href="https://sakauma.github.io/list/">
+              <img
+                src="assets/img/Tlaloc_cropped_1920x1080.webp"
+                alt="Sakauma blog background"
+              />
+              <div class="mode-content reveal">
+                <h2 class="split-word">文章<br />列表</h2>
+                <p>70 篇文章，从列托夫、苏联和地下朋克，到诗歌、未来主义和翻译。</p>
+                <span class="arrow-link">View posts</span>
+              </div>
+            </a>
+            <a class="mode" id="about-link" href="https://sakauma.github.io/about/">
+              <img
+                src="assets/img/anime-table.jpg"
+                alt="动画喜好表"
+              />
+              <div class="mode-content reveal">
+                <h2 class="split-word">关于<br />我</h2>
+                <p>Bilibili、GitHub、邮箱，以及一点很不适合写在名片上的自述。</p>
+                <span class="arrow-link">View about</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="section stats" id="stats">
+          <div class="section-inner">
+            <p class="eyebrow reveal">Site dashboard</p>
+            <div class="stat-grid">
+              <div class="stat reveal">
+                <strong data-count="70">70</strong>
+                <span>Posts</span>
+              </div>
+              <div class="stat reveal">
+                <strong data-count="25">25</strong>
+                <span>Tags</span>
+              </div>
+              <div class="stat reveal">
+                <strong data-count="1" data-pad="2">01</strong>
+                <span>Category</span>
+              </div>
+              <div class="stat reveal">
+                <strong data-count="2024">2024</strong>
+                <span>Since</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section helmets" id="topics">
+          <div class="section-inner">
+            <div class="helmet-head">
+              <div>
+                <p class="eyebrow reveal">Tags & categories</p>
+                <h2 class="section-title reveal">主题</h2>
+              </div>
+              <p class="reveal">
+                发布仓库里有 25 个标签；最常出现的气味是翻译、诗歌、民防、未来主义、苏联的晚年，以及那些边缘而明亮的文本。
+              </p>
+            </div>
+            <div class="helmet-rail" aria-label="Topic collection">
+              <article class="helmet-card reveal" style="--helmet: #c8ff00; --stripe: #121512">
+                <div class="helmet-visual"><div class="topic-mark">译</div></div>
+                <h3>翻译</h3>
+                <p>Russian texts, poems and songs moved into Chinese.</p>
+              </article>
+              <article class="helmet-card reveal" style="--helmet: #63b4ff; --stripe: #c8ff00">
+                <div class="helmet-visual"><div class="topic-mark">诗</div></div>
+                <h3>诗歌</h3>
+                <p>Lines that refuse to behave like ordinary prose.</p>
+              </article>
+              <article class="helmet-card reveal" style="--helmet: #ff7a34; --stripe: #111111">
+                <div class="helmet-visual"><div class="topic-mark">民</div></div>
+                <h3>民防</h3>
+                <p>Гражданская Оборона, Letov, Soviet underground punk.</p>
+              </article>
+              <article class="helmet-card reveal" style="--helmet: #f4f1e8; --stripe: #c8ff00">
+                <div class="helmet-visual"><div class="topic-mark">未</div></div>
+                <h3>未来主义</h3>
+                <p>Russian futurists and fragments from a harsher century.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="store" id="archive">
+          <div class="store-panel">
+            <p class="eyebrow reveal">Archive</p>
+            <h2 class="reveal">2026<br />TEXTS</h2>
+            <p class="reveal">
+              最新文章包括《子夜时分，升起了漆黑的太阳……》《搪瓷便盆》《在俄罗斯，分开意味着永别》等。
+            </p>
+            <a class="arrow-link reveal" href="https://sakauma.github.io/archives/">Open archive</a>
+          </div>
+        </section>
+
+        <section class="section socials" id="contact">
+          <div class="section-inner social-grid">
+            <div>
+              <p class="eyebrow reveal">Contact</p>
+              <h2 class="section-title reveal">找到<br />我</h2>
+            </div>
+            <div>
+              <div class="social-list reveal">
+                <a href="https://space.bilibili.com/9348725" aria-label="Bilibili">Bilibili <span>9348725</span></a>
+                <a href="https://github.com/Sakauma" aria-label="GitHub">GitHub <span>Sakauma</span></a>
+                <a href="mailto:ajax_mao@163.com" aria-label="Email">Email <span>ajax_mao@163.com</span></a>
+                <a href="https://sakauma.github.io/about/" aria-label="About">About <span>page</span></a>
+              </div>
+              <form class="signup reveal">
+                <input type="email" placeholder="ajax_mao@163.com" aria-label="邮箱地址" />
+                <button type="submit">Copy vibe</button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>
+          <strong>САКСОФОН ИГРАЕТ.</strong>
+          <p class="credit">
+            Sakauma / Egor Izmaylov. UESTC PhD. 内容来自本地 Hexo 工程和 Sakauma.github.io 发布仓库，
+            视觉保留诺里斯式大字、滚动、遮罩和交互动效。
+          </p>
+        </div>
+        <div>© 2024-2026 IDIPLab</div>
+      </footer>
     </div>
 
-                    <div class="post-main">
-    
-    
-       
-       
-       
-       
-            <div class="post-md">
-                <div class=".article-gallery"><h2 id="Добро-пожаловать-в-этот-грёбаный-мир"><a href="#Добро-пожаловать-в-этот-грёбаный-мир" class="headerlink" title="Добро пожаловать в этот грёбаный мир!"></a>Добро пожаловать в этот грёбаный мир!</h2><p>我是 Egor Izmaylov，目前UESTC MSc在读。</p>
-<p><a href="/img/[神奇海螺][动画生涯个人喜好表].jpg" class="gallery-item" style="box-shadow: none;"> <img src="/img/[神奇海螺][动画生涯个人喜好表].jpg" style="display: block; margin: 0 auto; max-width: 100%; border-radius: 0;"></a></p>
-<p>我爱一切不该爱的东西。</p>
-</div>
-            </div>
-    
-</div>
-                    
-                    <div class="footer">
-    
-</div>
+    <script>
+      const body = document.body;
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const menuButton = document.querySelector(".menu-button");
+      const menuLinks = document.querySelectorAll(".mobile-menu a");
+      const progressBar = document.querySelector(".scroll-progress span");
+      const hero = document.querySelector(".hero");
+      const store = document.querySelector(".store");
+      const parallaxImages = document.querySelectorAll(".photo img, .mode img");
 
+      document.querySelectorAll("[data-split]").forEach((node) => {
+        const text = node.textContent;
+        node.setAttribute("aria-label", text);
+        node.textContent = "";
+        [...text].forEach((letter, index) => {
+          const span = document.createElement("span");
+          span.className = letter === " " ? "char space" : "char";
+          span.style.setProperty("--i", index);
+          span.textContent = letter === " " ? "\u00a0" : letter;
+          node.appendChild(span);
+        });
+      });
 
-    <div class="footer-last-without-line">
-        
-        <span>本站总字数：25.5k</span>
-        
-        
-            <div class="footer-last-span-right">
-        
-        
-                <span id="busuanzi_container_site_pv" class="">
-                    本站总访问：<span id="busuanzi_value_site_pv"></span>次
-                </span>
-            </div>
-        
-    </div>
+      const finishLoading = () => {
+        body.classList.add("loaded");
+        body.classList.remove("loading");
+      };
 
+      if (reduceMotion) {
+        finishLoading();
+      } else {
+        window.addEventListener("load", () => {
+          window.setTimeout(finishLoading, 900);
+        });
+      }
 
-<!--这是指一条线往下的内容-->
-<div class="footer-last">
-    
-         
-            
-                
-                <span class="index-footer-last-span">Email:<a href="mailto:ajax_mao@163.com" title="ajax_mao@163.com">ajax_mao@163.com</a></span>
-            
-        
-    
-</div>
+      menuButton.addEventListener("click", () => {
+        const open = body.classList.toggle("menu-open");
+        menuButton.setAttribute("aria-expanded", String(open));
+      });
 
+      menuLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          body.classList.remove("menu-open");
+          menuButton.setAttribute("aria-expanded", "false");
+        });
+      });
 
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+      document.querySelector(".signup").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const button = event.currentTarget.querySelector("button");
+          button.textContent = "Copied";
+          event.currentTarget.reset();
+          window.setTimeout(() => {
+          button.textContent = "Copy vibe";
+        }, 1600);
+      });
 
-    <!--目录-->
-    
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript" ></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript" ></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js" type="text/javascript" ></script>
-        
-<script src="/js/toc.js"></script>
+      const revealNodes = [...document.querySelectorAll(".reveal")];
+      revealNodes.forEach((node, index) => {
+        node.style.transitionDelay = `${Math.min(index % 7, 6) * 70}ms`;
+        if (reduceMotion) {
+          node.classList.add("is-visible");
+        }
+      });
 
-    
+      const countNodes = [...document.querySelectorAll("[data-count]")];
+      const countedNodes = new WeakSet();
 
-    
-<script src="/js/randomHeaderContent.js"></script>
+      if (reduceMotion) {
+        countNodes.forEach((node) => {
+          const pad = Number(node.dataset.pad || 0);
+          node.textContent = String(Number(node.dataset.count)).padStart(pad, "0");
+        });
+      }
 
-    <!--回到顶部按钮-->
-    
-        
-<script src="/js/returnToTop.js"></script>
+      const isInView = (node, amount = 0.9) => {
+        const rect = node.getBoundingClientRect();
+        return rect.top < window.innerHeight * amount;
+      };
 
-    
+      const revealVisible = () => {
+        revealNodes.forEach((node) => {
+          if (!node.classList.contains("is-visible") && isInView(node)) {
+            node.classList.add("is-visible");
+          }
+        });
 
-    
-        
-<script src="/js/returnToLastPage.js"></script>
+        countNodes.forEach((node) => {
+          if (!countedNodes.has(node) && isInView(node, 0.82)) {
+            countedNodes.add(node);
+            animateCount(node);
+          }
+        });
+      };
 
-    
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+      );
 
+      if (!reduceMotion) {
+        revealNodes.forEach((node) => observer.observe(node));
+      }
 
+      function animateCount(node) {
+        const target = Number(node.dataset.count);
+        const pad = Number(node.dataset.pad || 0);
+        const duration = 1100;
+        const startedAt = performance.now();
 
-
-
-<script src="/js/lightgallery/lightgallery.umd.min.js"></script>
-
-
-
-<script src="/js/lightgallery/plugins/lg-thumbnail.umd.min.js"></script>
-
-
-
-<script src="/js/lightgallery/plugins/lg-fullscreen.umd.min.js"></script>
-
-
-<script src="/js/lightgallery/plugins/lg-autoplay.umd.min.js"></script>
-
-
-<script src="/js/lightgallery/plugins/lg-zoom.umd.min.js"></script>
-
-
-<script src="/js/lightgallery/plugins/lg-rotate.umd.min.js"></script>
-
-
-<script src="/js/lightgallery/plugins/lg-paper.umd.min.js"></script>
-
-
-
-
-<script type="text/javascript">
-     
-    if (typeof lightGallery !== "undefined") {
-        var options1 = {
-            selector: '.gallery-item',
-            plugins: [lgThumbnail, lgFullscreen, lgAutoplay, lgZoom, lgRotate, lgPager], // 启用插件
-            thumbnail: true,          // 显示缩略图
-            zoom: true,               // 启用缩放功
-            rotate: true,             // 启用旋转功能能
-            autoplay: true,        // 启用自动播放功能
-            fullScreen: true,      // 启用全屏功能
-            pager: false, //页码,
-            zoomFromOrigin: true,   // 从原始位置缩放
-            actualSize: true,       // 启用查看实际大小的功能
-            enableZoomAfter: 300,    // 延迟缩放，确保图片加载完成后可缩放
+        const tick = (now) => {
+          const t = Math.min((now - startedAt) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          const value = Math.round(target * eased);
+          node.textContent = String(value).padStart(pad, "0");
+          if (t < 1) requestAnimationFrame(tick);
         };
-        lightGallery(document.getElementsByClassName('.article-gallery')[0], options1); // 修复选择器
-    }
-    
-</script>
 
+        requestAnimationFrame(tick);
+      }
 
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+      document.querySelectorAll(".mode").forEach((mode) => {
+        mode.addEventListener("pointermove", (event) => {
+          const rect = mode.getBoundingClientRect();
+          mode.style.setProperty("--spot-x", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+          mode.style.setProperty("--spot-y", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+        });
+      });
 
-                </div>
-            
-            
-                <!-- 回到顶部的按钮-->
-                <div class="progress-wrap shadow-drop-2-bottom">
-                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
-                    </svg>
-                </div>
-            
-            
-                <!-- 返回的按钮-->
-                <div class="return-to-last-progress-wrap shadow-drop-2-bottom">
-                    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-                        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
-                    </svg>
-                </div>
-            
-    </body>
+      if (!reduceMotion) {
+        hero.addEventListener("pointermove", (event) => {
+          const rect = hero.getBoundingClientRect();
+          const mx = (event.clientX - rect.left) / rect.width - 0.5;
+          const my = (event.clientY - rect.top) / rect.height - 0.5;
+          hero.style.setProperty("--mx", mx.toFixed(3));
+          hero.style.setProperty("--my", my.toFixed(3));
+        });
+
+        hero.addEventListener("pointerleave", () => {
+          hero.style.setProperty("--mx", "0");
+          hero.style.setProperty("--my", "0");
+        });
+      }
+
+      let ticking = false;
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+      const updateScrollEffects = () => {
+        revealVisible();
+
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = max > 0 ? (window.scrollY / max) * 100 : 0;
+        progressBar.style.width = `${progress}%`;
+
+        if (!reduceMotion) {
+          parallaxImages.forEach((image) => {
+            const rect = image.parentElement.getBoundingClientRect();
+            const distance = window.innerHeight / 2 - (rect.top + rect.height / 2);
+            image.style.setProperty("--parallax", `${clamp(distance * 0.035, -22, 22).toFixed(1)}px`);
+          });
+
+          const storeRect = store.getBoundingClientRect();
+          store.style.setProperty("--store-shift", `${clamp((window.innerHeight / 2 - storeRect.top) * 0.035, -28, 28)}px`);
+        }
+
+        ticking = false;
+      };
+
+      const requestScrollEffects = () => {
+        if (!ticking) {
+          requestAnimationFrame(updateScrollEffects);
+          ticking = true;
+        }
+      };
+
+      window.addEventListener("scroll", requestScrollEffects, { passive: true });
+      window.addEventListener("resize", requestScrollEffects);
+      updateScrollEffects();
+
+      const finePointer = window.matchMedia("(pointer: fine)").matches;
+      if (finePointer && !reduceMotion) {
+        const dot = document.querySelector(".cursor-dot");
+        const ring = document.querySelector(".cursor-ring");
+        let ringX = 0;
+        let ringY = 0;
+        let mouseX = 0;
+        let mouseY = 0;
+
+        window.addEventListener("pointermove", (event) => {
+          mouseX = event.clientX;
+          mouseY = event.clientY;
+          dot.style.opacity = "1";
+          ring.style.opacity = "1";
+          dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+        });
+
+        const moveRing = () => {
+          ringX += (mouseX - ringX) * 0.18;
+          ringY += (mouseY - ringY) * 0.18;
+          ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+          requestAnimationFrame(moveRing);
+        };
+        moveRing();
+
+        document.querySelectorAll("a, button, input").forEach((node) => {
+          node.addEventListener("pointerenter", () => body.classList.add("cursor-active"));
+          node.addEventListener("pointerleave", () => body.classList.remove("cursor-active"));
+        });
+      }
+    </script>
+  </body>
 </html>
-<script src="/js/emojiHandler.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        wrapEmojis('.paper');
-    });
-</script>
