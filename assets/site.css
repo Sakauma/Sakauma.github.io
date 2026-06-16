@@ -204,13 +204,106 @@ body.menu-open .menu-button {
 
 .js .reveal {
   opacity: 1 !important;
-  transform: translateY(22px);
+  transform: translateY(var(--reveal-offset, 22px));
   clip-path: inset(0) !important;
   transition-delay: var(--reveal-delay, 0ms);
 }
 
 .js .reveal.is-visible {
+  transform: none !important;
+}
+
+.js .reveal[data-reveal-mode="rise"] {
+  --reveal-offset: 24px;
+}
+
+.js .reveal[data-reveal-mode="rise"].is-visible {
   transform: translateY(0);
+}
+
+.js .reveal[data-reveal-mode="left"] {
+  transform: translateX(-16px) translateY(12px);
+}
+
+.js .reveal[data-reveal-mode="left"].is-visible {
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="right"] {
+  transform: translateX(16px) translateY(12px);
+}
+
+.js .reveal[data-reveal-mode="right"].is-visible {
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="drift"] {
+  --reveal-offset: 30px;
+  transform: translate3d(var(--reveal-drift-x, 0), var(--reveal-drift-y, var(--reveal-offset)), 0);
+}
+
+.js .reveal[data-reveal-mode="drift"].is-visible {
+  --reveal-drift-y: 0px;
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="slice"] {
+  transform: translateY(10px);
+  clip-path: inset(0 0 100% 0);
+}
+
+.js .reveal[data-reveal-mode="slice"].is-visible {
+  clip-path: inset(0);
+  transform: translateY(0);
+}
+
+.js .reveal[data-reveal-mode="glide"] {
+  transform: translateY(26px) rotateX(-6deg);
+}
+
+.js .reveal[data-reveal-mode="glide"].is-visible {
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="stagger"] {
+  transform: translateY(18px) scale(0.99);
+}
+
+.js .reveal[data-reveal-mode="stagger"].is-visible {
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="zoom"] {
+  transform: scale(0.98);
+}
+
+.js .reveal[data-reveal-mode="zoom"].is-visible {
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="micro"] {
+  transform: translateY(10px);
+}
+
+.js .reveal[data-reveal-mode="micro"].is-visible {
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="fade"] {
+  --reveal-offset: 0px;
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="wipe"] {
+  clip-path: inset(0 100% 0 0);
+  transform: none;
+}
+
+.js .reveal[data-reveal-mode="wipe"].is-visible {
+  clip-path: inset(0 0 0 0);
+  transition:
+    transform var(--motion-mid) cubic-bezier(0.16, 1, 0.3, 1),
+    clip-path var(--motion-mid) cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 [data-split] .char {
@@ -1371,6 +1464,47 @@ body.command-open .command-shell {
   filter: drop-shadow(0 0 22px rgba(184, 255, 54, 0.48));
 }
 
+.route-transition .route-progress-track {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(380px, 45vw);
+  min-height: 7px;
+  border: 1px solid rgba(16, 21, 40, 0.34);
+  background: rgba(16, 21, 40, 0.25);
+  overflow: hidden;
+  clip-path: inset(0 0 0 0);
+  opacity: 0.9;
+}
+
+.route-transition .route-progress-track::before,
+.route-transition .route-progress-track::after,
+.route-transition .route-progress-track b {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.route-transition .route-progress-track::before {
+  background: linear-gradient(90deg, transparent, rgba(242, 250, 252, 0.35), transparent);
+  transform: translateX(-110%);
+  animation: none;
+}
+
+.route-transition .route-progress-track b {
+  width: 34%;
+  background: var(--ink);
+  animation: none;
+}
+
+.route-transition .route-progress-track::after {
+  pointer-events: none;
+  background: rgba(184, 255, 54, 0.24);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: none;
+}
+
 .route-transition span,
 .route-transition strong {
   position: relative;
@@ -1401,6 +1535,45 @@ body.command-open .command-shell {
   font-weight: 900;
 }
 
+.route-transition small {
+  position: relative;
+  z-index: 1;
+  width: max-content;
+  color: rgba(16, 21, 40, 0.84);
+  background: rgba(242, 250, 252, 0.78);
+  border: 1px solid rgba(16, 21, 40, 0.22);
+  border-radius: 3px;
+  padding: 3px 8px;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.route-transition small::before {
+  content: "Mode: Route";
+}
+
+.route-transition[data-route-mode="Read"] small::before {
+  content: "Mode: Read";
+}
+
+.route-transition[data-route-mode="Posts"] small::before {
+  content: "Mode: Posts";
+}
+
+.route-transition[data-route-mode="Archive"] small::before {
+  content: "Mode: Archive";
+}
+
+.route-transition[data-route-mode="Tags"] small::before,
+.route-transition[data-route-mode="Categories"] small::before {
+  content: "Mode: Filter";
+}
+
+.route-transition[data-route-mode="About"] small::before {
+  content: "Mode: Profile";
+}
+
 body.route-leaving .route-transition {
   transform: translate3d(0, 0, 0) skewX(0);
 }
@@ -1411,6 +1584,18 @@ body.route-leaving .route-transition::before {
 
 body.route-leaving .route-transition::after {
   animation: route-dark-swipe 420ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+body.route-leaving .route-transition .route-progress-track::before {
+  animation: route-progress-wave 640ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+body.route-leaving .route-transition .route-progress-track b {
+  animation: route-progress-fill 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+body.route-leaving .route-transition .route-progress-track::after {
+  animation: route-progress-edge 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Commercial polish layer: shared rhythm, speed texture, and richer micro-interactions. */
@@ -2948,6 +3133,38 @@ body.hud-ready .motion-hud {
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes route-progress-wave {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(110%);
+  }
+}
+
+@keyframes route-progress-fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 68%;
+  }
+}
+
+@keyframes route-progress-edge {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 0.2;
   }
 }
 

@@ -468,6 +468,8 @@
   routeTransition.innerHTML = `
     <span>SAKAUMA</span>
     <strong>Route</strong>
+    <small></small>
+    <i class="route-progress-track" aria-hidden="true"><b></b></i>
   `;
   body.appendChild(routeTransition);
 
@@ -502,6 +504,16 @@
     return last.replace(/[-_]+/g, " ").slice(0, 34) || "Route";
   };
 
+  const routeKind = (url) => {
+    if (/^\/\d{4}\//.test(url.pathname)) return "Read";
+    if (url.pathname.includes("/list/")) return "Posts";
+    if (url.pathname.includes("/archives/")) return "Archive";
+    if (url.pathname.includes("/tags/")) return "Tags";
+    if (url.pathname.includes("/categories/")) return "Categories";
+    if (url.pathname.includes("/about/")) return "About";
+    return "Route";
+  };
+
   startRouteTransition = (url) => {
     if (!url) return;
 
@@ -515,6 +527,7 @@
 
     closeMenu();
     closeCommand();
+    routeTransition.dataset.routeMode = routeKind(url);
     routeTransition.querySelector("strong").textContent = routeLabel(url);
     body.classList.add("route-leaving");
 
@@ -575,13 +588,57 @@
     });
   });
 
-  const revealNodes = [...document.querySelectorAll(".reveal")];
-  revealNodes.forEach((node, index) => {
+  let revealNodes = [];
+  let revealObserver = null;
+
+  const pickRevealMode = (node) => {
+    if (node.dataset.revealMode) return node.dataset.revealMode;
+    if (node.matches(".route-readout, .motion-hud, .hero-readout, .article-dock")) return "fade";
+    if (node.matches(".post-card, .topic-card, .signal-card, .helmet-card, .race-card, .mode")) return "drift";
+    if (node.matches("section, .content-panel, .article-shell, .about-layout, .post-list, .topic-list")) return "wipe";
+    if (node.matches(".hero h1, .section-title, .split-word, .page-hero h1")) return "slice";
+    if (node.matches("h1, h2, h3, .post-card h3, .topic-card h3, .signal-card strong, .helmet-card h3")) return "glide";
+    if (node.matches(".hero-copy, .intro-copy, .signal-copy p, .page-hero-copy")) return "left";
+    if (node.matches(".social-list a, .arrow-link, .pill-link, .pager a, .article-tags a")) return "stagger";
+    if (node.matches("img, .photo img, .hero-media img, .page-hero-media img, .mode img, .signal-card img")) return "zoom";
+    if (node.matches(".eyebrow, .stat strong")) return "micro";
+    return "rise";
+  };
+
+  const resolveRevealOffset = (mode) => {
+    if (mode === "micro") return "8px";
+    if (mode === "fade") return "0px";
+    return "22px";
+  };
+
+  const registerRevealNode = (node, index = revealNodes.length) => {
+    if (!node.classList.contains("reveal") || node.dataset.revealRegistered) return;
+    const mode = pickRevealMode(node);
+    node.dataset.revealMode = mode;
+    node.dataset.revealRegistered = "true";
     node.style.setProperty("--reveal-delay", `${Math.min(index % 7, 6) * 55}ms`);
+    node.style.setProperty("--reveal-offset", resolveRevealOffset(mode));
+    revealNodes.push(node);
     if (reduceMotion) {
       node.classList.add("is-visible");
+      return;
     }
-  });
+
+    if (revealObserver) {
+      revealObserver.observe(node);
+    }
+  };
+
+  const registerRevealNodes = (nodes) => {
+    nodes.forEach((node, index) => {
+      registerRevealNode(node, index);
+    });
+    if (revealObserver) {
+      revealNodes = [...document.querySelectorAll(".reveal[data-reveal-registered='true']")];
+    }
+  };
+
+  registerRevealNodes(document.querySelectorAll(".reveal"));
 
   const countNodes = [...document.querySelectorAll("[data-count]")];
   const countedNodes = new WeakSet();
@@ -644,7 +701,7 @@
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
     );
-
+    revealObserver = observer;
     revealNodes.forEach((node) => observer.observe(node));
   } else {
     revealNodes.forEach((node) => node.classList.add("is-visible"));
@@ -668,6 +725,7 @@
       <span>Mode<strong>${postCount ? "List" : topicCount ? "Index" : "Read"}</strong></span>
     `;
     contentHead.appendChild(readout);
+    registerRevealNode(readout, revealNodes.length);
   }
 
   let articleDock = null;
