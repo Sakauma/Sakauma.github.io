@@ -9,6 +9,7 @@
   const progressBar = document.querySelector(".scroll-progress span");
   const hero = document.querySelector(".hero");
   const store = document.querySelector(".store");
+  const postBody = document.querySelector(".post-body");
   const parallaxImages = document.querySelectorAll(".photo img, .mode img, .page-hero-media img, .signal-card img");
   const loaderStack = document.querySelector(".loader-stack");
 
@@ -204,6 +205,51 @@
     revealNodes.forEach((node) => node.classList.add("is-visible"));
   }
 
+  const compactNumber = (value) => String(value).padStart(2, "0");
+
+  const contentHead = document.querySelector(".content-head");
+  if (contentHead && !contentHead.querySelector(".route-readout")) {
+    contentHead.classList.add("has-route-readout");
+    const postCount = document.querySelectorAll(".post-card").length;
+    const topicCount = document.querySelectorAll(".topic-card").length;
+    const pageTitle = document.querySelector(".page-hero h1")?.textContent?.trim() || document.title.split("|")[0].trim();
+    const primaryCount = postCount || topicCount || document.querySelectorAll(".pill-link, .article-tags a").length;
+    const readout = document.createElement("div");
+    readout.className = "route-readout reveal";
+    readout.setAttribute("aria-label", "Page status");
+    readout.innerHTML = `
+      <span>Route<strong>${pageTitle || "Sakauma"}</strong></span>
+      <span>Items<strong>${compactNumber(primaryCount)}</strong></span>
+      <span>Mode<strong>${postCount ? "List" : topicCount ? "Index" : "Read"}</strong></span>
+    `;
+    contentHead.appendChild(readout);
+  }
+
+  let articleDock = null;
+  let articleDockValue = null;
+
+  if (postBody) {
+    articleDock = document.createElement("aside");
+    articleDock.className = "article-dock";
+    articleDock.setAttribute("aria-label", "Article reading controls");
+    articleDock.innerHTML = `
+      <div class="article-dock-head">
+        <span>Reading</span>
+        <strong>00%</strong>
+      </div>
+      <div class="article-dock-track" aria-hidden="true"><span></span></div>
+      <div class="article-dock-actions">
+        <button type="button" data-scroll-top>Top</button>
+        <a href="/list/">Posts</a>
+      </div>
+    `;
+    document.body.appendChild(articleDock);
+    articleDockValue = articleDock.querySelector("strong");
+    articleDock.querySelector("[data-scroll-top]")?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
+  }
+
   const sectionLabel = (section) => {
     if (section.dataset.navLabel) return section.dataset.navLabel;
     const id = section.id || "";
@@ -319,6 +365,16 @@
 
     if (progressBar) {
       progressBar.style.width = progressValue;
+    }
+
+    if (postBody && articleDock) {
+      const rect = postBody.getBoundingClientRect();
+      const total = Math.max(rect.height - window.innerHeight * 0.45, 1);
+      const read = clamp(window.innerHeight * 0.32 - rect.top, 0, total);
+      const articleProgress = Math.round((read / total) * 100);
+      const articleProgressValue = `${articleProgress}%`;
+      root.style.setProperty("--article-progress", articleProgressValue);
+      if (articleDockValue) articleDockValue.textContent = articleProgressValue.padStart(3, "0");
     }
 
     if (hero) {
