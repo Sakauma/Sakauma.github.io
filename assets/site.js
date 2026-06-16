@@ -719,6 +719,7 @@
     root.style.setProperty("--scroll-velocity-px", Math.round(smoothedVelocity * 1000));
     root.style.setProperty("--scroll-speed-shift", `${(speedRatio * 18).toFixed(3)}px`);
     root.style.setProperty("--scroll-speed-opacity", (speedRatio * 0.1).toFixed(3));
+    root.style.setProperty("--ticker-pace", `${(8 + (1 - speedRatio) * 26).toFixed(2)}s`);
     root.style.setProperty("--speed-layer-duration", `${Math.round(340 - 150 * speedRatio)}ms`);
     body.classList.toggle("scroll-fast", speedRatio > 0.25);
 
