@@ -8,7 +8,7 @@
     />
     <meta name="description" content="Sakauma 页面未找到" />
     <title>404 - Sakauma</title>
-    <link rel="alternate icon" type="image/webp" href="/img/avatar.png" />
+    <link rel="alternate icon" type="image/webp" href="/assets/img/avatar.png" />
     <link rel="stylesheet" href="/assets/site.css?v=20260616-rt5" />
   </head>
   <body class="site-page loading">
@@ -20,24 +20,26 @@
       </div>
     </div>
 
-    <div class="nav-wrap">
-      <nav class="nav">
+    <header class="nav" aria-label="Main navigation">
         <a class="brand" href="/" aria-label="返回首页">
           <span class="brand-mark" aria-hidden="true">S</span>
           <span>SAKAUMA</span>
         </a>
-        <div class="nav-links" role="navigation" aria-label="主导航">
+        <nav class="nav-links" role="navigation" aria-label="主导航">
           <a href="/">Home</a>
           <a href="/list/">Posts</a>
-          <a href="/about/">About</a>
           <a href="/archives/">Archive</a>
-        </div>
+          <a href="/tags/">Tags</a>
+          <a href="/categories/">Categories</a>
+          <a href="/about/">About</a>
+        </nav>
+        <a class="nav-action" href="/#contact">Contact</a>
         <button class="menu-button" type="button" aria-label="打开菜单" aria-expanded="false">
           <span></span>
           <span></span>
           <span></span>
         </button>
-      </nav>
+      </header>
       <nav class="mobile-menu" aria-label="移动端菜单">
         <a href="/">Home</a>
         <a href="/list/">Posts</a>
@@ -46,7 +48,6 @@
         <a href="/tags/">Tags</a>
         <a href="/categories/">Categories</a>
       </nav>
-    </div>
 
     <main class="site-main">
       <section class="page-hero" aria-labelledby="error-title">
@@ -88,6 +89,13 @@
         </div>
       </section>
     </main>
+    <footer class="footer">
+      <div>
+        <strong>САКСОФОН ИГРАЕТ.</strong>
+        <p>404 page loaded. The site uses unified visual system and UESTC PhD homepage style.</p>
+      </div>
+      <div>© 2024-2026 IDIPLab</div>
+    </footer>
 
     <script src="/assets/site.js?v=20260616-rt5" defer></script>
   </body>
