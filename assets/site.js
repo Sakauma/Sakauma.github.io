@@ -780,7 +780,7 @@
   if (finePointer && !reduceMotion) {
     document
       .querySelectorAll(
-        ".nav-action, .arrow-link, .race-card, .helmet-card, .post-card, .topic-card, .signal-card, .social-list a, .pill-link, .pager a, .article-tags a, .mode"
+        ".brand-mark, .nav-action, .arrow-link, .race-card, .helmet-card, .post-card, .topic-card, .signal-card, .social-list a, .pill-link, .pager a, .article-tags a, .mode"
       )
       .forEach((node) => {
         node.addEventListener("pointermove", (event) => {

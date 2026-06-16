@@ -1537,6 +1537,8 @@ body.scrolled .brand-mark {
 .article-tags a {
   --mag-x: 0px;
   --mag-y: 0px;
+  --mag-tilt-x: 0deg;
+  --mag-tilt-y: 0deg;
 }
 
 .nav-action,
@@ -1544,7 +1546,8 @@ body.scrolled .brand-mark {
 .pill-link,
 .pager a,
 .article-tags a {
-  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  transform: translate3d(var(--mag-x), var(--mag-y), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
+  transition: transform 260ms ease, box-shadow 260ms ease;
 }
 
 .arrow-link,
@@ -1568,6 +1571,21 @@ body.scrolled .brand-mark {
 .nav-action:hover::before,
 .nav-action:focus-visible::before {
   transform: translateX(125%);
+}
+
+.nav-action:hover,
+.nav-action:focus-visible,
+.arrow-link:hover,
+.arrow-link:focus-visible,
+.pill-link:hover,
+.pill-link:focus-visible,
+.pager a:hover,
+.pager a:focus-visible,
+.article-tags a:hover,
+.article-tags a:focus-visible,
+.post-category a:hover,
+.post-category a:focus-visible {
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 2px), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
 }
 
 .hero {
@@ -1942,14 +1960,14 @@ body.scrolled .brand-mark {
   padding: 30px;
   overflow: hidden;
   isolation: isolate;
-  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  transform: translate3d(var(--mag-x), var(--mag-y), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
   transition: transform 260ms ease;
   will-change: transform;
 }
 
 .mode:hover,
 .mode:focus-visible {
-  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 6px), 0) skewX(-1deg);
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 6px), 0) skewX(-1deg) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
 }
 
 .mode::after {
@@ -2377,12 +2395,12 @@ body.scrolled .brand-mark {
 .topic-card,
 .helmet-card,
 .profile-card {
-  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  transform: translate3d(var(--mag-x), var(--mag-y), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
   will-change: transform;
 }
 
 .race-card:hover {
-  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 8px), 0) rotate(-1deg);
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 8px), 0) rotateZ(-1deg) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
 }
 
 .post-card {
@@ -2413,7 +2431,7 @@ body.scrolled .brand-mark {
 
 .post-card:hover,
 .post-card:focus-within {
-  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 5px), 0) skewX(-0.45deg);
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 5px), 0) skewX(-0.45deg) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
 }
 
 .post-card:hover::before,
@@ -2446,7 +2464,7 @@ body.scrolled .brand-mark {
 
 .topic-card:hover,
 .topic-card:focus-within {
-  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 5px), 0);
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 5px), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
 }
 
 .topic-card:hover::after,
@@ -2456,11 +2474,17 @@ body.scrolled .brand-mark {
 }
 
 .helmet-card:hover {
-  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 12px), 0) rotate(-0.7deg);
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 12px), 0) rotateZ(-0.7deg) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
 }
 
 .social-list a {
-  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  transform: translate3d(var(--mag-x), var(--mag-y), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.social-list a:hover,
+.social-list a:focus-visible {
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 2px), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
 }
 
 .social-list a::before {
@@ -2560,7 +2584,7 @@ body.scrolled .brand-mark {
   color: var(--track);
   overflow: hidden;
   isolation: isolate;
-  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  transform: translate3d(var(--mag-x), var(--mag-y), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
   transition: transform 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
 }
 
@@ -2605,7 +2629,7 @@ body.scrolled .brand-mark {
 .signal-card:focus-visible {
   border-color: rgba(184, 255, 54, 0.72);
   box-shadow: 0 26px 80px rgba(0, 0, 0, 0.28);
-  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 8px), 0);
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 8px), 0) rotateX(var(--mag-tilt-x)) rotateY(var(--mag-tilt-y));
 }
 
 .signal-card:hover img,
