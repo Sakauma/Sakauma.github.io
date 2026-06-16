@@ -13,6 +13,7 @@
   const postBody = document.querySelector(".article-shell .post-body");
   const parallaxImages = document.querySelectorAll(".photo img, .mode img, .page-hero-media img, .signal-card img");
   const loaderStack = document.querySelector(".loader-stack");
+  const shellRoot = document.querySelector(".shell, .site-page");
 
   const loaderPhrases = ["Sakauma online", "Motion archive", "UESTC PhD", "Text field ready"];
   let loaderTimer = null;
@@ -61,6 +62,26 @@
     body.classList.add("loaded");
     body.classList.remove("loading");
   };
+
+  const wireSkipToContent = () => {
+    const main = document.querySelector("main");
+    const existing = document.getElementById("skip-to-content");
+    const root = shellRoot || body;
+
+    if (!main) return;
+    if (!main.id) main.id = "top";
+
+    if (existing) return;
+
+    const skipLink = document.createElement("a");
+    skipLink.id = "skip-to-content";
+    skipLink.className = "skip-link";
+    skipLink.href = "#top";
+    skipLink.textContent = "Skip to content";
+    root.prepend(skipLink);
+  };
+
+  wireSkipToContent();
 
   const normalizeRoute = (path) => {
     const cleaned = (path || "/").split(/[?#]/)[0].replace(/\/index\.html$/i, "/").replace(/\/$/, "/");
@@ -124,6 +145,8 @@
 
   menuLinks.forEach((link) => {
     link.addEventListener("click", closeMenu);
+    const linkIndex = Array.prototype.indexOf.call(menuLinks, link);
+    link.style.setProperty("--menu-link-delay", `${72 + linkIndex * 44}ms`);
   });
 
   window.addEventListener("keydown", (event) => {
@@ -718,7 +741,7 @@
   if (finePointer && !reduceMotion) {
     document
       .querySelectorAll(
-        ".nav-action, .arrow-link, .race-card, .helmet-card, .post-card, .topic-card, .signal-card, .social-list a, .pill-link, .pager a, .article-tags a"
+        ".nav-action, .arrow-link, .race-card, .helmet-card, .post-card, .topic-card, .signal-card, .social-list a, .pill-link, .pager a, .article-tags a, .mode"
       )
       .forEach((node) => {
         node.addEventListener("pointermove", (event) => {

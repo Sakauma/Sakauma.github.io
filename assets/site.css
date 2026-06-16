@@ -429,17 +429,43 @@ body.menu-open .mobile-menu {
 .site-page .mobile-menu a {
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(242, 250, 252, 0.3);
+  --menu-link-delay: 0ms;
   font-size: clamp(1.6rem, 11vw, 2.7rem);
   font-weight: 900;
   text-transform: uppercase;
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 320ms ease, transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    opacity 320ms ease var(--menu-link-delay),
+    transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1) var(--menu-link-delay);
 }
 
 body.menu-open .mobile-menu a {
   opacity: 1 !important;
   transform: translateY(0) !important;
+}
+
+.skip-link {
+  position: fixed;
+  left: 12px;
+  top: 10px;
+  z-index: 120;
+  padding: 8px 12px;
+  border: 1px solid #0f1524;
+  border-radius: 4px;
+  background: #f2fafc;
+  color: #0d111a;
+  font-size: 0.85rem;
+  font-weight: 900;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transform: translateY(-180%);
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 .site-main {
@@ -1442,6 +1468,7 @@ body.scrolled .brand-mark {
 .helmet-card,
 .social-list a,
 .profile-card,
+.mode,
 .pill-link,
 .pager a,
 .article-tags a {
@@ -1845,6 +1872,14 @@ body.scrolled .brand-mark {
   padding: 30px;
   overflow: hidden;
   isolation: isolate;
+  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  transition: transform 260ms ease;
+  will-change: transform;
+}
+
+.mode:hover,
+.mode:focus-visible {
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) - 6px), 0) skewX(-1deg);
 }
 
 .mode::after {
@@ -2974,6 +3009,7 @@ body.hud-ready .motion-hud {
   .social-list a,
   .arrow-link,
   .nav-action,
+  .mode,
   .hero-readout {
     --mag-x: 0px !important;
     --mag-y: 0px !important;
