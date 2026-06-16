@@ -3,12 +3,40 @@
   const root = document.documentElement;
   const body = document.body;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const captureMode = navigator.webdriver || new URLSearchParams(window.location.search).has("capture");
   const menuButton = document.querySelector(".menu-button");
   const menuLinks = document.querySelectorAll(".mobile-menu a");
   const progressBar = document.querySelector(".scroll-progress span");
   const hero = document.querySelector(".hero");
   const store = document.querySelector(".store");
-  const parallaxImages = document.querySelectorAll(".photo img, .mode img, .page-hero-media img");
+  const parallaxImages = document.querySelectorAll(".photo img, .mode img, .page-hero-media img, .signal-card img");
+  const loaderStack = document.querySelector(".loader-stack");
+
+  const loaderPhrases = ["Sakauma online", "Motion archive", "UESTC PhD", "Text field ready"];
+  let loaderTimer = null;
+
+  if (loaderStack) {
+    const copy = document.createElement("div");
+    const phrase = document.createElement("span");
+    const code = document.createElement("div");
+    copy.className = "loader-copy";
+    code.className = "loader-code";
+    phrase.textContent = loaderPhrases[0];
+    code.textContent = "A4 / archive / live";
+    copy.appendChild(phrase);
+    loaderStack.append(copy, code);
+
+    if (!reduceMotion) {
+      let phraseIndex = 0;
+      loaderTimer = window.setInterval(() => {
+        phraseIndex = (phraseIndex + 1) % loaderPhrases.length;
+        phrase.textContent = loaderPhrases[phraseIndex];
+        phrase.style.animation = "none";
+        phrase.offsetHeight;
+        phrase.style.animation = "";
+      }, 520);
+    }
+  }
 
   document.querySelectorAll("[data-split]").forEach((node) => {
     if (node.querySelector(".char")) return;
@@ -27,11 +55,12 @@
   });
 
   const finishLoading = () => {
+    if (loaderTimer) window.clearInterval(loaderTimer);
     body.classList.add("loaded");
     body.classList.remove("loading");
   };
 
-  if (reduceMotion) {
+  if (reduceMotion || captureMode) {
     finishLoading();
   } else {
     window.addEventListener(
@@ -175,6 +204,59 @@
     revealNodes.forEach((node) => node.classList.add("is-visible"));
   }
 
+  const sectionLabel = (section) => {
+    if (section.dataset.navLabel) return section.dataset.navLabel;
+    const id = section.id || "";
+    const labels = {
+      top: "Start",
+      about: "Index",
+      writing: "Writing",
+      stats: "Stats",
+      signal: "Signal",
+      topics: "Topics",
+      archive: "Archive",
+      contact: "Contact",
+    };
+    if (labels[id]) return labels[id];
+    return id.replace(/[-_]+/g, " ") || "Section";
+  };
+
+  const trackedSections = [];
+  const hudLinks = new Map();
+  const main = document.querySelector("main");
+  const heroSection = document.querySelector(".hero");
+  const pageSections = [...document.querySelectorAll("main > section[id]")];
+
+  if (main?.id && heroSection && pageSections.length >= 4) {
+    trackedSections.push({ id: main.id, element: heroSection, label: sectionLabel(main) });
+    pageSections.forEach((section) => {
+      trackedSections.push({ id: section.id, element: section, label: sectionLabel(section) });
+    });
+
+    const hud = document.createElement("nav");
+    const title = document.createElement("span");
+    hud.className = "motion-hud";
+    hud.setAttribute("aria-label", "Page sections");
+    title.className = "motion-hud-title";
+    title.textContent = "Route";
+    hud.appendChild(title);
+
+    trackedSections.forEach(({ id, label }) => {
+      const link = document.createElement("a");
+      const span = document.createElement("span");
+      link.href = `#${id}`;
+      link.dataset.hudTarget = id;
+      link.setAttribute("aria-label", `Jump to ${label}`);
+      span.className = "motion-hud-label";
+      span.textContent = label;
+      link.appendChild(span);
+      hudLinks.set(id, link);
+      hud.appendChild(link);
+    });
+
+    body.appendChild(hud);
+  }
+
   document.querySelectorAll(".mode").forEach((mode) => {
     mode.addEventListener("pointermove", (event) => {
       const rect = mode.getBoundingClientRect();
@@ -243,6 +325,31 @@
       const rect = hero.getBoundingClientRect();
       const heroProgress = clamp(-rect.top / Math.max(rect.height, 1), 0, 1);
       root.style.setProperty("--hero-progress", heroProgress.toFixed(3));
+      body.classList.toggle("hud-ready", heroProgress > 0.28);
+    }
+
+    if (trackedSections.length) {
+      const anchor = window.innerHeight * 0.42;
+      let active = trackedSections[0];
+      let bestDistance = Number.POSITIVE_INFINITY;
+
+      trackedSections.forEach((item) => {
+        const rect = item.element.getBoundingClientRect();
+        const distance = Math.abs(rect.top - anchor);
+        if (rect.bottom > 80 && rect.top < window.innerHeight - 80 && distance < bestDistance) {
+          active = item;
+          bestDistance = distance;
+        }
+      });
+
+      body.dataset.section = active.id;
+      hudLinks.forEach((link, id) => {
+        if (id === active.id) {
+          link.setAttribute("aria-current", "true");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
     }
 
     if (!reduceMotion) {
