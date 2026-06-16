@@ -9,7 +9,7 @@
   const progressBar = document.querySelector(".scroll-progress span");
   const hero = document.querySelector(".hero");
   const store = document.querySelector(".store");
-  const postBody = document.querySelector(".post-body");
+  const postBody = document.querySelector(".article-shell .post-body");
   const parallaxImages = document.querySelectorAll(".photo img, .mode img, .page-hero-media img, .signal-card img");
   const loaderStack = document.querySelector(".loader-stack");
 

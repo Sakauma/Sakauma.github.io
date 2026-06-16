@@ -360,7 +360,8 @@ body.menu-open .menu-button span:last-child {
 }
 
 body.menu-open .mobile-menu {
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) !important;
+  transition: none;
 }
 
 .site-page .mobile-menu a {
@@ -375,8 +376,8 @@ body.menu-open .mobile-menu {
 }
 
 body.menu-open .mobile-menu a {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 .site-main {
