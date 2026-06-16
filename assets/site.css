@@ -1199,6 +1199,89 @@ body.command-open .command-shell {
   text-transform: uppercase;
 }
 
+.route-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 86;
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  padding: clamp(28px, 6vw, 72px);
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--lime);
+  color: var(--ink);
+  transform: translate3d(-110%, 0, 0) skewX(-10deg);
+  transform-origin: left center;
+  transition: transform 340ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.route-transition::before,
+.route-transition::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.route-transition::before {
+  background:
+    repeating-linear-gradient(112deg, transparent 0 42px, rgba(16, 21, 40, 0.13) 43px 45px, transparent 46px 92px),
+    linear-gradient(90deg, rgba(16, 21, 40, 0.18), transparent 42%);
+  transform: translate3d(-42px, 0, 0);
+  opacity: 0;
+}
+
+.route-transition::after {
+  left: auto;
+  width: 20vw;
+  min-width: 120px;
+  background: var(--ink);
+  transform: translateX(102%) skewX(-12deg);
+}
+
+.route-transition span,
+.route-transition strong {
+  position: relative;
+  z-index: 1;
+  width: min-content;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.route-transition span {
+  font-size: clamp(4.8rem, 17vw, 13rem);
+  line-height: 0.72;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.route-transition strong {
+  display: inline-flex;
+  width: max-content;
+  max-width: min(620px, 92vw);
+  border: 1px solid rgba(16, 21, 40, 0.34);
+  border-radius: 4px;
+  padding: 8px 12px;
+  background: rgba(242, 250, 252, 0.22);
+  font-size: clamp(0.72rem, 2vw, 0.92rem);
+  line-height: 1.1;
+  font-weight: 900;
+}
+
+body.route-leaving .route-transition {
+  transform: translate3d(0, 0, 0) skewX(0);
+}
+
+body.route-leaving .route-transition::before {
+  animation: route-speed-lines 420ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+body.route-leaving .route-transition::after {
+  animation: route-dark-swipe 420ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
 /* Commercial polish layer: shared rhythm, speed texture, and richer micro-interactions. */
 :root {
   --scroll-progress: 0%;
@@ -1238,7 +1321,6 @@ body.command-open .command-shell {
   animation: none !important;
   transform: translateY(0) !important;
   transition:
-    transform 520ms cubic-bezier(0.76, 0, 0.24, 1),
     min-height 240ms ease,
     padding 240ms ease,
     background 240ms ease,
@@ -1253,6 +1335,13 @@ body.command-open .command-shell {
 
 .js body.loaded .nav {
   transform: translateY(0) !important;
+}
+
+body.loaded .nav,
+body:not(.loading) .nav {
+  top: 0 !important;
+  animation: none !important;
+  transform: translate3d(0, 0, 0) !important;
 }
 
 .nav::before {
@@ -1890,6 +1979,26 @@ body.hud-ready .motion-hud {
   }
 }
 
+@keyframes route-speed-lines {
+  from {
+    opacity: 0;
+    transform: translate3d(-72px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes route-dark-swipe {
+  from {
+    transform: translateX(120%) skewX(-12deg);
+  }
+  to {
+    transform: translateX(-540%) skewX(-12deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1934,10 +2043,17 @@ body.hud-ready .motion-hud {
   .command-overlay::before,
   .command-shell,
   .command-result,
+  .route-transition,
+  .route-transition::before,
+  .route-transition::after,
   .article-dock {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;
+  }
+
+  .route-transition {
+    display: none !important;
   }
 }
 
@@ -2209,6 +2325,7 @@ body.hud-ready .motion-hud {
   .menu-button,
   .command-button,
   .command-overlay,
+  .route-transition,
   .motion-hud,
   .hero-readout,
   .route-readout,

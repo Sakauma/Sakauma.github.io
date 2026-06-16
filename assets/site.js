@@ -134,6 +134,9 @@
   let commandVisibleResults = [];
   let commandActiveIndex = 0;
   let commandPreviousFocus = null;
+  let startRouteTransition = (url) => {
+    window.location.href = url.href;
+  };
 
   const staticCommandEntries = [
     { title: "Home", href: "/", type: "Route", meta: "Sakauma / Egor Izmaylov" },
@@ -270,7 +273,15 @@
       title.textContent = entry.title;
       meta.textContent = entry.meta || entry.href;
       link.append(kicker, title, meta);
-      link.addEventListener("click", closeCommand);
+      link.addEventListener("click", (event) => {
+        const url = new URL(link.href, window.location.href);
+        if (url.origin === window.location.origin) {
+          event.preventDefault();
+          startRouteTransition(url);
+        } else {
+          closeCommand();
+        }
+      });
       commandResults.appendChild(link);
     });
 
@@ -320,7 +331,10 @@
       setCommandActive(commandActiveIndex - 1);
     } else if (event.key === "Enter") {
       event.preventDefault();
-      commandResults.querySelector(".command-result.is-active")?.click();
+      const activeResult = commandResults.querySelector(".command-result.is-active");
+      if (activeResult) {
+        startRouteTransition(new URL(activeResult.getAttribute("href"), window.location.href));
+      }
     } else if (event.key === "Escape") {
       event.preventDefault();
       closeCommand();
@@ -350,6 +364,81 @@
         openCommand();
       }
     }
+  });
+
+  const routeTransition = document.createElement("div");
+  routeTransition.className = "route-transition";
+  routeTransition.setAttribute("aria-hidden", "true");
+  routeTransition.innerHTML = `
+    <span>SAKAUMA</span>
+    <strong>Route</strong>
+  `;
+  body.appendChild(routeTransition);
+
+  let routeLeaving = false;
+
+  const shouldTransitionLink = (link, event) => {
+    if (!link || event.defaultPrevented || event.button !== 0) return null;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return null;
+    if (link.target && link.target !== "_self") return null;
+    if (link.hasAttribute("download")) return null;
+
+    const href = link.getAttribute("href") || "";
+    if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return null;
+
+    let url = null;
+    try {
+      url = new URL(href, window.location.href);
+    } catch {
+      return null;
+    }
+
+    if (url.origin !== window.location.origin) return null;
+    const samePath = url.pathname === window.location.pathname && url.search === window.location.search;
+    if (samePath && url.hash) return null;
+    if (url.href === window.location.href) return null;
+    return url;
+  };
+
+  const routeLabel = (url) => {
+    if (url.pathname === "/") return "Home";
+    const last = decodeURIComponent(url.pathname.split("/").filter(Boolean).pop() || "Route");
+    return last.replace(/[-_]+/g, " ").slice(0, 34) || "Route";
+  };
+
+  startRouteTransition = (url) => {
+    if (!url) return;
+
+    if (reduceMotion || captureMode) {
+      window.location.href = url.href;
+      return;
+    }
+
+    if (routeLeaving) return;
+    routeLeaving = true;
+
+    closeMenu();
+    closeCommand();
+    routeTransition.querySelector("strong").textContent = routeLabel(url);
+    body.classList.add("route-leaving");
+
+    window.setTimeout(() => {
+      window.location.href = url.href;
+    }, 340);
+  };
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest?.("a[href]");
+    const url = shouldTransitionLink(link, event);
+    if (!url) return;
+
+    event.preventDefault();
+    startRouteTransition(url);
+  });
+
+  window.addEventListener("pageshow", () => {
+    routeLeaving = false;
+    body.classList.remove("route-leaving");
   });
 
   document.querySelectorAll(".signup, [data-copy-email-form]").forEach((form) => {
