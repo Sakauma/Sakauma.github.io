@@ -1,5 +1,6 @@
 (() => {
   const EMAIL = "ajax_mao@163.com";
+  const root = document.documentElement;
   const body = document.body;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const menuButton = document.querySelector(".menu-button");
@@ -197,16 +198,51 @@
     });
   }
 
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+  if (finePointer && !reduceMotion) {
+    document
+      .querySelectorAll(
+        ".nav-action, .arrow-link, .race-card, .helmet-card, .post-card, .topic-card, .signal-card, .social-list a, .pill-link, .pager a, .article-tags a"
+      )
+      .forEach((node) => {
+        node.addEventListener("pointermove", (event) => {
+          const rect = node.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width - 0.5) * 12;
+          const y = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
+          node.style.setProperty("--mag-x", `${x.toFixed(2)}px`);
+          node.style.setProperty("--mag-y", `${y.toFixed(2)}px`);
+        });
+
+        node.addEventListener("pointerleave", () => {
+          node.style.setProperty("--mag-x", "0px");
+          node.style.setProperty("--mag-y", "0px");
+        });
+      });
+  }
+
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   let ticking = false;
 
   const updateScrollEffects = () => {
     revealVisible();
 
+    body.classList.toggle("scrolled", window.scrollY > 16);
+
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? (window.scrollY / max) * 100 : 0;
+    const progressValue = `${progress.toFixed(2)}%`;
+    root.style.setProperty("--scroll-progress", progressValue);
+    root.style.setProperty("--scroll-ratio", (progress / 100).toFixed(4));
+
     if (progressBar) {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = max > 0 ? (window.scrollY / max) * 100 : 0;
-      progressBar.style.width = `${progress}%`;
+      progressBar.style.width = progressValue;
+    }
+
+    if (hero) {
+      const rect = hero.getBoundingClientRect();
+      const heroProgress = clamp(-rect.top / Math.max(rect.height, 1), 0, 1);
+      root.style.setProperty("--hero-progress", heroProgress.toFixed(3));
     }
 
     if (!reduceMotion) {
@@ -238,7 +274,6 @@
   window.addEventListener("resize", requestScrollEffects);
   updateScrollEffects();
 
-  const finePointer = window.matchMedia("(pointer: fine)").matches;
   if (finePointer && !reduceMotion) {
     const dot = document.querySelector(".cursor-dot");
     const ring = document.querySelector(".cursor-ring");
