@@ -700,9 +700,30 @@
 
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   let ticking = false;
+  let previousScrollY = window.scrollY;
+  let previousScrollTime = performance.now();
+  let smoothedVelocity = 0;
 
   const updateScrollEffects = () => {
     revealVisible();
+
+    const now = performance.now();
+    const currentScrollY = window.scrollY;
+    const deltaY = Math.abs(currentScrollY - previousScrollY);
+    const deltaTime = Math.max(1, now - previousScrollTime);
+    const rawVelocity = Math.min(2, deltaY / deltaTime);
+    smoothedVelocity += (rawVelocity - smoothedVelocity) * 0.22;
+
+    const speedRatio = clamp(smoothedVelocity / 0.36, 0, 1);
+    root.style.setProperty("--scroll-velocity", speedRatio.toFixed(3));
+    root.style.setProperty("--scroll-velocity-px", Math.round(smoothedVelocity * 1000));
+    root.style.setProperty("--scroll-speed-shift", `${(speedRatio * 18).toFixed(3)}px`);
+    root.style.setProperty("--scroll-speed-opacity", (speedRatio * 0.1).toFixed(3));
+    root.style.setProperty("--speed-layer-duration", `${Math.round(340 - 150 * speedRatio)}ms`);
+    body.classList.toggle("scroll-fast", speedRatio > 0.25);
+
+    previousScrollY = currentScrollY;
+    previousScrollTime = now;
 
     body.classList.toggle("scrolled", window.scrollY > 16);
 

@@ -1289,6 +1289,11 @@ body.route-leaving .route-transition::after {
   --hero-progress: 0;
   --mag-x: 0px;
   --mag-y: 0px;
+  --scroll-velocity: 0;
+  --scroll-velocity-px: 0;
+  --scroll-speed-shift: 0px;
+  --scroll-speed-opacity: 0;
+  --speed-layer-duration: 380ms;
 }
 
 ::selection {
@@ -1313,8 +1318,26 @@ body.route-leaving .route-transition::after {
     repeating-linear-gradient(112deg, transparent 0 56px, rgba(50, 62, 116, 0.055) 57px 58px, transparent 59px 128px),
     radial-gradient(circle at 82% 22%, rgba(184, 255, 54, 0.12), transparent 24%);
   mix-blend-mode: multiply;
-  opacity: 0.55;
-  transform: translate3d(calc(var(--scroll-ratio) * -42px), 0, 0);
+  opacity: calc(0.47 + var(--scroll-speed-opacity));
+  transform: translate3d(calc(var(--scroll-ratio) * -42px + var(--scroll-speed-shift)), 0, 0);
+  transition: opacity 260ms ease;
+}
+
+.shell::after,
+.site-page::after {
+  content: "";
+  position: fixed;
+  inset: -24% 0 0 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 12px, rgba(184, 255, 54, 0.055) 12px 14px, transparent 14px 40px),
+    radial-gradient(circle at 82% 20%, rgba(242, 250, 252, 0.16), transparent 56%);
+  opacity: calc(0.1 + (var(--scroll-speed-opacity) * 0.8));
+  transform: translate3d(calc(-110px - var(--scroll-speed-shift)), 0, 0);
+  mix-blend-mode: soft-light;
+  animation: speed-grid var(--speed-layer-duration) cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  filter: saturate(1.12) blur(0.25px);
 }
 
 .nav {
@@ -1430,7 +1453,7 @@ body.scrolled .brand-mark {
     repeating-linear-gradient(112deg, transparent 0 22px, rgba(242, 250, 252, 0.16) 23px 25px, transparent 26px 54px),
     linear-gradient(112deg, rgba(184, 255, 54, 0.42), transparent 70%);
   opacity: 0.68;
-  transform: translate3d(calc(var(--mx, 0) * 26px), calc(var(--hero-progress) * -70px), 0) skewX(-14deg);
+  transform: translate3d(calc(var(--mx, 0) * 26px + var(--scroll-speed-shift)), calc(var(--hero-progress) * -70px + (var(--scroll-velocity) * -28px)), 0) skewX(-14deg);
   pointer-events: none;
 }
 
@@ -1567,7 +1590,7 @@ body.scrolled .brand-mark {
   background:
     repeating-linear-gradient(112deg, transparent 0 18px, rgba(184, 255, 54, 0.16) 19px 21px, transparent 22px 48px),
     linear-gradient(112deg, rgba(184, 255, 54, 0.22), transparent);
-  transform: translate3d(calc(var(--scroll-ratio) * -60px), 0, 0) skewX(-12deg);
+  transform: translate3d(calc(var(--scroll-ratio) * -60px + var(--scroll-speed-shift)), calc(var(--scroll-velocity) * -24px), 0) skewX(-12deg);
 }
 
 .page-hero-media img {
@@ -1999,6 +2022,15 @@ body.hud-ready .motion-hud {
   }
 }
 
+@keyframes speed-grid {
+  from {
+    transform: translate3d(-160px, 0, 0);
+  }
+  to {
+    transform: translate3d(120px, 0, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -2016,13 +2048,19 @@ body.hud-ready .motion-hud {
     clip-path: inset(0) !important;
   }
 
-  .shell::before,
-  .site-page::before,
-  .hero::before,
-  .page-hero::before {
-    transform: none !important;
-    opacity: 0.18;
-  }
+.shell::before,
+.site-page::before,
+.hero::before,
+.page-hero::before {
+  transform: none !important;
+  opacity: 0.18;
+}
+
+.shell::after,
+.site-page::after {
+  animation: none !important;
+  opacity: 0.08 !important;
+}
 
   .race-card,
   .post-card,
@@ -2306,6 +2344,13 @@ body.hud-ready .motion-hud {
   .site-footer-inner {
     grid-template-columns: 1fr;
   }
+
+  .shell::after,
+  .site-page::after,
+  .route-transition::before,
+  .route-transition::after {
+    display: none !important;
+  }
 }
 
 @media print {
@@ -2333,6 +2378,8 @@ body.hud-ready .motion-hud {
   .hero-stripe,
   .shell::before,
   .site-page::before,
+  .shell::after,
+  .site-page::after,
   .hero::before,
   .page-hero::before {
     display: none !important;
