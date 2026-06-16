@@ -38,6 +38,10 @@ body.menu-open {
   overflow: hidden;
 }
 
+body.command-open {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -240,7 +244,7 @@ body.menu-open .menu-button {
   right: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   gap: 28px;
   align-items: center;
   min-height: 72px;
@@ -249,6 +253,10 @@ body.menu-open .menu-button {
   background: rgba(242, 250, 252, 0.76);
   border-bottom: 1px solid rgba(50, 62, 116, 0.12);
   backdrop-filter: blur(18px);
+}
+
+.nav {
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
 }
 
 .brand {
@@ -282,12 +290,14 @@ body.menu-open .menu-button {
 }
 
 .nav-links a,
-.nav-action {
+.nav-action,
+.command-button {
   position: relative;
 }
 
 .nav-links a::after,
-.nav-action::after {
+.nav-action::after,
+.command-button::after {
   content: "";
   position: absolute;
   left: 0;
@@ -304,18 +314,31 @@ body.menu-open .menu-button {
 .nav-links a:focus-visible::after,
 .nav-links a[aria-current="page"]::after,
 .nav-action:hover::after,
-.nav-action:focus-visible::after {
+.nav-action:focus-visible::after,
+.command-button:hover::after,
+.command-button:focus-visible::after,
+.command-button[aria-expanded="true"]::after {
   transform: scaleX(1);
 }
 
-.nav-action {
+.nav-action,
+.command-button {
   justify-self: end;
   border: 1px solid currentColor;
   border-radius: 4px;
   padding: 10px 14px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
   font-size: 0.72rem;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.command-button[aria-expanded="true"] {
+  border-color: var(--lime);
+  color: var(--ink);
+  background: var(--lime);
 }
 
 .menu-button {
@@ -941,6 +964,239 @@ body.scrolled .article-dock {
   background: var(--lime);
   color: var(--ink);
   transform: translateY(-2px);
+}
+
+.command-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: start center;
+  padding: clamp(82px, 12vh, 132px) 20px 28px;
+  background:
+    linear-gradient(100deg, rgba(184, 255, 54, 0.12), transparent 31%),
+    radial-gradient(circle at 72% 18%, rgba(184, 255, 54, 0.18), transparent 28%),
+    rgba(6, 8, 18, 0.76);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.command-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(180deg, rgba(242, 250, 252, 0.07) 0 1px, transparent 1px 8px),
+    linear-gradient(115deg, transparent 0 46%, rgba(184, 255, 54, 0.16) 46.4% 47%, transparent 47.6%);
+  opacity: 0.38;
+  transform: translate3d(-24px, 0, 0);
+}
+
+body.command-open .command-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.command-open .command-overlay::before {
+  animation: command-scan 900ms cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+.command-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  width: min(780px, calc(100vw - 40px));
+  max-height: min(720px, calc(100svh - 116px));
+  border: 1px solid rgba(242, 250, 252, 0.28);
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 12.5% 100%,
+    rgba(242, 250, 252, 0.94);
+  color: var(--cream);
+  box-shadow: 0 36px 120px rgba(0, 0, 0, 0.34);
+  transform: translateY(22px) scale(0.98);
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.command-open .command-shell {
+  transform: translateY(0) scale(1);
+}
+
+.command-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-top: 5px solid var(--lime);
+  background: linear-gradient(120deg, transparent 0 36%, rgba(184, 255, 54, 0.16) 36.5% 37%, transparent 37.6%);
+  mix-blend-mode: multiply;
+}
+
+.command-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid rgba(50, 62, 116, 0.16);
+  color: var(--mist);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.command-head button {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 8px 10px;
+  background: rgba(242, 250, 252, 0.68);
+  color: var(--cream);
+  cursor: pointer;
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.command-head button:hover,
+.command-head button:focus-visible {
+  border-color: var(--lime);
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.command-input-wrap {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(50, 62, 116, 0.16);
+}
+
+.command-input-wrap span {
+  color: var(--mist);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.command-input-wrap input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-bottom: 2px solid var(--cream);
+  border-radius: 0;
+  padding: 8px 0 10px;
+  outline: 0;
+  background: transparent;
+  color: var(--cream);
+  font-size: clamp(1.2rem, 4vw, 2.2rem);
+  font-weight: 900;
+}
+
+.command-input-wrap input::placeholder {
+  color: rgba(93, 102, 139, 0.58);
+}
+
+.command-input-wrap input:focus {
+  border-bottom-color: var(--lime);
+}
+
+.command-meta {
+  position: relative;
+  z-index: 1;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(50, 62, 116, 0.16);
+  color: var(--mist);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.command-results {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1px;
+  min-height: 0;
+  overflow: auto;
+  background: rgba(50, 62, 116, 0.13);
+}
+
+.command-result {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 4px 16px;
+  padding: 14px 20px;
+  background: rgba(242, 250, 252, 0.9);
+  color: var(--cream);
+  transform: translateY(12px);
+  opacity: 0;
+  animation: command-result-in 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--i) * 36ms);
+}
+
+.command-result span {
+  grid-row: span 2;
+  align-self: center;
+  color: var(--mist);
+  font-size: 0.64rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.command-result strong {
+  overflow: hidden;
+  color: var(--cream);
+  font-size: clamp(1rem, 2.5vw, 1.32rem);
+  line-height: 1.12;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-result em {
+  overflow: hidden;
+  color: var(--mist);
+  font-size: 0.78rem;
+  font-style: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-result:hover,
+.command-result:focus-visible,
+.command-result.is-active {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.command-result:hover span,
+.command-result:hover strong,
+.command-result:hover em,
+.command-result:focus-visible span,
+.command-result:focus-visible strong,
+.command-result:focus-visible em,
+.command-result.is-active span,
+.command-result.is-active strong,
+.command-result.is-active em {
+  color: var(--ink);
+}
+
+.command-empty {
+  padding: 24px 20px;
+  background: rgba(242, 250, 252, 0.9);
+  color: var(--mist);
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 /* Commercial polish layer: shared rhythm, speed texture, and richer micro-interactions. */
@@ -1616,6 +1872,24 @@ body.hud-ready .motion-hud {
   }
 }
 
+@keyframes command-scan {
+  from {
+    transform: translate3d(-52px, 0, 0);
+    opacity: 0.12;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.38;
+  }
+}
+
+@keyframes command-result-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1657,16 +1931,21 @@ body.hud-ready .motion-hud {
   .motion-hud,
   .hero-readout::before,
   .preloader::before,
+  .command-overlay::before,
+  .command-shell,
+  .command-result,
   .article-dock {
     animation: none !important;
     transform: none !important;
+    opacity: 1 !important;
   }
 }
 
 @media (max-width: 980px) {
   .site-page .nav,
   .nav {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    gap: 10px;
   }
 
   .nav-links,
@@ -1674,7 +1953,16 @@ body.hud-ready .motion-hud {
     display: none;
   }
 
+  .command-button {
+    grid-column: 3;
+    padding: 9px 11px;
+    background: rgba(242, 250, 252, 0.82);
+    color: var(--cream);
+    box-shadow: 0 10px 26px rgba(16, 21, 40, 0.12);
+  }
+
   .menu-button {
+    grid-column: 4;
     display: block;
     background: rgba(242, 250, 252, 0.82);
     color: var(--cream);
@@ -1708,10 +1996,16 @@ body.hud-ready .motion-hud {
 @media (max-width: 620px) {
   .nav,
   .site-page .nav {
-    grid-template-columns: auto auto !important;
+    grid-template-columns: auto minmax(0, 1fr) auto auto !important;
     justify-content: space-between;
     min-height: 62px;
     padding: 10px 16px;
+  }
+
+  .command-button {
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 0.68rem;
   }
 
   .menu-button {
@@ -1855,6 +2149,44 @@ body.hud-ready .motion-hud {
     width: auto;
   }
 
+  .command-overlay {
+    align-items: start;
+    padding: 74px 12px 16px;
+  }
+
+  .command-shell {
+    width: calc(100vw - 24px);
+    max-height: calc(100svh - 92px);
+  }
+
+  .command-head,
+  .command-input-wrap,
+  .command-meta,
+  .command-result,
+  .command-empty {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .command-input-wrap {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .command-result {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .command-result span {
+    grid-row: auto;
+  }
+
+  .command-result strong,
+  .command-result em {
+    white-space: normal;
+  }
+
   .site-footer-inner {
     grid-template-columns: 1fr;
   }
@@ -1875,6 +2207,8 @@ body.hud-ready .motion-hud {
   .cursor-ring,
   .mobile-menu,
   .menu-button,
+  .command-button,
+  .command-overlay,
   .motion-hud,
   .hero-readout,
   .route-readout,

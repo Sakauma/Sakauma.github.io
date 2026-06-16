@@ -92,6 +92,266 @@
     if (event.key === "Escape") closeMenu();
   });
 
+  const nav = document.querySelector(".nav");
+  const commandButton = document.createElement("button");
+  commandButton.className = "command-button";
+  commandButton.type = "button";
+  commandButton.setAttribute("aria-label", "Open site search");
+  commandButton.setAttribute("aria-expanded", "false");
+  commandButton.setAttribute("aria-controls", "command-panel");
+  commandButton.setAttribute("aria-keyshortcuts", "Control+K /");
+  commandButton.textContent = "Search";
+  nav?.insertBefore(commandButton, menuButton || null);
+
+  const commandOverlay = document.createElement("div");
+  commandOverlay.className = "command-overlay";
+  commandOverlay.id = "command-panel";
+  commandOverlay.setAttribute("role", "dialog");
+  commandOverlay.setAttribute("aria-modal", "true");
+  commandOverlay.setAttribute("aria-label", "Site search");
+  commandOverlay.innerHTML = `
+    <div class="command-shell">
+      <div class="command-head">
+        <span>Route finder</span>
+        <button type="button" data-command-close aria-label="Close site search">Close</button>
+      </div>
+      <label class="command-input-wrap">
+        <span>Query</span>
+        <input type="search" autocomplete="off" spellcheck="false" placeholder="Search posts, routes, tags" aria-controls="command-results" />
+      </label>
+      <div class="command-meta" aria-live="polite">Ready</div>
+      <div class="command-results" id="command-results" role="listbox"></div>
+    </div>
+  `;
+  body.appendChild(commandOverlay);
+
+  const commandShell = commandOverlay.querySelector(".command-shell");
+  const commandClose = commandOverlay.querySelector("[data-command-close]");
+  const commandInput = commandOverlay.querySelector("input");
+  const commandResults = commandOverlay.querySelector(".command-results");
+  const commandMeta = commandOverlay.querySelector(".command-meta");
+  let commandEntries = null;
+  let commandVisibleResults = [];
+  let commandActiveIndex = 0;
+  let commandPreviousFocus = null;
+
+  const staticCommandEntries = [
+    { title: "Home", href: "/", type: "Route", meta: "Sakauma / Egor Izmaylov" },
+    { title: "Posts", href: "/list/", type: "Route", meta: "70 texts" },
+    { title: "Archive", href: "/archives/", type: "Route", meta: "Chronological index" },
+    { title: "Tags", href: "/tags/", type: "Route", meta: "Topic map" },
+    { title: "Categories", href: "/categories/", type: "Route", meta: "Main shelf" },
+    { title: "About", href: "/about/", type: "Route", meta: "Profile and contact" },
+    { title: "Contact", href: "/#contact", type: "Section", meta: EMAIL },
+  ];
+
+  const normalizeText = (value) => (value || "").replace(/\s+/g, " ").trim();
+  const searchableText = (entry) => `${entry.title} ${entry.type} ${entry.meta}`.toLowerCase();
+
+  const addEntry = (map, entry) => {
+    const href = entry.href;
+    const title = normalizeText(entry.title);
+    if (!href || !title || href.startsWith("javascript:") || href === "#") return;
+    const key = new URL(href, window.location.origin).pathname + new URL(href, window.location.origin).hash;
+    if (map.has(key)) return;
+    map.set(key, {
+      title,
+      href: new URL(href, window.location.origin).pathname + new URL(href, window.location.origin).hash,
+      type: normalizeText(entry.type) || "Link",
+      meta: normalizeText(entry.meta),
+    });
+  };
+
+  const collectEntriesFromDocument = (doc, map) => {
+    doc.querySelectorAll(".post-card").forEach((card) => {
+      const link = card.querySelector("h3 a");
+      addEntry(map, {
+        title: link?.textContent,
+        href: link?.getAttribute("href"),
+        type: "Post",
+        meta: card.querySelector(".post-date")?.textContent || card.querySelector(".post-category")?.textContent,
+      });
+    });
+
+    doc.querySelectorAll(".topic-card").forEach((card) => {
+      addEntry(map, {
+        title: card.querySelector("strong")?.textContent || card.textContent,
+        href: card.getAttribute("href"),
+        type: "Topic",
+        meta: card.querySelector("span")?.textContent,
+      });
+    });
+  };
+
+  const loadCommandEntries = async () => {
+    if (commandEntries) return commandEntries;
+
+    const map = new Map();
+    staticCommandEntries.forEach((entry) => addEntry(map, entry));
+    collectEntriesFromDocument(document, map);
+
+    try {
+      const response = await fetch("/list/", { credentials: "same-origin" });
+      if (response.ok) {
+        const text = await response.text();
+        const doc = new DOMParser().parseFromString(text, "text/html");
+        collectEntriesFromDocument(doc, map);
+      }
+    } catch {
+      commandMeta.textContent = "Local index";
+    }
+
+    commandEntries = [...map.values()];
+    return commandEntries;
+  };
+
+  const setCommandActive = (index) => {
+    if (!commandVisibleResults.length) {
+      commandInput?.removeAttribute("aria-activedescendant");
+      return;
+    }
+
+    commandActiveIndex = (index + commandVisibleResults.length) % commandVisibleResults.length;
+    commandResults.querySelectorAll(".command-result").forEach((node, itemIndex) => {
+      const active = itemIndex === commandActiveIndex;
+      node.classList.toggle("is-active", active);
+      node.setAttribute("aria-selected", String(active));
+      if (active) {
+        commandInput?.setAttribute("aria-activedescendant", node.id);
+      }
+    });
+  };
+
+  const renderCommandResults = (query = "") => {
+    if (!commandEntries || !commandResults || !commandMeta) return;
+
+    const cleaned = query.toLowerCase().trim();
+    const entries = cleaned
+      ? commandEntries
+          .map((entry) => {
+            const haystack = searchableText(entry);
+            const title = entry.title.toLowerCase();
+            const score = title.startsWith(cleaned) ? 0 : title.includes(cleaned) ? 1 : haystack.includes(cleaned) ? 2 : 9;
+            return { entry, score };
+          })
+          .filter((item) => item.score < 9)
+          .sort((a, b) => a.score - b.score || a.entry.title.localeCompare(b.entry.title))
+          .map((item) => item.entry)
+      : commandEntries;
+
+    commandVisibleResults = entries.slice(0, 9);
+    commandActiveIndex = 0;
+    commandResults.textContent = "";
+    commandMeta.textContent = commandVisibleResults.length
+      ? `${String(commandVisibleResults.length).padStart(2, "0")} matches`
+      : "No matches";
+
+    if (!commandVisibleResults.length) {
+      const empty = document.createElement("div");
+      empty.className = "command-empty";
+      empty.textContent = "No route found";
+      commandResults.appendChild(empty);
+      commandInput?.removeAttribute("aria-activedescendant");
+      return;
+    }
+
+    commandVisibleResults.forEach((entry, index) => {
+      const link = document.createElement("a");
+      const kicker = document.createElement("span");
+      const title = document.createElement("strong");
+      const meta = document.createElement("em");
+      link.className = "command-result";
+      link.id = `command-result-${index}`;
+      link.href = entry.href;
+      link.setAttribute("role", "option");
+      link.setAttribute("aria-selected", "false");
+      link.style.setProperty("--i", index);
+      kicker.textContent = entry.type;
+      title.textContent = entry.title;
+      meta.textContent = entry.meta || entry.href;
+      link.append(kicker, title, meta);
+      link.addEventListener("click", closeCommand);
+      commandResults.appendChild(link);
+    });
+
+    setCommandActive(0);
+  };
+
+  const openCommand = async () => {
+    closeMenu();
+    commandPreviousFocus = document.activeElement;
+    body.classList.add("command-open");
+    commandButton.setAttribute("aria-expanded", "true");
+    commandOverlay.setAttribute("aria-hidden", "false");
+    commandMeta.textContent = "Indexing";
+    commandInput.value = "";
+    commandInput.focus({ preventScroll: true });
+    await loadCommandEntries();
+    renderCommandResults("");
+  };
+
+  function closeCommand() {
+    body.classList.remove("command-open");
+    commandButton.setAttribute("aria-expanded", "false");
+    commandOverlay.setAttribute("aria-hidden", "true");
+    commandInput?.removeAttribute("aria-activedescendant");
+    if (commandPreviousFocus && document.contains(commandPreviousFocus)) {
+      commandPreviousFocus.focus({ preventScroll: true });
+    }
+  }
+
+  commandOverlay.setAttribute("aria-hidden", "true");
+  commandButton.addEventListener("click", openCommand);
+  commandClose?.addEventListener("click", closeCommand);
+  commandOverlay.addEventListener("click", (event) => {
+    if (!commandShell?.contains(event.target)) closeCommand();
+  });
+
+  commandInput?.addEventListener("input", () => {
+    renderCommandResults(commandInput.value);
+  });
+
+  commandInput?.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setCommandActive(commandActiveIndex + 1);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setCommandActive(commandActiveIndex - 1);
+    } else if (event.key === "Enter") {
+      event.preventDefault();
+      commandResults.querySelector(".command-result.is-active")?.click();
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      closeCommand();
+    } else if (event.key === "Tab") {
+      const focusable = [commandInput, commandClose].filter(Boolean);
+      const currentIndex = focusable.indexOf(document.activeElement);
+      if (event.shiftKey && currentIndex === 0) {
+        event.preventDefault();
+        commandClose?.focus();
+      } else if (!event.shiftKey && currentIndex === focusable.length - 1) {
+        event.preventDefault();
+        commandInput?.focus();
+      }
+    }
+  });
+
+  window.addEventListener("keydown", (event) => {
+    const target = event.target;
+    const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target?.isContentEditable;
+    if (event.key === "Escape") closeCommand();
+    if (typing) return;
+    if ((event.ctrlKey && event.key.toLowerCase() === "k") || event.key === "/") {
+      event.preventDefault();
+      if (body.classList.contains("command-open")) {
+        closeCommand();
+      } else {
+        openCommand();
+      }
+    }
+  });
+
   document.querySelectorAll(".signup, [data-copy-email-form]").forEach((form) => {
     const input = form.querySelector("input");
     const button = form.querySelector("button");
