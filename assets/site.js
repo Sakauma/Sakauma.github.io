@@ -61,7 +61,42 @@
     if (loaderTimer) window.clearInterval(loaderTimer);
     body.classList.add("loaded");
     body.classList.remove("loading");
+    body.classList.add("scene-ready");
   };
+
+  const sceneNodes = [
+    ...new Set([
+      ...document.querySelectorAll("main > section"),
+      ...document.querySelectorAll(".content-panel"),
+      ...document.querySelectorAll(".article-shell"),
+      ...document.querySelectorAll(".post-list"),
+      ...document.querySelectorAll(".topic-list"),
+      ...document.querySelectorAll(".about-layout"),
+    ]),
+  ];
+
+  sceneNodes.forEach((node, index) => {
+    node.classList.add("scene-stage");
+    node.style.setProperty("--scene-delay", `${Math.min(index, 8) * 70}ms`);
+  });
+
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    const sceneObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("stage-visible");
+            sceneObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.11 }
+    );
+
+    sceneNodes.forEach((node) => sceneObserver.observe(node));
+  } else {
+    sceneNodes.forEach((node) => node.classList.add("stage-visible"));
+  }
 
   const wireSkipToContent = () => {
     const main = document.querySelector("main");
@@ -728,11 +763,15 @@
       const my = (event.clientY - rect.top) / rect.height - 0.5;
       hero.style.setProperty("--mx", mx.toFixed(3));
       hero.style.setProperty("--my", my.toFixed(3));
+      hero.style.setProperty("--hero-tilt-x", `${(-my * 3.8).toFixed(3)}deg`);
+      hero.style.setProperty("--hero-tilt-y", `${(mx * 4.2).toFixed(3)}deg`);
     });
 
     hero.addEventListener("pointerleave", () => {
       hero.style.setProperty("--mx", "0");
       hero.style.setProperty("--my", "0");
+      hero.style.setProperty("--hero-tilt-x", "0deg");
+      hero.style.setProperty("--hero-tilt-y", "0deg");
     });
   }
 
@@ -750,11 +789,15 @@
           const y = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
           node.style.setProperty("--mag-x", `${x.toFixed(2)}px`);
           node.style.setProperty("--mag-y", `${y.toFixed(2)}px`);
+          node.style.setProperty("--mag-tilt-x", `${(-y * 0.18).toFixed(3)}deg`);
+          node.style.setProperty("--mag-tilt-y", `${(x * 0.18).toFixed(3)}deg`);
         });
 
         node.addEventListener("pointerleave", () => {
           node.style.setProperty("--mag-x", "0px");
           node.style.setProperty("--mag-y", "0px");
+          node.style.setProperty("--mag-tilt-x", "0deg");
+          node.style.setProperty("--mag-tilt-y", "0deg");
         });
       });
   }
