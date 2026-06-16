@@ -6,6 +6,7 @@
   const captureMode = navigator.webdriver || new URLSearchParams(window.location.search).has("capture");
   const menuButton = document.querySelector(".menu-button");
   const menuLinks = document.querySelectorAll(".mobile-menu a");
+  const allNavLinks = document.querySelectorAll(".nav-links a, .mobile-menu a");
   const progressBar = document.querySelector(".scroll-progress span");
   const hero = document.querySelector(".hero");
   const store = document.querySelector(".store");
@@ -60,6 +61,43 @@
     body.classList.add("loaded");
     body.classList.remove("loading");
   };
+
+  const normalizeRoute = (path) => {
+    const cleaned = (path || "/").split(/[?#]/)[0].replace(/\/index\.html$/i, "/").replace(/\/$/, "/");
+    if (cleaned === "//") return "/";
+    return cleaned;
+  };
+
+  const getCurrentRoute = () => {
+    const path = normalizeRoute(location.pathname);
+
+    if (path === "/" || path === "/index/" || path === "/404/") return "/";
+    if (path.startsWith("/list/")) return "/list/";
+    if (path.startsWith("/archives/")) return "/archives/";
+    if (path.startsWith("/tags/")) return "/tags/";
+    if (path.startsWith("/categories/")) return "/categories/";
+    if (path.startsWith("/about/")) return "/about/";
+    if (/^\/\d{4}\//.test(path)) return "/list/";
+
+    return path;
+  };
+
+  const syncAriaCurrent = () => {
+    const activeRoute = getCurrentRoute();
+
+    allNavLinks.forEach((link) => {
+      const href = normalizeRoute(link.getAttribute("href") || "");
+      const normalizedHref = href.startsWith("http") ? normalizeRoute(new URL(href, location.href).pathname) : href;
+      const isCurrent = href === activeRoute || normalizedHref === activeRoute;
+      if (isCurrent) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  syncAriaCurrent();
 
   if (reduceMotion || captureMode) {
     finishLoading();
@@ -481,7 +519,7 @@
 
   const revealNodes = [...document.querySelectorAll(".reveal")];
   revealNodes.forEach((node, index) => {
-    node.style.transitionDelay = `${Math.min(index % 7, 6) * 55}ms`;
+    node.style.setProperty("--reveal-delay", `${Math.min(index % 7, 6) * 55}ms`);
     if (reduceMotion) {
       node.classList.add("is-visible");
     }

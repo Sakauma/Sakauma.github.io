@@ -172,6 +172,7 @@ body.menu-open .menu-button {
   opacity: 1 !important;
   transform: translateY(22px);
   clip-path: inset(0) !important;
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 .js .reveal.is-visible {
