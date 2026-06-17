@@ -8,9 +8,11 @@
     <script>
       document.documentElement.classList.add("js");
     </script>
-        <link rel="stylesheet" href="/assets/site.css?v=20260616-rt5" />
+    <link rel="stylesheet" href="/assets/site.css?v=20260616-rt5" />
+    <link rel="stylesheet" href="/css/home-premium.css?v=20260617" />
   </head>
-  <body class="loading">
+  <body class="site-page loading">
+    <a class="floating-cta" href="/#contact" data-floating-cta>Contact</a>
     <div class="preloader" aria-hidden="true">
       <div class="loader-stack">
         <div class="loader-mark">S</div>
@@ -49,33 +51,64 @@
         <a href="/#contact">Contact</a>
       </nav>
 
-      <main id="top">
-        <section class="hero">
+      <main id="top" data-nav-label="Home">
+        <section class="hero" id="hero" data-nav-label="Hero">
+          <div class="hero-deco" aria-hidden="true">
+            <span class="hero-deco-line"></span>
+            <span class="hero-deco-line"></span>
+            <span class="hero-deco-line"></span>
+          </div>
           <div class="hero-media" aria-hidden="true">
-            <img
-              src="/assets/img/Tlaloc_cropped_1920x1080.webp"
-              alt=""
-            />
+            <img src="/assets/img/Tlaloc_cropped_1920x1080.webp" alt="" />
           </div>
           <div class="hero-stripe" aria-hidden="true"></div>
+          <div class="hero-ambient" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
           <div class="hero-readout reveal" aria-hidden="true">
-            <span>Field Log</span>
+            <span>Sakauma</span>
             <strong>70</strong>
-            <small>posts / poems / translations</small>
+            <small>Posts</small>
           </div>
           <div class="hero-grid">
-            <div>
+            <div class="hero-core">
               <p class="eyebrow reveal">Egor Izmaylov / UESTC PhD</p>
               <h1 class="reveal" data-split>SAKAUMA</h1>
               <p class="hero-copy reveal">
                 Добро пожаловать в этот грёбаный мир. 我是 Egor Izmaylov，目前 UESTC PhD 在读。
               </p>
+              <div class="hero-value-band reveal">
+                <div>
+                  <strong>70</strong>
+                  <span>Posts</span>
+                </div>
+                <div>
+                  <strong>25</strong>
+                  <span>Tags</span>
+                </div>
+                <div>
+                  <strong>01</strong>
+                  <span>Category</span>
+                </div>
+              </div>
+              <div class="hero-pills reveal">
+                <a href="/list/">Posts</a>
+                <a href="/archives/">Archive</a>
+                <a href="/tags/">Tags</a>
+                <a href="/categories/">Categories</a>
+              </div>
+              <div class="hero-copy-actions">
+                <a class="arrow-link reveal" href="/list/">Posts</a>
+                <a class="arrow-link reveal" href="/about/">About</a>
+              </div>
             </div>
             <a class="race-card reveal" href="/list/" aria-label="查看文章列表">
-              <div class="label">Now writing</div>
+              <div class="label">Posts</div>
               <div class="place">70<br />POSTS</div>
               <div class="meta">
-                <span>Hexo / A4</span>
+                <span>Sakauma</span>
                 <span>2024-2026</span>
               </div>
             </a>
@@ -88,76 +121,58 @@
           <span>Добро пожаловать / 我爱一切不该爱的东西 / 翻译 / 诗歌 / 苏联地下朋克 / </span>
         </div>
 
-        <section class="section intro" id="about">
+        <section class="section intro" id="about" data-nav-label="不该爱的东西">
           <div class="section-inner">
             <div class="intro-grid">
               <div>
-                <p class="eyebrow reveal">Index note</p>
+                <p class="eyebrow reveal">不该爱的东西</p>
                 <h2 class="section-title reveal">不该<br />爱的东西</h2>
               </div>
               <p class="intro-copy reveal">
-                我爱一切不该爱的东西。这里收着翻译、诗歌、苏联地下朋克，以及一些不太适合被整理成标准履历的精神碎片。
+                我爱一切不该爱的东西。翻译 / 诗歌 / 民防 / 未来主义。
               </p>
             </div>
             <div class="photo-strip">
               <figure class="photo tall reveal" data-caption="Avatar">
-                <img
-                  src="/assets/img/avatar.png"
-                  alt="Sakauma avatar"
-                />
+                <img src="/assets/img/avatar.png" alt="Sakauma avatar" />
               </figure>
               <figure class="photo small reveal" data-caption="A4 background">
-                <img
-                  src="/assets/img/Tlaloc_cropped_1920x1080.webp"
-                  alt="Tlaloc themed background"
-                />
+                <img src="/assets/img/Tlaloc_cropped_1920x1080.webp" alt="Tlaloc themed background" />
               </figure>
               <figure class="photo reveal" data-caption="Anime table">
-                <img
-                  src="/assets/img/anime-table.jpg"
-                  alt="动画生涯个人喜好表"
-                />
+                <img src="/assets/img/anime-table.jpg" alt="动画生涯个人喜好表" />
               </figure>
               <figure class="photo tall reveal" data-caption="Sakauma.github.io">
-                <img
-                  src="/assets/img/Tlaloc_cropped_1920x1080.webp"
-                  alt="Sakauma site background detail"
-                />
+                <img src="/assets/img/Tlaloc_cropped_1920x1080.webp" alt="Sakauma site background detail" />
               </figure>
             </div>
           </div>
         </section>
 
-        <section class="modes" id="writing">
+        <section class="modes" id="posts" data-nav-label="Posts">
           <div class="mode-grid">
             <a class="mode" href="/list/">
-              <img
-                src="/assets/img/Tlaloc_cropped_1920x1080.webp"
-                alt="Sakauma blog background"
-              />
+              <img src="/assets/img/Tlaloc_cropped_1920x1080.webp" alt="Sakauma blog background" />
               <div class="mode-content reveal">
                 <h2 class="split-word">文章<br />列表</h2>
-                <p>70 篇文章，从列托夫、苏联和地下朋克，到诗歌、未来主义和翻译。</p>
-                <span class="arrow-link">View posts</span>
+                <p>翻译 / 诗歌 / 民防 / 未来主义。</p>
+                <span class="arrow-link">Posts</span>
               </div>
             </a>
             <a class="mode" id="about-link" href="/about/">
-              <img
-                src="/assets/img/anime-table.jpg"
-                alt="动画喜好表"
-              />
+              <img src="/assets/img/anime-table.jpg" alt="动画喜好表" />
               <div class="mode-content reveal">
                 <h2 class="split-word">关于<br />我</h2>
-                <p>Bilibili、GitHub、邮箱，以及一点很不适合写在名片上的自述。</p>
-                <span class="arrow-link">View about</span>
+                <p>Bilibili / GitHub / Email。</p>
+                <span class="arrow-link">About</span>
               </div>
             </a>
           </div>
         </section>
 
-        <section class="section stats" id="stats">
+        <section class="section stats" id="stats" data-nav-label="Sakauma">
           <div class="section-inner">
-            <p class="eyebrow reveal">Site dashboard</p>
+            <p class="eyebrow reveal">Sakauma</p>
             <div class="stat-grid">
               <div class="stat reveal">
                 <strong data-count="70">70</strong>
@@ -179,28 +194,28 @@
           </div>
         </section>
 
-        <section class="section signal-wall" id="signal">
+        <section class="section signal-wall" id="signal" data-nav-label="MOTION ARCHIVE">
           <div class="section-inner signal-grid">
             <div class="signal-copy reveal">
-              <p class="eyebrow">Live index</p>
+              <p class="eyebrow">MOTION ARCHIVE</p>
               <h2 class="section-title">MOTION<br />ARCHIVE</h2>
               <p>
-                Research notes, translations, poems, Soviet underground fragments, and personal obsessions arranged as a fast-moving field log.
+                翻译 / 诗歌 / 民防 / 未来主义。
               </p>
-              <a class="arrow-link" href="/list/">Read the latest</a>
+              <a class="arrow-link" href="/list/">Posts</a>
             </div>
             <div class="signal-deck reveal" aria-label="Featured Sakauma sections">
               <a class="signal-card signal-card-large" href="/archives/">
                 <img src="/assets/img/Tlaloc_cropped_1920x1080.webp" alt="" />
                 <span>Archive</span>
-                <strong>2026 texts</strong>
-                <small>time-indexed writing</small>
+                <strong>Archive</strong>
+                <small>2026</small>
               </a>
               <a class="signal-card" href="/tags/">
                 <img src="/assets/img/anime-table.jpg" alt="" />
                 <span>Tags</span>
-                <strong>25 signals</strong>
-                <small>translation / poetry / futures</small>
+                <strong>25 Tags</strong>
+                <small>翻译 / 诗歌 / 未来主义</small>
               </a>
               <a class="signal-card" href="/about/">
                 <img src="/assets/img/avatar.png" alt="" />
@@ -212,54 +227,54 @@
           </div>
         </section>
 
-        <section class="section helmets" id="topics">
+        <section class="section helmets" id="topics" data-nav-label="Tags / Categories">
           <div class="section-inner">
             <div class="helmet-head">
               <div>
-                <p class="eyebrow reveal">Tags & categories</p>
+                <p class="eyebrow reveal">Tags / Categories</p>
                 <h2 class="section-title reveal">主题</h2>
               </div>
               <p class="reveal">
-                发布仓库里有 25 个标签；最常出现的气味是翻译、诗歌、民防、未来主义、苏联的晚年，以及那些边缘而明亮的文本。
+                翻译 / 诗歌 / 民防 / 未来主义。
               </p>
             </div>
             <div class="helmet-rail" aria-label="Topic collection">
               <article class="helmet-card reveal" style="--helmet: #c8ff00; --stripe: #121512">
                 <div class="helmet-visual"><div class="topic-mark">译</div></div>
                 <h3>翻译</h3>
-                <p>Russian texts, poems and songs moved into Chinese.</p>
+                <p>翻译。</p>
               </article>
               <article class="helmet-card reveal" style="--helmet: #63b4ff; --stripe: #c8ff00">
                 <div class="helmet-visual"><div class="topic-mark">诗</div></div>
                 <h3>诗歌</h3>
-                <p>Lines that refuse to behave like ordinary prose.</p>
+                <p>诗歌。</p>
               </article>
               <article class="helmet-card reveal" style="--helmet: #ff7a34; --stripe: #111111">
                 <div class="helmet-visual"><div class="topic-mark">民</div></div>
                 <h3>民防</h3>
-                <p>Гражданская Оборона, Letov, Soviet underground punk.</p>
+                <p>民防。</p>
               </article>
               <article class="helmet-card reveal" style="--helmet: #f4f1e8; --stripe: #c8ff00">
                 <div class="helmet-visual"><div class="topic-mark">未</div></div>
                 <h3>未来主义</h3>
-                <p>Russian futurists and fragments from a harsher century.</p>
+                <p>未来主义。</p>
               </article>
             </div>
           </div>
         </section>
 
-        <section class="store" id="archive">
+        <section class="store" id="archive" data-nav-label="Archive">
           <div class="store-panel">
             <p class="eyebrow reveal">Archive</p>
             <h2 class="reveal">2026<br />TEXTS</h2>
             <p class="reveal">
-              最新文章包括《子夜时分，升起了漆黑的太阳……》《搪瓷便盆》《在俄罗斯，分开意味着永别》等。
+              子夜时分，升起了漆黑的太阳…… / 搪瓷便盆 / 在俄罗斯，分开意味着永别。
             </p>
-            <a class="arrow-link reveal" href="/archives/">Open archive</a>
+            <a class="arrow-link reveal" href="/archives/">Archive</a>
           </div>
         </section>
 
-        <section class="section socials" id="contact">
+        <section class="section socials" id="contact" data-nav-label="Contact">
           <div class="section-inner social-grid">
             <div>
               <p class="eyebrow reveal">Contact</p>
@@ -267,9 +282,9 @@
             </div>
             <div>
               <div class="social-list reveal">
-                <a href="https://space.bilibili.com/9348725" aria-label="Bilibili">Bilibili <span>9348725</span></a>
-                <a href="https://github.com/Sakauma" aria-label="GitHub">GitHub <span>Sakauma</span></a>
-                <a href="#contact" aria-label="Email">Email <span>ajax_mao@163.com</span></a>
+                <a href="https://space.bilibili.com/9348725" target="_blank" rel="noopener noreferrer" aria-label="Bilibili">Bilibili <span>9348725</span></a>
+                <a href="https://github.com/Sakauma" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub <span>Sakauma</span></a>
+                <a href="mailto:ajax_mao@163.com" aria-label="Email">Email <span>ajax_mao@163.com</span></a>
                 <a href="/about/" aria-label="About">About <span>page</span></a>
               </div>
               <form class="signup reveal" data-copy-email-form>
@@ -285,8 +300,7 @@
         <div>
           <strong>САКСОФОН ИГРАЕТ.</strong>
           <p class="credit">
-            Sakauma / Egor Izmaylov. UESTC PhD. 内容来自本地 Hexo 工程和 Sakauma.github.io 发布仓库，
-            视觉保留诺里斯式大字、滚动、遮罩和交互动效。
+            Sakauma / Egor Izmaylov. UESTC PhD. Sakauma / Egor Izmaylov. UESTC PhD.
           </p>
         </div>
         <div>© 2024-2026 IDIPLab</div>
@@ -296,5 +310,7 @@
     <script src="/assets/site.js?v=20260616-rt5" defer></script>
   </body>
 </html>
+
+
 
 
