@@ -1,0 +1,116 @@
+/* Homepage-only reading surface. Shared article styles are intentionally untouched. */
+@font-face {
+  font-family: "Home WenKai";
+  src: url("/assets/fonts/home-wenkai.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  color-scheme: light;
+  --paper: #f8f9f6;
+  --ink: #24352f;
+  --muted: #58645c;
+  --green: #285744;
+  --line: #d9dfd7;
+  --wash: #eef2eb;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 2rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; -webkit-tap-highlight-color: #bfcfc3; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .25em; }
+a:hover { color: var(--green); text-decoration: underline; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--green); outline-offset: 5px; border-radius: 2px; }
+button, a { touch-action: manipulation; }
+button { font: inherit; }
+::selection { background: #d5e3d6; color: #18392b; }
+.page { width: min(100% - 5rem, 1056px); margin-inline: auto; }
+.site-header { display: flex; align-items: center; justify-content: space-between; padding-block: 2.1rem; gap: 1.5rem; }
+.wordmark { font: 600 1.25rem/1.4 Georgia, "Times New Roman", serif; letter-spacing: -.04em; text-decoration: none; }
+.wordmark span { color: var(--green); }
+.site-header nav { display: flex; gap: 2.3rem; }
+.site-header nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: .9375rem; text-decoration: none; }
+.site-header nav a:hover { text-decoration: underline; }
+.skip-link { position: fixed; z-index: 10; top: .5rem; left: 1rem; padding: .65rem 1rem; background: var(--ink); color: white; transform: translateY(-200%); }
+.skip-link:focus { transform: none; color: white; }
+#main:focus { outline: none; }
+.introduction { display: grid; grid-template-columns: 1.12fr 1fr; align-items: center; gap: 5rem; padding-block: 2.7rem 4.75rem; }
+h1 { font: 400 clamp(3.4rem, 6vw, 4.75rem)/1.06 Georgia, "Times New Roman", serif; letter-spacing: -.055em; margin: 0 0 1rem; }
+.identity { margin: 0; color: var(--muted); font-size: .9375rem; }
+.identity-separator { margin-inline: .35rem; color: #849186; }
+.motto { margin: 2.1rem 0 .8rem; font: 400 clamp(1.85rem, 3vw, 2.55rem)/1.5 "Home WenKai", "Kaiti SC", KaiTi, serif; letter-spacing: .02em; }
+.interests { margin: 0 0 .75rem; font-size: 1rem; }
+.welcome { max-width: 32ch; margin: 0; color: var(--muted); font: italic 1rem/1.7 Georgia, "Times New Roman", serif; }
+.artwork { min-width: 0; margin: 0; }
+.artwork img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.artwork figcaption { display: flex; gap: .35rem 1rem; flex-wrap: wrap; justify-content: space-between; margin-top: .75rem; color: var(--muted); font-size: .75rem; }
+.reading-layout { display: grid; grid-template-columns: minmax(0, 1fr) 235px; gap: 6rem; padding-block: 2rem 4.3rem; border-top: 1px solid var(--line); }
+h2 { font-size: 1.125rem; font-weight: 500; margin: 0; letter-spacing: .02em; }
+.section-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; margin-bottom: .5rem; }
+.section-heading time { color: var(--muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+.entries { list-style: none; padding: 0; margin: 0; }
+.entries li { border-bottom: 1px solid var(--line); }
+.entry { display: block; padding: 1.3rem 0 1.25rem; text-decoration: none; }
+.entry-title { display: block; font: 400 1.42rem/1.5 "Home WenKai", "Kaiti SC", KaiTi, serif; overflow-wrap: anywhere; }
+.entry-original { display: block; margin-top: .35rem; color: var(--muted); font: 400 .9375rem/1.6 Georgia, "Times New Roman", serif; overflow-wrap: anywhere; }
+.entry:hover { text-decoration: none; }
+.entry:hover .entry-title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.all-posts { display: inline-flex; align-items: center; gap: .8rem; min-height: 44px; margin-top: 1.25rem; color: var(--green); font-size: .9375rem; }
+.all-posts span { color: var(--muted); font-size: .8125rem; }
+.margin-notes { min-width: 0; }
+.margin-notes h2 { margin-bottom: 1rem; }
+.topic-links { display: flex; flex-direction: column; align-items: flex-start; }
+.topic-links a { padding-block: .35rem; min-height: 40px; text-decoration: none; }
+.topic-links a:hover { text-decoration: underline; }
+.index-links { font-size: .8125rem; color: var(--muted); margin-top: 1rem; }
+.contact { margin-top: 3.1rem; }
+.social-links { display: flex; flex-wrap: wrap; gap: .8rem 1.25rem; }
+.social-links a { font-size: .9375rem; min-height: 32px; }
+.email { width: 100%; overflow-wrap: anywhere; }
+.copy-email { border: 0; border-radius: 3px; padding: .4rem .65rem; background: var(--wash); color: var(--green); cursor: pointer; font-size: .8125rem; min-height: 36px; margin-top: .5rem; }
+.copy-email:hover { background: #dfe8dc; }
+.copy-status { display: block; font-size: .8125rem; color: var(--muted); min-height: 1.8em; margin-top: .4rem; }
+.site-footer { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; border-top: 1px solid var(--line); padding-block: 1.5rem 2.25rem; color: var(--muted); }
+.site-footer p { margin: 0; font: italic 1rem/1.5 Georgia, "Times New Roman", serif; }
+.site-footer span { font-size: .75rem; }
+@media (max-width: 900px) {
+  .page { width: min(100% - 3rem, 1056px); }
+  .introduction { gap: 2rem; padding-block: 2rem 3rem; }
+  .reading-layout { grid-template-columns: minmax(0, 1fr) 190px; gap: 2.5rem; }
+  .motto { font-size: 2rem; }
+  .identity { max-width: 23ch; }
+}
+@media (max-width: 620px) {
+  .page { width: calc(100% - 2.5rem); }
+  .site-header { padding-block: 1.2rem; gap: 1rem; }
+  .site-header nav { gap: 1.4rem; }
+  .site-header nav a { font-size: .875rem; }
+  .introduction { grid-template-columns: 1fr; gap: 2rem; padding-block: 1.75rem 2.2rem; }
+  h1 { font-size: 3.4rem; }
+  .identity { max-width: none; font-size: .875rem; }
+  .motto { margin-top: 1.65rem; font-size: 2.05rem; }
+  .welcome { max-width: none; font-size: .9375rem; }
+  .artwork img { aspect-ratio: 1.5; object-fit: cover; object-position: center 44%; }
+  .artwork figcaption { font-size: .75rem; }
+  .reading-layout { grid-template-columns: 1fr; gap: 2.5rem; padding-block: 1.6rem 2.5rem; }
+  .entry-title { font-size: 1.32rem; }
+  .entry { padding-block: 1.2rem; }
+  .margin-notes { display: grid; grid-template-columns: 1fr 1.35fr; gap: 1.4rem; padding-top: 1.75rem; border-top: 1px solid var(--line); }
+  .contact { margin-top: 0; }
+  .social-links { gap: .5rem .85rem; }
+  .social-links a { font-size: .875rem; }
+}
+@media (max-width: 350px) {
+  .site-header nav { gap: 1rem; }
+  .margin-notes { grid-template-columns: 1fr; }
+  .contact { margin-top: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
+@media print {
+  .page { width: 100%; }
+  .copy-email, .skip-link, .copy-status { display: none; }
+  .introduction { padding-top: 0; }
+  .entry { break-inside: avoid; }
+}
