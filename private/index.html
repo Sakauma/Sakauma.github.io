@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+    <meta name="theme-color" content="#111314" />
+    
+    
+    
+    
+    <link rel="icon" href="/assets/img/avatar.png" />
+    <title>私密资料 | Sakauma</title>
+    <script>
+      try {
+        const saved = localStorage.getItem('sakauma:cli:theme');
+        document.documentElement.dataset.theme = ['dark', 'light', 'amber'].includes(saved) ? saved : 'dark';
+        const motion = localStorage.getItem('sakauma:cli:motion');
+        document.documentElement.dataset.motion = motion === 'off' || (motion !== 'on' && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'off' : 'on';
+      } catch {
+        document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'off' : 'on';
+      }
+    </script>
+    <script type="module" crossorigin src="/terminal-assets/index-DdUnpW88.js"></script>
+    <link rel="stylesheet" crossorigin href="/terminal-assets/index-DRoVZ3fR.css">
+  <meta name="description" content="私密资料 — 翻译、诗歌、民防与未来主义。">
+<meta property="og:title" content="私密资料 | Sakauma">
+<meta property="og:description" content="私密资料 — 翻译、诗歌、民防与未来主义。">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://sakauma.github.io/private/">
+<meta name="robots" content="noindex">
+<style>
+html:not(.app-ready) #app{display:none}
+#site-fallback{max-width:76ch;margin:2rem auto;padding:1.5rem;color:#d9e0d6;background:#111314;font:15px/1.8 ui-monospace,monospace;overflow-wrap:anywhere}
+#site-fallback a{color:#afd8ae}#site-fallback img{max-width:100%;height:auto}#site-fallback pre{white-space:pre-wrap}#site-fallback nav{margin:1rem 0}#site-fallback input{color:inherit;background:transparent;border:1px solid #68766a;padding:.25rem}.app-ready #site-fallback{display:none}
+</style>
+</head>
+  <body>
+    <div id="app"></div>
+  <section id="site-fallback" aria-label="文章原文与静态导航"><nav><a href="/">Sakauma</a> · <a href="/list/">全部文章</a> · <a href="/archives/">归档</a> · <a href="/tags/">标签</a> · <a href="/categories/">分类</a> · <a href="/about/">关于</a></nav><h1>私密资料</h1><p>已上锁。启用 JavaScript 后输入访问密码。</p></section><noscript><style>#app{display:none}</style></noscript>
+</body>
+</html>
