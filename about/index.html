@@ -1,98 +1,47 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="About | Sakauma" />
-    <title>About | Sakauma</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+    <meta name="theme-color" content="#111314" />
+    
+    
+    
+    
     <link rel="icon" href="/assets/img/avatar.png" />
-    <script>document.documentElement.classList.add("js");</script>
-    <link rel="stylesheet" href="/assets/site.css?v=20260616-rt5" />
-  </head>
-  <body class="site-page loading">
-    <div class="preloader" aria-hidden="true">
-      <div class="loader-stack">
-        <div class="loader-mark">S</div>
-        <div class="loader-bar"><span></span></div>
-      </div>
-    </div>
-    <div class="scroll-progress" aria-hidden="true"><span></span></div>
-    <div class="cursor-dot" aria-hidden="true"></div>
-    <div class="cursor-ring" aria-hidden="true"></div>
-
-      <header class="nav" aria-label="Main navigation">
-        <a class="brand" href="/" aria-label="Sakauma home">
-          <span class="brand-mark">S</span>
-          <span>Sakauma</span>
-        </a>
-        <nav class="nav-links" aria-label="Primary">
-          <a href="/">Home</a>
-          <a href="/list/">Posts</a>
-          <a href="/archives/">Archive</a>
-          <a href="/tags/">Tags</a>
-          <a href="/categories/">Categories</a>
-          <a href="/about/" aria-current="page">About</a>
-        </nav>
-        <a class="nav-action" href="/#contact">Contact</a>
-        <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-        </button>
-      </header>
-
-      <nav class="mobile-menu" aria-label="Mobile navigation">
-        <a href="/">Home</a>
-        <a href="/list/">Posts</a>
-        <a href="/archives/">Archive</a>
-        <a href="/tags/">Tags</a>
-        <a href="/categories/">Categories</a>
-        <a href="/about/" aria-current="page">About</a>
-      </nav>
-    <main class="site-main">
-      <section class="page-hero ">
-        <div class="page-hero-media" aria-hidden="true">
-          <img src="/assets/img/Tlaloc_cropped_1920x1080.webp" alt="" />
-        </div>
-        <div class="page-hero-inner">
-          <p class="eyebrow reveal">Profile</p>
-          <h1 class="reveal">About</h1>
-          <p class="reveal">Bilibili, GitHub, email, and a short note from Sakauma / Egor Izmaylov, UESTC PhD.</p>
-        </div>
-      </section>
-      <section class="content-panel">
-        <div class="about-layout">
-          <article class="post-body reveal">
+    <title>About | Sakauma</title>
+    <script>
+      try {
+        const saved = localStorage.getItem('sakauma:cli:theme');
+        document.documentElement.dataset.theme = ['dark', 'light', 'amber'].includes(saved) ? saved : 'dark';
+        const motion = localStorage.getItem('sakauma:cli:motion');
+        document.documentElement.dataset.motion = motion === 'off' || (motion !== 'on' && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'off' : 'on';
+      } catch {
+        document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'off' : 'on';
+      }
+    </script>
+    <script type="module" crossorigin src="/terminal-assets/index-CgADoCsi.js"></script>
+    <link rel="stylesheet" crossorigin href="/terminal-assets/index-Ra1JTTAl.css">
+  <meta name="description" content="About — 翻译、诗歌、民防与未来主义。">
+<meta property="og:title" content="About | Sakauma">
+<meta property="og:description" content="About — 翻译、诗歌、民防与未来主义。">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://sakauma.github.io/about/">
+<style>
+html:not(.app-ready) #app{display:none}
+#site-fallback{max-width:76ch;margin:2rem auto;padding:1.5rem;color:#d9e0d6;background:#111314;font:15px/1.8 ui-monospace,monospace;overflow-wrap:anywhere}
+#site-fallback a{color:#afd8ae}#site-fallback img{max-width:100%;height:auto}#site-fallback pre{white-space:pre-wrap}#site-fallback nav{margin:1rem 0}#site-fallback input{color:inherit;background:transparent;border:1px solid #68766a;padding:.25rem}.app-ready #site-fallback{display:none}
+</style>
+</head>
+  <body>
+    <div id="app"></div>
+  <section id="site-fallback" aria-label="文章原文与静态导航"><nav><a href="/">Sakauma</a> · <a href="/list/">全部文章</a> · <a href="/archives/">归档</a> · <a href="/tags/">标签</a> · <a href="/categories/">分类</a> · <a href="/about/">关于</a></nav><h1>About</h1>
 <p>在精神上感染了艾滋病</p>
               <p>Bilibili: <a target="_blank" rel="noopener" href="https://space.bilibili.com/9348725">https://space.bilibili.com/9348725</a><br>Github: <a target="_blank" rel="noopener" href="https://github.com/Sakauma">https://github.com/Sakauma</a></p>
               <form class="signup" data-copy-email-form>
                 <input type="email" value="ajax_mao@163.com" readonly aria-label="邮箱地址" />
                 <button type="submit" data-label="Copy email">Copy email</button>
               </form>
-</article>
-          <aside class="profile-card reveal" aria-label="Profile">
-            <img src="/assets/img/avatar.png" alt="Sakauma avatar" />
-            <strong>Egor Izmaylov</strong>
-            <span class="article-meta">Sakauma / UESTC PhD</span>
-            <a class="pill-link" href="https://github.com/Sakauma">GitHub</a>
-            <a class="pill-link" href="https://space.bilibili.com/9348725">Bilibili</a>
-            <form class="signup" data-copy-email-form>
-              <input type="email" value="ajax_mao@163.com" readonly aria-label="邮箱地址" />
-              <button type="submit" data-label="Copy email">Copy email</button>
-            </form>
-          </aside>
-        </div>
-      </section>
-    </main>
-    <footer class="footer">
-      <div class="site-footer-inner">
-        <div>
-          <strong>САКСОФОН ИГРАЕТ.</strong>
-          <p>Sakauma / Egor Izmaylov. UESTC PhD. 视觉系统统一为浅青背景、深蓝正文和荧光绿高亮。</p>
-        </div>
-        <div>© 2024-2026 IDIPLab</div>
-      </div>
-    </footer>
-    <script src="/assets/site.js?v=20260616-rt5" defer></script>
-  </body>
+</section><noscript><style>#app{display:none}</style></noscript>
+</body>
 </html>
-
