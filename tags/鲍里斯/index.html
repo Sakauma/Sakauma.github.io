@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN" data-theme="dark" data-style="modern">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
@@ -14,14 +14,16 @@
       try {
         const saved = localStorage.getItem('sakauma:cli:theme');
         document.documentElement.dataset.theme = ['dark', 'light', 'amber'].includes(saved) ? saved : 'dark';
+        const style = localStorage.getItem('sakauma:cli:style');
+        document.documentElement.dataset.style = ['modern', 'retro'].includes(style) ? style : 'modern';
         const motion = localStorage.getItem('sakauma:cli:motion');
         document.documentElement.dataset.motion = motion === 'off' || (motion !== 'on' && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'off' : 'on';
       } catch {
         document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'off' : 'on';
       }
     </script>
-    <script type="module" crossorigin src="/terminal-assets/index-DdUnpW88.js"></script>
-    <link rel="stylesheet" crossorigin href="/terminal-assets/index-DRoVZ3fR.css">
+    <script type="module" crossorigin src="/terminal-assets/index-CeSqwKn-.js"></script>
+    <link rel="stylesheet" crossorigin href="/terminal-assets/index-C0Q0USPx.css">
   <meta name="description" content="鲍里斯 — 翻译、诗歌、民防与未来主义。">
 <meta property="og:title" content="鲍里斯 | Sakauma">
 <meta property="og:description" content="鲍里斯 — 翻译、诗歌、民防与未来主义。">
