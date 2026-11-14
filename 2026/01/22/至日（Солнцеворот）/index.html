@@ -11,19 +11,16 @@
     <link rel="icon" href="/assets/img/avatar.png" />
     <title>至日（Солнцеворот） | Sakauma</title>
     <script>
+      document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'off' : 'on';
       try {
         const saved = localStorage.getItem('sakauma:cli:theme');
         document.documentElement.dataset.theme = ['dark', 'light', 'amber'].includes(saved) ? saved : 'dark';
         const style = localStorage.getItem('sakauma:cli:style');
         document.documentElement.dataset.style = ['modern', 'retro'].includes(style) ? style : 'retro';
-        const motion = localStorage.getItem('sakauma:cli:motion');
-        document.documentElement.dataset.motion = motion === 'off' || (motion !== 'on' && matchMedia('(prefers-reduced-motion: reduce)').matches) ? 'off' : 'on';
-      } catch {
-        document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'off' : 'on';
-      }
+      } catch {}
     </script>
-    <script type="module" crossorigin src="/terminal-assets/index-fT4TvdT9.js"></script>
-    <link rel="stylesheet" crossorigin href="/terminal-assets/index-sTUlFgJ5.css">
+    <script type="module" crossorigin src="/terminal-assets/index-BFIFAOt_.js"></script>
+    <link rel="stylesheet" crossorigin href="/terminal-assets/index-Ddz8moUK.css">
   <meta name="description" content="至日（Солнцеворот） — 翻译、诗歌、民防与未来主义。">
 <meta property="og:title" content="至日（Солнцеворот） | Sakauma">
 <meta property="og:description" content="至日（Солнцеворот） — 翻译、诗歌、民防与未来主义。">
